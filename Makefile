@@ -22,12 +22,9 @@ SRCS = ${addprefix ${SRC_DIR}/, ${SRCS_FILES}}
 OBJS_FILES = ${SRCS_FILES:.c=.o}
 OBJS = ${addprefix ${OBJ_DIR}/, ${OBJS_FILES}}
 
-CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS = -Wall -Werror -Wextra -g3 -O0 -gdwarf-4
 
 CC = gcc ${CFLAGS}
-
-STRINGS = 1 2 3 4 5 6 7 8 
-STRINGS_FLAGS = 9 10 11 12 13 #14 15 16 17 18 19 20 21 22 23 24 25 26
 
 all: ${NAME} run
 	@echo ""

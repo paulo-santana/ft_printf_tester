@@ -44,6 +44,18 @@ void pretty_printf(char *params)
 	ft_putchar('\n');
 }
 
+void print_atomic_help(char *params_used)
+{
+	ft_putstr("     ");
+	ft_putstr(BOLD "You can rerun this test with " RESET YELLOW);
+	ft_putstr(program_name);
+	ft_putstr(" ");
+	ft_putnbr(current_test);
+	ft_putstr(RESET "\n     ");
+	ft_putstr("The function was called like this: ");
+	pretty_printf(params_used);
+}
+
 int check_result(char *desc, char *params_used)
 {
 	if (current_test == test_nbr || test_nbr == 0)
@@ -58,22 +70,12 @@ int check_result(char *desc, char *params_used)
 		ft_putnbr(current_test);
 		ft_putchar('.');
 		if (!test_string(desc, expected, result))
-		{
-			ft_putstr("        ");
-			ft_putstr(BOLD "You can rerun this test with " RESET YELLOW);
-			ft_putstr(program_name);
-			ft_putstr(" ");
-			ft_putnbr(current_test);
-			ft_putstr(RESET "\n   ");
-			ft_putstr("The function was called like this: ");
-			pretty_printf(params_used);
-		}
+			print_atomic_help(params_used);
 		else
 			ft_putchar(' ');
 		free(result);
 		free(expected);
 	}
-	current_test++;
 	return (0);
 }
 
@@ -98,24 +100,34 @@ int check_result(char *desc, char *params_used)
 			dup2(file, 1); \
 			ft_printf params; \
 			return (0); \
-		} else { \
+		} \
+		else \
+		{ \
 			waitpid(child, &wstatus, 0); \
 			if (wstatus != 0) \
 			{ \
 				switch(wstatus - 128) { \
 					case SIGSEGV: \
-						printf(BOLD RED "%s.SIGSEGV! " RESET, test); \
+						ft_putstr(BOLD RED); \
+						ft_putnbr(current_test); \
+						ft_putstr(".SIGSEGV! " RESET "\n"); \
 						break; \
-					case 256 * 7 - 128: \
-						printf(BOLD "%s. retornou 0" RESET, test); \
-						break ; \
 					default: \
-						printf(BOLD RED "%s.UNKNOWN CRASH! signal: (%d) " RESET, test, wstatus); \
+						ft_putstr(BOLD RED); \
+						ft_putnbr(current_test); \
+						ft_putstr(".UNKNOWN CRASH! wstatus: "); \
+						ft_putnbr(wstatus); \
+						ft_putstr(RESET); \
 				} \
+				print_atomic_help(#params); \
+			} \
+			else \
+			{ \
+				check_result(description, #params); \
 			} \
 		} \
-		check_result(description, #params); \
 	} \
+	current_test++; \
 }
 
 void describe(char *test_title)
@@ -143,13 +155,28 @@ int main(int argc, char *argv[])
 	current_test = 1;
 
 	describe("Basic test");
-	PRINTF(("test"),
+	PRINTF(("1, 2, 3, test, testing, sound, 1, 2, 3, sound, test"),
 		"Print simple string");
 
 	describe("\nTest simple %c formats");
 
 	PRINTF(("%c", 'a'),
 		"Test with a single char");
+
+	PRINTF(("%c small string", 'a'),
+		"Test with a single char in the begining of a small string");
+
+	PRINTF(("the char is: %c", 'a'),
+		"Test with a single char in the end of a small string");
+
+	PRINTF(("n%cs", 'a'),
+		"Test printing a single char in the middle of a 3 letter string");
+
+	PRINTF(("%c%c%c%c%c", 'a', 'i', 'u', 'e', 'o'),
+		"Test printing many sequentiated chars");
+
+	PRINTF(("l%cl%cl%cl%cl%c", 'a', 'i', 'u', 'e', 'o'),
+		"Test printing many intercalated chars");
 
 	describe("\nTest simple %s formats");
 
@@ -177,11 +204,11 @@ int main(int argc, char *argv[])
 	PRINTF(("t%st%s", "a", "u"),
 		"Test printing some single char parameters intercalated");
 
-	PRINTF(("%s%s", "a", "u"),
+	PRINTF(("%s%s%s%s%s%s", "a", "i", "u", "e", "o", "l"),
 		"Test printing some single char parameters sequentiated");
 
-	PRINTF(("%d%s", 10, "u"),
-		"Test printing a number");
+	 PRINTF(("%d%s", 10, "u"),
+		 "Test printing a number");
 	ft_putstr(RESET "\n");
 
 }
