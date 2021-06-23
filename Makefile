@@ -22,7 +22,7 @@ SRCS = ${addprefix ${SRC_DIR}/, ${SRCS_FILES}}
 OBJS_FILES = ${SRCS_FILES:.c=.o}
 OBJS = ${addprefix ${OBJ_DIR}/, ${OBJS_FILES}}
 
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g3
 
 CC = gcc ${CFLAGS}
 
