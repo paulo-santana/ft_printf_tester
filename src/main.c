@@ -207,8 +207,19 @@ int main(int argc, char *argv[])
 	PRINTF(("%s%s%s%s%s%s", "a", "i", "u", "e", "o", "l"),
 		"Test printing some single char parameters sequentiated");
 
-	 PRINTF(("%d%s", 10, "u"),
-		 "Test printing a number");
+	describe("\nTest simple %d formats");
+
+	PRINTF(("%d", 10),
+		 "Test printing only a number");
+
+	PRINTF(("%d, %d", 10, 20),
+		 "Test printing two numbers");
+
+	PRINTF(("%d%d%d%d", 10, 20, 30, 5),
+		 "Test printing consecutive numbers");
+
+	PRINTF(("%d %d", 2147483647, -2147483648),
+		 "Test printing INT_MAX and INT_MIN + 1");
 	ft_putstr(RESET "\n");
 
 }
