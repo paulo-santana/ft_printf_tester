@@ -2,7 +2,7 @@
 #include <sys/wait.h>
 #include <wchar.h>
 #include "../libtest/libtest.h"
-#include "../get_next_line/get_next_line.h"
+#include "get_next_line.h"
 #include "libftprintf.h"
 #include <fcntl.h>
 
