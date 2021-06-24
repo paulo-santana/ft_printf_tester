@@ -46,13 +46,11 @@ void pretty_printf(char *params)
 
 void print_atomic_help(char *params_used)
 {
-	ft_putstr("     ");
-	ft_putstr(BOLD "You can rerun this test with " RESET YELLOW);
-	ft_putstr(program_name);
-	ft_putstr(" ");
+	ft_putstr("\n     ");
+	ft_putstr(BOLD "You can rerun this test with " RESET YELLOW "make ");
 	ft_putnbr(current_test);
 	ft_putstr(RESET "\n     ");
-	ft_putstr("The function was called like this: ");
+	ft_putstr("The function was called like this:\n   ");
 	pretty_printf(params_used);
 }
 
@@ -98,6 +96,7 @@ int check_result(char *desc, char *params_used)
 		if (child == 0) { \
 			int file = open("files/user_output.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644); \
 			dup2(file, 1); \
+			alarm(1); \
 			ft_printf params; \
 			return (0); \
 		} \
@@ -106,15 +105,16 @@ int check_result(char *desc, char *params_used)
 			waitpid(child, &wstatus, 0); \
 			if (wstatus != 0) \
 			{ \
+				ft_putstr(BOLD RED); \
+				ft_putnbr(current_test); \
 				switch(wstatus - 128) { \
-					case SIGSEGV: \
-						ft_putstr(BOLD RED); \
-						ft_putnbr(current_test); \
-						ft_putstr(".SIGSEGV! " RESET "\n"); \
+					case SIGSEGV: /* classic segfault */ \
+						ft_putstr(".SIGSEGV! " RESET); \
 						break; \
-					default: \
-						ft_putstr(BOLD RED); \
-						ft_putnbr(current_test); \
+					case 14 - 128: /* timeout */ \
+						ft_putstr(".TIMEOUT! " RESET); \
+						break; \
+					default: /* something yet to be discovered */ \
 						ft_putstr(".UNKNOWN CRASH! wstatus: "); \
 						ft_putnbr(wstatus); \
 						ft_putstr(RESET); \

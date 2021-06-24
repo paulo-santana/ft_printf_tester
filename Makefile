@@ -3,6 +3,9 @@ PRINTER_USER = user_printer
 
 LIBFTPRINTF_DIR = ../
 
+# I'm not proud of this
+TESTS = $(shell for ((i=1;i<=17;i++)); do echo -n "$$i "; done)
+
 NAME = tester
 LIBTEST = libtest/libtest.a
 LIBFTPRINTF = ${LIBFTPRINTF_DIR}/libftprintf.a
@@ -44,11 +47,8 @@ ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c
 run: #${STRINGS} ${STRINGS_FLAGS}
 	./${NAME}
 
-${STRINGS}: DESCRIBE_STRING
-	@./${NAME} $@
-
-${STRINGS_FLAGS}: DESCRIBE_STRING_FLAGS
-	@./${NAME} $@
+${TESTS}: ${NAME}
+	./${NAME} $@
 
 DESCRIBE_STRING:
 	@echo ""
