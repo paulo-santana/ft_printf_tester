@@ -12,6 +12,8 @@ LIBFTPRINTF = ${LIBFTPRINTF_DIR}/libftprintf.a
 
 LIB_DIR = ../
 
+# Uncomment the line bellow to run the program under valgrind's monitoring
+#VALGRIND = valgrind -q --leak-check=full --show-leak-kinds=all
 
 SRC_DIR = ./src
 OBJ_DIR = ./obj
@@ -25,7 +27,7 @@ SRCS = ${addprefix ${SRC_DIR}/, ${SRCS_FILES}}
 OBJS_FILES = ${SRCS_FILES:.c=.o}
 OBJS = ${addprefix ${OBJ_DIR}/, ${OBJS_FILES}}
 
-CFLAGS = -Wall -Werror -Wextra -g3 -O0 -gdwarf-4
+CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 
 CC = clang ${CFLAGS}
 
@@ -33,7 +35,8 @@ all: ${NAME} run
 	@echo ""
 
 ${NAME}: ${LIBFTPRINTF} ${LIBTEST} ${OBJS}
-	${CC} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} ${GNL_FILES} -o ${NAME} -ltest -lftprintf
+	${CC} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} -o ${NAME} -ltest -lftprintf
+	mkdir -p files
 
 ${LIBFTPRINTF}:
 	make -C ${LIBFTPRINTF_DIR}
@@ -45,18 +48,10 @@ ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c
 	${CC} -DBUFFER_SIZE=32 -c $< -o $@
 
 run: #${STRINGS} ${STRINGS_FLAGS}
-	./${NAME}
+	${VALGRIND} ./${NAME}
 
 ${TESTS}: ${NAME}
-	./${NAME} $@
-
-DESCRIBE_STRING:
-	@echo ""
-	@./${NAME} describe "Testing with strings"
-
-DESCRIBE_STRING_FLAGS:
-	@echo ""
-	@./${NAME} describe "Testing strings with flags"
+	${VALGRIND} ./${NAME} $@
 
 clean:
 	make -C ./libtest clean

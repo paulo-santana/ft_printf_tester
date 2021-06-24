@@ -207,6 +207,12 @@ int main(int argc, char *argv[])
 	PRINTF(("%s%s%s%s%s%s", "a", "i", "u", "e", "o", "l"),
 		"Test printing some single char parameters sequentiated");
 
+	describe("\nTest simple %p formats");
+
+	int test;
+	PRINTF(("%p", &test),
+			"Test printing a simple pointer");
+
 	describe("\nTest simple %d formats");
 
 	PRINTF(("%d", 10),
@@ -220,6 +226,12 @@ int main(int argc, char *argv[])
 
 	PRINTF(("%d %d", 2147483647, -2147483647),
 		 "Test printing INT_MAX and INT_MIN + 1");
+
+	PRINTF(("42 - 84 is %d", -42),
+		 "Test printing a negative number in the end of a string");
+
+	PRINTF(("%d C is the lowest temperature in the universe", -273),
+		 "Test printing a negative number in the beginning of a string");
 	ft_putstr(RESET "\n");
 
 }
