@@ -218,7 +218,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%d%d%d%d", 10, 20, 30, 5),
 		 "Test printing consecutive numbers");
 
-	PRINTF(("%d %d", 2147483647, -2147483648),
+	PRINTF(("%d %d", 2147483647, -2147483647),
 		 "Test printing INT_MAX and INT_MIN + 1");
 	ft_putstr(RESET "\n");
 

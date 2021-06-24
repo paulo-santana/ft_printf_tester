@@ -12,14 +12,14 @@ LIBFTPRINTF = ${LIBFTPRINTF_DIR}/libftprintf.a
 
 LIB_DIR = ../
 
-GNL_FILES = get_next_line/get_next_line.c \
-			get_next_line/get_next_line_utils.c \
-			get_next_line/get_next_line.h
 
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 
-SRCS_FILES = main.c
+SRCS_FILES = main.c \
+			 get_next_line.c \
+			 get_next_line_utils.c
+
 SRCS = ${addprefix ${SRC_DIR}/, ${SRCS_FILES}}
 
 OBJS_FILES = ${SRCS_FILES:.c=.o}
@@ -27,13 +27,13 @@ OBJS = ${addprefix ${OBJ_DIR}/, ${OBJS_FILES}}
 
 CFLAGS = -Wall -Werror -Wextra -g3 -O0 -gdwarf-4
 
-CC = gcc ${CFLAGS}
+CC = clang ${CFLAGS}
 
 all: ${NAME} run
 	@echo ""
 
 ${NAME}: ${LIBFTPRINTF} ${LIBTEST} ${OBJS}
-	${CC} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} -DBUFFER_SIZE=32 ${GNL_FILES} -o ${NAME} -ltest -lftprintf
+	${CC} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} ${GNL_FILES} -o ${NAME} -ltest -lftprintf
 
 ${LIBFTPRINTF}:
 	make -C ${LIBFTPRINTF_DIR}
@@ -42,7 +42,7 @@ ${LIBTEST}:
 	make -C libtest
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c
-	${CC} -c $< -o $@
+	${CC} -DBUFFER_SIZE=32 -c $< -o $@
 
 run: #${STRINGS} ${STRINGS_FLAGS}
 	./${NAME}
