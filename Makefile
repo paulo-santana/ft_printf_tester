@@ -13,7 +13,7 @@ LIBFTPRINTF = ${LIBFTPRINTF_DIR}/libftprintf.a
 LIB_DIR = ../
 
 # Uncomment the line bellow to run the program under valgrind's monitoring
-#VALGRIND = valgrind -q --leak-check=full --show-leak-kinds=all
+VALGRIND = valgrind -q --leak-check=full --show-leak-kinds=all
 
 SRC_DIR = ./src
 OBJ_DIR = ./obj
@@ -27,7 +27,7 @@ SRCS = ${addprefix ${SRC_DIR}/, ${SRCS_FILES}}
 OBJS_FILES = ${SRCS_FILES:.c=.o}
 OBJS = ${addprefix ${OBJ_DIR}/, ${OBJS_FILES}}
 
-CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
 
 CC = clang ${CFLAGS}
 
