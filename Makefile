@@ -36,7 +36,7 @@ all: ${NAME} run
 	@echo ""
 
 ${NAME}: ${LIBFTPRINTF} ${LIBTEST} ${OBJS}
-	ASAN_OPTIONS=detect_leaks=1 ${CC} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} -o ${NAME} -ltest -lftprintf -ldl
+	${CC} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} -o ${NAME} -ltest -lftprintf -ldl
 	mkdir -p files
 
 ${LIBFTPRINTF}:
