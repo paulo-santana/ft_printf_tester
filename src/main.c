@@ -213,8 +213,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%p", &test),
 			"Test printing a simple pointer");
 
-	char *str = NULL;
-	PRINTF(("%p", str),
+	PRINTF(("%p", NULL),
 			"Test printing the NULL pointer");
 
 	describe("\nTest simple %d formats");
