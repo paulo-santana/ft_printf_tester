@@ -96,6 +96,7 @@ int check_result(char *desc, char *params_used)
 		char *expected;
 		int success = 1;
 		int leaked = 0;
+		int wrong_return = 0;
 
 		int orig_file = open("files/original_output.txt", O_RDONLY);
 		int user_file = open("files/user_output.txt", O_RDONLY);
@@ -117,7 +118,7 @@ int check_result(char *desc, char *params_used)
 		}
 		else
 			ft_putchar(' ');
-		if (!success || leaked)
+		if (!success || leaked || wrong_return)
 			print_help(params_used);
 		free(result);
 		free(expected);
@@ -204,11 +205,29 @@ int main(int argc, char *argv[])
 
 	describe("\nTest simple %p formats");
 
-	int test;
+	int test = 42;
 	PRINTF(("%p", &test),
-			"Test printing a simple pointer");
+		"Test printing a simple pointer");
 
-	PRINTF_PREDEFINDED(("%p", NULL), "0x0",
+	PRINTF(("%p is a virtual memory address", &test),
+		"Test printing a pointer in the beginning of a string");
+
+	PRINTF(("The address of the answer is %p", &test),
+		"Test printing a pointer in the end of a string");
+
+	PRINTF(("The address is %p, so what?", &test),
+		"Test printing a pointer in the middle of a string");
+
+	int *ptr = &test;
+	PRINTF(("A pointer at %p points to %p", &test, &ptr),
+		"Test printing multiple pointers");
+
+
+	PRINTF(("This %p is a very strange address", (void *)(long int)test),
+		"Test printing a pointer in the beginning of a string");
+
+	PRINTF_EXPECTED(("%p", NULL),
+			("0x0"),
 			"Test printing the NULL pointer");
 
 	describe("\nTest simple %d formats");
@@ -230,6 +249,7 @@ int main(int argc, char *argv[])
 
 	PRINTF(("%d C is the lowest temperature in the universe", -273),
 		 "Test printing a negative number in the beginning of a string");
+
 	ft_putstr(RESET "\n");
 
 }

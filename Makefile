@@ -23,6 +23,9 @@ SRCS_FILES = main.c \
 			 get_next_line_utils.c \
 			 malloc_count.c
 
+HEADERS_FILES = helpers.h
+HEADERS = ${addprefix ${SRC_DIR}/, ${HEADERS_FILES}}
+
 SRCS = ${addprefix ${SRC_DIR}/, ${SRCS_FILES}}
 
 OBJS_FILES = ${SRCS_FILES:.c=.o}
@@ -35,7 +38,7 @@ CC = clang ${CFLAGS}
 all: ${NAME} run
 	@echo ""
 
-${NAME}: ${LIBFTPRINTF} ${LIBTEST} ${OBJS}
+${NAME}: ${LIBFTPRINTF} ${LIBTEST} ${HEADERS} ${OBJS}
 	${CC} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} -o ${NAME} -ltest -lftprintf -ldl
 	mkdir -p files
 
@@ -45,21 +48,21 @@ ${LIBFTPRINTF}:
 ${LIBTEST}:
 	make -C libtest
 
-${OBJ_DIR}/%.o: ${SRC_DIR}/%.c
+${OBJ_DIR}/%.o: ${SRC_DIR}/%.c ${HEADERS}
 	${CC} -DBUFFER_SIZE=32 -c $< -o $@
 
 run: #${STRINGS} ${STRINGS_FLAGS}
-	${VALGRIND} ./${NAME}
+	${VALGRIND} ./${NAME} 2>/dev/null
 
 ${TESTS}: ${NAME}
-	${VALGRIND} ./${NAME} $@
+	${VALGRIND} ./${NAME} $@ 2>/dev/null
 
 clean:
 	make -C ./libtest clean
 	make -C ${LIBFTPRINTF_DIR} clean
 	${RM} ${OBJS}
 
-fclean:
+fclean: clean
 	make -C ./libtest fclean
 	make -C ${LIBFTPRINTF_DIR} fclean
 	${RM} ${NAME}

@@ -2,14 +2,7 @@
 # define HELPERS_H
 
 #ifdef __linux__
-#define PRINTF_PREDEFINDED(params, expeced, description) { \
-	ft_putstr(#expeced); \
-}
-#elif defined __APPLE__
-#define PRINTF_PREDEFINDED(params, expected, description) PRINTF(params, description)
-#endif
-
-# define PRINTF(params, description) { \
+#define PRINTF_EXPECTED(params, expected, description) { \
 	already_printed_help = 0; \
 	if (current_test == test_nbr || test_nbr == 0) \
 	{ \
@@ -20,7 +13,7 @@
 			int err = open("files/original_stderr.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644); /* get rid of real printf errors*/ \
 			dup2(file, 1); \
 			dup2(err, 2); \
-			printf params; \
+			printf expected; \
 			return (0); \
 		} \
 		else \
@@ -66,5 +59,10 @@
 	} \
 	current_test++; \
 }
+#elif defined __APPLE__
+#define PRINTF_EXPECTED(params, expected, description) PRINTF(params, description)
+#endif
+
+# define PRINTF(params, description) PRINTF_EXPECTED(params, params, description)
 
 #endif
