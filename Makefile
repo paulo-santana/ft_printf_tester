@@ -13,14 +13,15 @@ LIBFTPRINTF = ${LIBFTPRINTF_DIR}/libftprintf.a
 LIB_DIR = ../
 
 # Uncomment the line bellow to run the program under valgrind's monitoring
-VALGRIND = valgrind -q --leak-check=full --show-leak-kinds=all --suppressions=./tester.supp
+#VALGRIND = valgrind -q --leak-check=full --show-leak-kinds=all --suppressions=./tester.supp
 
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 
 SRCS_FILES = main.c \
 			 get_next_line.c \
-			 get_next_line_utils.c
+			 get_next_line_utils.c \
+			 malloc_count.c
 
 SRCS = ${addprefix ${SRC_DIR}/, ${SRCS_FILES}}
 
@@ -35,7 +36,7 @@ all: ${NAME} run
 	@echo ""
 
 ${NAME}: ${LIBFTPRINTF} ${LIBTEST} ${OBJS}
-	ASAN_OPTIONS=detect_leaks=1 ${CC} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} -o ${NAME} -ltest -lftprintf
+	ASAN_OPTIONS=detect_leaks=1 ${CC} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} -o ${NAME} -ltest -lftprintf -ldl
 	mkdir -p files
 
 ${LIBFTPRINTF}:

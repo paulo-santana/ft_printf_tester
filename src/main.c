@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <sys/wait.h>
-#include <wchar.h>
 #include "../libtest/libtest.h"
 #include "get_next_line.h"
 #include "libftprintf.h"
@@ -44,8 +43,12 @@ void pretty_printf(char *params)
 	ft_putchar('\n');
 }
 
+int already_printed_help = 0;
 void print_atomic_help(char *params_used)
 {
+	if (already_printed_help)
+		return ;
+	already_printed_help = 1;
 	ft_putstr("\n     ");
 	ft_putstr(BOLD "You can rerun this test with " RESET YELLOW "make ");
 	ft_putnbr(current_test);
@@ -54,12 +57,44 @@ void print_atomic_help(char *params_used)
 	pretty_printf(params_used);
 }
 
+int check_leaks(int success, char *params_used)
+{
+	char *line;
+	int result = 1;
+	int leaked = 0;
+	(void) params_used;
+
+	int user_stderr = open("files/user_stderr.txt", O_RDONLY);
+
+	while (result > 0)
+	{
+		result = get_next_line(user_stderr, &line);
+		if (result != 1)
+			break ;
+
+		if (!tester_strnstr(line, "current: 0", tester_strlen(line)))
+		{
+			if (success)
+				ft_putstr(BOLD RED " - But there were LEAKS!! " RESET);
+			else
+				ft_putstr(BOLD RED " - And there were LEAKS!! " RESET);
+			//print_atomic_help(params_used);
+			leaked = 1;
+		}
+		free(line);
+	}
+	free(line);
+	return (leaked);
+}
+
 int check_result(char *desc, char *params_used)
 {
 	if (current_test == test_nbr || test_nbr == 0)
 	{
 		char *result;
 		char *expected;
+		int success = 1;
+		int leaked = 0;
 
 		int orig_file = open("files/original_output.txt", O_RDONLY);
 		int user_file = open("files/user_output.txt", O_RDONLY);
@@ -67,10 +102,18 @@ int check_result(char *desc, char *params_used)
 		get_next_line(orig_file, &expected);
 		ft_putnbr(current_test);
 		ft_putchar('.');
-		if (!test_string(desc, expected, result))
-			print_atomic_help(params_used);
+		success = test_string(expected, result);
+		print_success(desc, success);
+		leaked = check_leaks(success, params_used);
+		if (!success)
+		{
+			ft_putstr("\n");
+			print_string_diff(expected, result, tester_strlen(expected) + 1);
+		}
 		else
 			ft_putchar(' ');
+		if (!success || leaked)
+			print_atomic_help(params_used);
 		free(result);
 		free(expected);
 	}
@@ -78,13 +121,16 @@ int check_result(char *desc, char *params_used)
 }
 
 # define PRINTF(params, description) { \
+	already_printed_help = 0; \
 	if (current_test == test_nbr || test_nbr == 0) \
 	{ \
 		int child = fork(); \
 		if (child == 0) \
 		{ \
 			int file = open("files/original_output.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644); \
+			int err = open("files/original_stderr.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644); /* get rid of real printf errors*/ \
 			dup2(file, 1); \
+			dup2(err, 2); \
 			printf params; \
 			return (0); \
 		} \
@@ -95,7 +141,9 @@ int check_result(char *desc, char *params_used)
 		child = fork(); \
 		if (child == 0) { \
 			int file = open("files/user_output.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644); \
+			int err = open("files/user_stderr.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644); \
 			dup2(file, 1); \
+			dup2(err, 2); \
 			alarm(1); \
 			ft_printf params; \
 			return (0); \
