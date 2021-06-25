@@ -27,7 +27,8 @@ void	print_string_diff(char expected[], char result[], unsigned int size)
 	}
 
 	ft_putstr("]\n        Got:      [");
-	for (unsigned int i = 0; i < size; i++)
+	int i = 0;
+	while (result[i])
 	{
 		if (expected[i] != result[i] && !is_red_already)
 		{
@@ -45,6 +46,7 @@ void	print_string_diff(char expected[], char result[], unsigned int size)
 			ft_putchar('*');
 		else
 			ft_putchar(result[i]);
+		i++;
 	}
 	ft_putstr(RESET "]\n");
 }
