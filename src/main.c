@@ -3,6 +3,7 @@
 #include "../libtest/libtest.h"
 #include "get_next_line.h"
 #include "libftprintf.h"
+#include "helpers.h"
 #include <fcntl.h>
 
 char *program_name;
@@ -44,7 +45,7 @@ void pretty_printf(char *params)
 }
 
 int already_printed_help = 0;
-void print_atomic_help(char *params_used)
+void print_help(char *params_used)
 {
 	if (already_printed_help)
 		return ;
@@ -100,9 +101,13 @@ int check_result(char *desc, char *params_used)
 		int user_file = open("files/user_output.txt", O_RDONLY);
 		get_next_line(user_file, &result);
 		get_next_line(orig_file, &expected);
+		success = test_string(expected, result);
+		if (success)
+			ft_putstr(GREEN);
+		else
+			ft_putstr(RED);
 		ft_putnbr(current_test);
 		ft_putchar('.');
-		success = test_string(expected, result);
 		print_success(desc, success);
 		leaked = check_leaks(success, params_used);
 		if (!success)
@@ -113,69 +118,11 @@ int check_result(char *desc, char *params_used)
 		else
 			ft_putchar(' ');
 		if (!success || leaked)
-			print_atomic_help(params_used);
+			print_help(params_used);
 		free(result);
 		free(expected);
 	}
 	return (0);
-}
-
-# define PRINTF(params, description) { \
-	already_printed_help = 0; \
-	if (current_test == test_nbr || test_nbr == 0) \
-	{ \
-		int child = fork(); \
-		if (child == 0) \
-		{ \
-			int file = open("files/original_output.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644); \
-			int err = open("files/original_stderr.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644); /* get rid of real printf errors*/ \
-			dup2(file, 1); \
-			dup2(err, 2); \
-			printf params; \
-			return (0); \
-		} \
-		else \
-		{ \
-			waitpid(child, &wstatus, 0); \
-		} \
-		child = fork(); \
-		if (child == 0) { \
-			int file = open("files/user_output.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644); \
-			int err = open("files/user_stderr.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644); \
-			dup2(file, 1); \
-			dup2(err, 2); \
-			alarm(1); \
-			ft_printf params; \
-			return (0); \
-		} \
-		else \
-		{ \
-			waitpid(child, &wstatus, 0); \
-			if (wstatus != 0) \
-			{ \
-				ft_putstr(BOLD RED); \
-				ft_putnbr(current_test); \
-				switch(wstatus - 128) { \
-					case SIGSEGV: /* classic segfault */ \
-						ft_putstr(".SIGSEGV! " RESET); \
-						break; \
-					case 14 - 128: /* timeout */ \
-						ft_putstr(".TIMEOUT! " RESET); \
-						break; \
-					default: /* something yet to be discovered */ \
-						ft_putstr(".UNKNOWN CRASH! wstatus: "); \
-						ft_putnbr(wstatus); \
-						ft_putstr(RESET); \
-				} \
-				print_atomic_help(#params); \
-			} \
-			else \
-			{ \
-				check_result(description, #params); \
-			} \
-		} \
-	} \
-	current_test++; \
 }
 
 void describe(char *test_title)
@@ -261,7 +208,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%p", &test),
 			"Test printing a simple pointer");
 
-	PRINTF(("%p", NULL),
+	PRINTF_PREDEFINDED(("%p", NULL), "0x0",
 			"Test printing the NULL pointer");
 
 	describe("\nTest simple %d formats");
