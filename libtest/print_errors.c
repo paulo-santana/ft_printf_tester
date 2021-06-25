@@ -46,7 +46,7 @@ void	print_string_diff(char expected[], char result[], unsigned int size)
 			ft_putchar('*');
 		else
 			ft_putchar(result[i]);
-		if (expected[i] == '\0')
+		if (result[i] == '\0')
 			break ;
 		i++;
 	}
