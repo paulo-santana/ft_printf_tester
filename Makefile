@@ -13,7 +13,7 @@ LIBFTPRINTF = ${LIBFTPRINTF_DIR}/libftprintf.a
 LIB_DIR = ../
 
 # Uncomment the line bellow to run the program under valgrind's monitoring
-VALGRIND = valgrind -q --leak-check=full --show-leak-kinds=all
+VALGRIND = valgrind -q --leak-check=full --show-leak-kinds=all --suppressions=./tester.supp
 
 SRC_DIR = ./src
 OBJ_DIR = ./obj
