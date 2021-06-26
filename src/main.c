@@ -350,6 +350,41 @@ int main(int argc, char *argv[])
 	PRINTF(("this is the real number: %x", (unsigned int)-1),
 			"Test printing the max unsigned integer");
 
+	describe("\nTest some simple %X formats");
+
+	PRINTF(("%X", 0),
+			"Yes, i'm gonna copy all of the tests for %x");
+
+	PRINTF(("%X", 1),
+			"Test printing the number 1");
+
+	PRINTF(("%X", 10),
+			"Test printing the number 10");
+
+	PRINTF(("%X", 16),
+			"Test printing the number 16");
+
+	PRINTF(("%X", 160),
+			"Test printing the number 160");
+
+	PRINTF(("%X", 255),
+			"Test printing the number 255");
+
+	PRINTF(("%X", 256),
+			"Test printing the number 256");
+
+	PRINTF(("%X", (unsigned int)3735929054),
+			"Test printing the number 3735929054");
+
+	PRINTF(("the password is %x", (unsigned int)3735929054),
+			"Test printing a number in the end of the string");
+
+	PRINTF(("%X is the definitive answer", (unsigned int)66),
+			"Test printing a number in the beginning of the string");
+
+	PRINTF(("this is the real number: %X", (unsigned int)-1),
+			"Test printing the max unsigned integer");
+
 	ft_putstr(RESET "\n");
 
 }
