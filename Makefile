@@ -52,7 +52,7 @@ ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c ${HEADERS}
 	${CC} -DBUFFER_SIZE=32 -c $< -o $@
 
 run: #${STRINGS} ${STRINGS_FLAGS}
-	${VALGRIND} ./${NAME} 2>/dev/null
+	${VALGRIND} ./${NAME} #2>/dev/null
 
 ${TESTS}: ${NAME}
 	${VALGRIND} ./${NAME} $@ 2>/dev/null

@@ -51,7 +51,7 @@ void print_help(char *params_used)
 		return ;
 	already_printed_help = 1;
 	ft_putstr("\n     ");
-	ft_putstr(BOLD "You can rerun this test with " RESET YELLOW "make ");
+	ft_putstr(RESET BOLD "You can rerun this test with " RESET YELLOW "make ");
 	ft_putnbr(current_test);
 	ft_putstr(RESET "\n     ");
 	ft_putstr("The function was called like this:\n   ");
@@ -88,6 +88,13 @@ int check_leaks(int success, char *params_used)
 	return (leaked);
 }
 
+int check_return()
+{
+	int failed = 0;
+
+	return (failed);
+}
+
 int check_result(char *desc, char *params_used)
 {
 	if (current_test == test_nbr || test_nbr == 0)
@@ -96,20 +103,21 @@ int check_result(char *desc, char *params_used)
 		char *expected;
 		int success = 1;
 		int leaked = 0;
-		int wrong_return = 0;
+		int wrong_return = 1;
 
 		int orig_file = open("files/original_output.txt", O_RDONLY);
 		int user_file = open("files/user_output.txt", O_RDONLY);
 		get_next_line(user_file, &result);
 		get_next_line(orig_file, &expected);
 		success = test_string(expected, result);
-		if (success)
+		wrong_return = check_return();
+		if (success && !wrong_return)
 			ft_putstr(GREEN);
 		else
 			ft_putstr(RED);
 		ft_putnbr(current_test);
 		ft_putchar('.');
-		print_success(desc, success);
+		print_success(desc, success && !wrong_return);
 		leaked = check_leaks(success, params_used);
 		if (!success)
 		{
@@ -222,13 +230,21 @@ int main(int argc, char *argv[])
 	PRINTF(("A pointer at %p points to %p", &test, &ptr),
 		"Test printing multiple pointers");
 
-
 	PRINTF(("This %p is a very strange address", (void *)(long int)test),
 		"Test printing a pointer in the beginning of a string");
+
+	char *mallocked = malloc(2);
+	PRINTF(("This %p is an address from the heap", mallocked); free(mallocked);,
+		"Test printing a mallocked pointer, because why not?");
+	free(mallocked);
 
 	PRINTF_EXPECTED(("%p", NULL),
 			("0x0"),
 			"Test printing the NULL pointer");
+
+	PRINTF_EXPECTED(("The NULL macro represents the %p address", NULL),
+			("The NULL macro represents the 0x0 address"),
+			"Test printing the NULL inside some text");
 
 	describe("\nTest simple %d formats");
 
@@ -241,14 +257,28 @@ int main(int argc, char *argv[])
 	PRINTF(("%d%d%d%d", 10, 20, 30, 5),
 		 "Test printing consecutive numbers");
 
-	PRINTF(("%d %d", 2147483647, -2147483647),
-		 "Test printing INT_MAX and INT_MIN + 1");
+	PRINTF(("%d %d", 2147483647, (int)-2147483648),
+		 "Test printing INT_MAX and INT_MIN");
 
 	PRINTF(("42 - 84 is %d", -42),
 		 "Test printing a negative number in the end of a string");
 
 	PRINTF(("%d C is the lowest temperature in the universe", -273),
 		 "Test printing a negative number in the beginning of a string");
+
+	describe("\nTest simple %i formats");
+
+	PRINTF(("%i", 10),
+			"Test printing a single number");
+
+	PRINTF(("%i, %i", 10, 23),
+			"Test printing some more numbers");
+
+	PRINTF(("%i%i%i%i%i%i%i", 10, 23, -2, 37, 200, -9999, 977779),
+			"Test printing more consecutive numbers");
+
+	PRINTF(("%i %i", 2147483647, (int)-2147483648),
+			"Test printing INT_MAX and INT_MIN");
 
 	ft_putstr(RESET "\n");
 
