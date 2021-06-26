@@ -246,6 +246,9 @@ int main(int argc, char *argv[])
 			("The NULL macro represents the 0x0 address"),
 			"Test printing the NULL inside some text");
 
+	PRINTF(("This %p is even stranger", (void *)-1),
+		"Test printing a pointer in the beginning of a string");
+
 	describe("\nTest simple %d formats");
 
 	PRINTF(("%d", 0),
