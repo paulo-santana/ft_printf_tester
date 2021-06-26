@@ -1,6 +1,8 @@
 #ifndef HELPERS_H
 # define HELPERS_H
 
+# define PRINTF(params, description) PRINTF_EXPECTED(params, params, description)
+
 #ifdef __linux__
 #define PRINTF_EXPECTED(params, expected, description) { \
 	already_printed_help = 0; \
@@ -62,7 +64,5 @@
 #elif defined __APPLE__
 #define PRINTF_EXPECTED(params, expected, description) PRINTF(params, description)
 #endif
-
-# define PRINTF(params, description) PRINTF_EXPECTED(params, params, description)
 
 #endif
