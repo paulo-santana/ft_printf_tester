@@ -388,6 +388,20 @@ int main(int argc, char *argv[])
 	PRINTF(("this is the real number: %X", (unsigned int)-1),
 			"Test printing the max unsigned integer");
 
+	describe("\nTest some simple %% formats");
+
+	PRINTF(("%%"),
+			"Test printing a simple %");
+
+	PRINTF(("100%%"),
+			"Test printing a simple % in the end of a string");
+
+	PRINTF(("%%p is how you print a pointer in printf"),
+			"Test printing a simple % in the beginning of a string");
+
+	PRINTF(("the '%%%%' is used to print a %% in printf"),
+			"Test printing consecutive %s in the middle of a string");
+
 	ft_putstr(RESET "\n");
 
 }
