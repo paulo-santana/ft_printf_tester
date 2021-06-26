@@ -341,6 +341,15 @@ int main(int argc, char *argv[])
 	PRINTF(("%x", (unsigned int)3735929054),
 			"Test printing the number 3735929054");
 
+	PRINTF(("the password is %x", (unsigned int)3735929054),
+			"Test printing a number in the end of the string");
+
+	PRINTF(("%x is the definitive answer", (unsigned int)66),
+			"Test printing a number in the beginning of the string");
+
+	PRINTF(("this is the real number: %x", (unsigned int)-1),
+			"Test printing the max unsigned integer");
+
 	ft_putstr(RESET "\n");
 
 }
