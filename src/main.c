@@ -303,6 +303,18 @@ int main(int argc, char *argv[])
 	PRINTF(("%u", (unsigned int)2147483648),
 			"Test printing INT_MAX + 1");
 
+	PRINTF(("%u", (unsigned int)3147983649),
+			"Test a bigger number");
+
+	PRINTF(("%u", (unsigned int)4294967295),
+			"Test printing the last number");
+
+	PRINTF(("%u to the power of %d is %u", 2, 32, (unsigned int)4294967295),
+			"Test printing multiple numbers");
+
+	PRINTF(("%u%u%u%u", (unsigned int)429896724, 0, 32, (unsigned int)4294967295),
+			"Test printing multiple numbers glued");
+
 	ft_putstr(RESET "\n");
 
 }
