@@ -320,6 +320,27 @@ int main(int argc, char *argv[])
 	PRINTF(("%x", 0),
 			"Another day, another positive int");
 
+	PRINTF(("%x", 1),
+			"Test printing the number 1");
+
+	PRINTF(("%x", 10),
+			"Test printing the number 10");
+
+	PRINTF(("%x", 16),
+			"Test printing the number 16");
+
+	PRINTF(("%x", 160),
+			"Test printing the number 16");
+
+	PRINTF(("%x", 255),
+			"Test printing the number 255");
+
+	PRINTF(("%x", 256),
+			"Test printing the number 256");
+
+	PRINTF(("%x", (unsigned int)3735929054),
+			"Test printing the number 3735929054");
+
 	ft_putstr(RESET "\n");
 
 }
