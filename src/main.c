@@ -315,6 +315,11 @@ int main(int argc, char *argv[])
 	PRINTF(("%u%u%u%u", (unsigned int)429896724, 0, 32, (unsigned int)4294967295),
 			"Test printing multiple numbers glued");
 
+	describe("\nTest some simple %x formats");
+
+	PRINTF(("%x", 0),
+			"Another day, another positive int");
+
 	ft_putstr(RESET "\n");
 
 }
