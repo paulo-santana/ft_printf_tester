@@ -248,6 +248,9 @@ int main(int argc, char *argv[])
 
 	describe("\nTest simple %d formats");
 
+	PRINTF(("%d", 0),
+		 "Test printing 0");
+
 	PRINTF(("%d", 10),
 		 "Test printing only a number");
 
@@ -268,6 +271,9 @@ int main(int argc, char *argv[])
 
 	describe("\nTest simple %i formats");
 
+	PRINTF(("%i", 0),
+			"Test printing 0");
+
 	PRINTF(("%i", 10),
 			"Test printing a single number");
 
@@ -279,6 +285,23 @@ int main(int argc, char *argv[])
 
 	PRINTF(("%i %i", 2147483647, (int)-2147483648),
 			"Test printing INT_MAX and INT_MIN");
+
+	PRINTF(("%iq%i", 21447, -21648),
+			"Did you notice these tests are becoming repetitive?");
+
+	describe("\nTest some simple %u formats");
+
+	PRINTF(("%u", 42),
+			"Another day, another positive int");
+
+	PRINTF(("%u", 0),
+			"Test printing 0");
+
+	PRINTF(("%u", 2147483647),
+			"Test printing INT_MAX");
+
+	PRINTF(("%u", (unsigned int)2147483648),
+			"Test printing INT_MAX + 1");
 
 	ft_putstr(RESET "\n");
 
