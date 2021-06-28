@@ -9,6 +9,7 @@
 char *program_name;
 char *test;
 int current_test;
+int passed_tests = 0;
 int test_nbr;
 
 void pretty_printf(char *params)
@@ -125,7 +126,7 @@ int check_result(char *desc, char *params_used)
 			print_string_diff(expected, result, tester_strlen(expected) + 1);
 		}
 		else
-			ft_putchar(' ');
+			passed_tests++, ft_putchar(' ');
 		if (!success || leaked || wrong_return)
 			print_help(params_used);
 		free(result);
@@ -406,7 +407,13 @@ int main(int argc, char *argv[])
 
 	PRINTF(("%1d", 0),
 			"Test printing 0 passing a width of 1");
-
-	ft_putstr(RESET "\n");
-
+	
+	if (test_nbr == 0)
+	{
+		ft_putstr("\n" RESET "Tests passed: ");
+		ft_putnbr(passed_tests);
+		ft_putstr("/");
+		ft_putnbr(--current_test);
+	}
+	ft_putchar('\n');
 }
