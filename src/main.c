@@ -400,7 +400,12 @@ int main(int argc, char *argv[])
 			"Test printing a simple % in the beginning of a string");
 
 	PRINTF(("the '%%%%' is used to print a %% in printf"),
-			"Test printing consecutive %s in the middle of a string");
+			"Test printing consecutive %% in the middle of a string");
+
+	describe("\nTest printing with some widths");
+
+	PRINTF(("%1d", 0),
+			"Test printing 0 passing a width of 1");
 
 	ft_putstr(RESET "\n");
 
