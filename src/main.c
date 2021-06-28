@@ -379,7 +379,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%X", (unsigned int)3735929054),
 			"Test printing the number 3735929054");
 
-	PRINTF(("the password is %x", (unsigned int)3735929054),
+	PRINTF(("the password is %X", (unsigned int)3735929054),
 			"Test printing a number in the end of the string");
 
 	PRINTF(("%X is the definitive answer", (unsigned int)66),
