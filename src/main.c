@@ -407,6 +407,9 @@ int main(int argc, char *argv[])
 
 	PRINTF(("%1d", 0),
 			"Test printing 0 passing a width of 1");
+
+	PRINTF(("%1d", -4),
+			"Test printing a negative number with a width of 1");
 	
 	if (test_nbr == 0)
 	{
