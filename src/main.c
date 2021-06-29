@@ -131,6 +131,8 @@ int check_result(char *desc, char *params_used)
 			print_help(params_used);
 		free(result);
 		free(expected);
+		close(user_file);
+		close(orig_file);
 	}
 	return (0);
 }
