@@ -403,6 +403,26 @@ int main(int argc, char *argv[])
 	PRINTF(("the '%%%%' is used to print a %% in printf"),
 			"Test printing consecutive %% in the middle of a string");
 
+	describe("\nTest printing %c with some widths");
+
+	PRINTF(("%1c", 'a'),
+			"Test printing a single char with a small width")
+
+	PRINTF(("%10c", 'b'),
+			"Test printing a single char with a big width")
+
+	PRINTF(("%2c", 'c'),
+			"Test printing a single char with a slightly bigger width")
+
+	PRINTF(("there are 15 spaces between this text and the next char%15c", 'd'),
+			"Test printing a char with a big width in the end of a string")
+
+	PRINTF(("%4chis paragraph is indented", 't'),
+			"Test printing a char with a big width in the end of a string")
+
+	PRINTF(("The number %7c represents luck", '7'),
+			"Test printing a char with a big width in the middle of a string")
+
 	describe("\nTest printing %d with some widths");
 
 	PRINTF(("%1d", 0),
