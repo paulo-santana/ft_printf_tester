@@ -403,7 +403,7 @@ int main(int argc, char *argv[])
 	PRINTF(("the '%%%%' is used to print a %% in printf"),
 			"Test printing consecutive %% in the middle of a string");
 
-	describe("\nTest printing with some widths");
+	describe("\nTest printing %d with some widths");
 
 	PRINTF(("%1d", 0),
 			"Test printing 0 passing a width of 1");
@@ -413,13 +413,47 @@ int main(int argc, char *argv[])
 
 	PRINTF(("%10d", 42),
 			"Test printing a number with a width of 10");
+
+	PRINTF(("%42d", 42000),
+			"Test printing a number with a width of 42");
 	
+	PRINTF(("%20d", -42000),
+			"Test printing a negative number with a width of 20");
+	
+	PRINTF(("wait for it... %50d", 42),
+			"Test printing a number with a width of 50 in the end of a string");
+	
+	PRINTF(("%20d is how many tests are going to be made", 8000),
+			"Test printing a number with a width of 50 in the beginning of a string");
+	
+	PRINTF(("%5d", 2147483647),
+			"Test printing INT_MAX with a small width");
+	
+	PRINTF(("%30d", 2147483647),
+			"Test printing INT_MAX with a big width");
+	
+	PRINTF(("%10d", 2147483647),
+			"Test printing INT_MAX with its exact width");
+	
+	PRINTF(("%5d", (int)-2147483648),
+			"Test printing INT_MIN with a small width");
+	
+	PRINTF(("%30d", (int)-2147483648),
+			"Test printing INT_MIN with a big width");
+	
+	PRINTF(("%10d", (int)-2147483648),
+			"Test printing INT_MIN with almost its exact width");
+	
+	PRINTF(("%11d", (int)-2147483648),
+			"Test printing INT_MIN with its exact width");
+	
+	ft_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
-		ft_putstr("\n" RESET "Tests passed: ");
+		ft_putstr("\nTests passed: ");
 		ft_putnbr(passed_tests);
 		ft_putstr("/");
 		ft_putnbr(--current_test);
+		ft_putchar('\n');
 	}
-	ft_putchar('\n');
 }
