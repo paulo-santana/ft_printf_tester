@@ -410,6 +410,9 @@ int main(int argc, char *argv[])
 
 	PRINTF(("%1d", -4),
 			"Test printing a negative number with a width of 1");
+
+	PRINTF(("%10d", 42),
+			"Test printing a number with a width of 10");
 	
 	if (test_nbr == 0)
 	{
