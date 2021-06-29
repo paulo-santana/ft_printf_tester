@@ -425,6 +425,29 @@ int main(int argc, char *argv[])
 	PRINTF(("The number %7c represents luck", '7'),
 			"Test printing a char with a big width in the middle of a string")
 
+	describe("\nTest printing %s with some widths");
+
+	PRINTF(("%1s", "a"),
+			"Test printing a single char passing a width of 1");
+
+	PRINTF(("%1s", "abc"),
+			"Test printing a small string with a width of 1");
+
+	PRINTF(("%7s", "a"),
+			"Test printing a single char with a width of 7");
+
+	PRINTF(("%7s", "abc"),
+			"Test printing a small string with a width of 7");
+
+	PRINTF(("%7s is as easy as %13s", "abc", "123"),
+			"Test printing two small strings with variable lengths");
+
+	PRINTF(("%13s are the three first letter of the %3s", "a, b and c", "alphabet"),
+			"Test printing another two small strings with variable lengths");
+
+	PRINTF(("%s%13s%42s%3s", "a, b and c", " are letters", " of the", " alphabet"),
+			"Test printing glued strings with variable lengths");
+
 	describe("\nTest printing %d with some widths");
 
 	PRINTF(("%1d", 0),
