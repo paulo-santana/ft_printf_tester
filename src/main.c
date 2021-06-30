@@ -448,6 +448,53 @@ int main(int argc, char *argv[])
 	PRINTF(("%s%13s%42s%3s", "a, b and c", " are letters", " of the", " alphabet"),
 			"Test printing glued strings with variable lengths");
 
+	describe("\nTest printing %p with some widths");
+
+	char c;
+	PRINTF(("%1p", &c),
+			"Test printing a %p with a width of 1");
+
+	PRINTF(("%30p", &c),
+			"Test printing a %p with a width of 30");
+
+	PRINTF(("%12p", (void *)0x7ffe6b8e60c6),
+			"Test printing a %p with a width of 12");
+
+	PRINTF(("%13p", (void *)0x7ffe6b8e60c5),
+			"Test printing a %p with a width of 13");
+
+	PRINTF(("%14p", (void *)0x7ffe6b8e60c4),
+			"Test printing a %p with a width of 14");
+
+	PRINTF(("the address is %12p", (void *)0x7ffe6b8e60c7),
+			"Test printing a %p with a width of 12 in the end of a string");
+
+	PRINTF(("the address is %13p", (void *)0x7ffe6b8e60c8),
+			"Test printing a %p with a width of 13 in the end of a string");
+
+	PRINTF(("the address is %14p", (void *)0x7ffe6b8e60c9),
+			"Test printing a %p with a width of 14 in the end of a string");
+
+	PRINTF_EXPECTED(("the address is %1p", (void *)0),
+			("the address is 0x0"),
+			"Test printing a %p with a width of 12 in the end of a string");
+
+	PRINTF_EXPECTED(("the address is %2p", (void *)0),
+			("the address is 0x0"),
+			"Test printing a %p with a width of 13 in the end of a string");
+
+	PRINTF_EXPECTED(("the address is %3p", (void *)0),
+			("the address is 0x0"),
+			"Test printing a %p with a width of 14 in the end of a string");
+
+	PRINTF_EXPECTED(("the address is %4p", (void *)0),
+			("the address is  0x0"),
+			"Test printing a %p with a width of 14 in the end of a string");
+
+	PRINTF_EXPECTED(("the address is %8p", (void *)0),
+			("the address is      0x0"),
+			"Test printing a %p with a width of 14 in the end of a string");
+
 	describe("\nTest printing %d with some widths");
 
 	PRINTF(("%1d", 0),
