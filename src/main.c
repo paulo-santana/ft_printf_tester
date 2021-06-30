@@ -492,6 +492,21 @@ int main(int argc, char *argv[])
 	PRINTF(("%11d", (int)-2147483648),
 			"Test printing INT_MIN with its exact width");
 	
+	PRINTF(("%12d", (int)-2147483648),
+			"Test printing INT_MIN with a slightly bigger width");
+	
+	PRINTF(("%12d, %20d, %2d, %42d", (int)-2147483648, 3, 30, -1),
+			"Test printing some ints with varying widths");
+	
+	PRINTF(("%12d, %d, %2d, %42d", (int)-2147483648, 3, 30, -1),
+			"Test printing some ints with varying widths and no width");
+	
+	PRINTF(("%14d%20d%2d%d", (int)-2147483648, 3, 30, -1),
+			"Test printing some ints glued, varying widths");
+	
+	PRINTF(("%14dc%20ds%2dx%du", (int)-2147483648, 3, 30, -1),
+			"Test printing some ints with some letters in between");
+	
 	ft_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
