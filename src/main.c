@@ -448,6 +448,12 @@ int main(int argc, char *argv[])
 	PRINTF(("%s%13s%42s%3s", "a, b and c", " are letters", " of the", " alphabet"),
 			"Test printing glued strings with variable lengths");
 
+	PRINTF(("%sc%13sd%42sp%3sx", "a, b and c", " are letters", " of the", " alphabet"),
+			"Test printing glued strings with variable lengths");
+
+	PRINTF(("%sc%13sd%42sp%3sx", "a, b and c", " are letters", " of the", " alphabet"),
+			"Test printing glued strings with variable lengths");
+
 	describe("\nTest printing %p with some widths");
 
 	char c;
@@ -477,23 +483,52 @@ int main(int argc, char *argv[])
 
 	PRINTF_EXPECTED(("the address is %1p", (void *)0),
 			("the address is 0x0"),
-			"Test printing a %p with a width of 12 in the end of a string");
+			"Test printing the NULL with a width of 1 in the end of a string");
 
 	PRINTF_EXPECTED(("the address is %2p", (void *)0),
 			("the address is 0x0"),
-			"Test printing a %p with a width of 13 in the end of a string");
+			"Test printing the NULL with a width of 2 in the end of a string");
 
 	PRINTF_EXPECTED(("the address is %3p", (void *)0),
 			("the address is 0x0"),
-			"Test printing a %p with a width of 14 in the end of a string");
+			"Test printing the NULL with a width of 3 in the end of a string");
 
 	PRINTF_EXPECTED(("the address is %4p", (void *)0),
 			("the address is  0x0"),
-			"Test printing a %p with a width of 14 in the end of a string");
+			"Test printing the NULL with a width of 4 in the end of a string");
 
 	PRINTF_EXPECTED(("the address is %8p", (void *)0),
 			("the address is      0x0"),
+			"Test printing the NULL with a width of 8 in the end of a string");
+
+	PRINTF(("%12p is the address", (void *)0x7ffe6b8e60c7),
+			"Test printing a %p with a width of 12 in the end of a string");
+
+	PRINTF(("%13p is the address", (void *)0x7ffe6b8e60c8),
+			"Test printing a %p with a width of 13 in the end of a string");
+
+	PRINTF(("%14p is the address", (void *)0x7ffe6b8e60c9),
 			"Test printing a %p with a width of 14 in the end of a string");
+
+	PRINTF_EXPECTED(("%1p is the address", (void *)0),
+			("0x0 is the address"),
+			"Test printing the NULL with a width of 1 in the end of a string");
+
+	PRINTF_EXPECTED(("%2p is the address", (void *)0),
+			("0x0 is the address"),
+			"Test printing the NULL with a width of 2 in the end of a string");
+
+	PRINTF_EXPECTED(("%3p is the address", (void *)0),
+			("0x0 is the address"),
+			"Test printing the NULL with a width of 3 in the end of a string");
+
+	PRINTF_EXPECTED(("%4p is the address", (void *)0),
+			(" 0x0 is the address"),
+			"Test printing the NULL with a width of 4 in the end of a string");
+
+	PRINTF_EXPECTED(("%8p is the address", (void *)0),
+			("     0x0 is the address"),
+			"Test printing the NULL with a width of 8 in the end of a string");
 
 	describe("\nTest printing %d with some widths");
 
@@ -553,7 +588,160 @@ int main(int argc, char *argv[])
 	
 	PRINTF(("%14dc%20ds%2dx%du", (int)-2147483648, 3, 30, -1),
 			"Test printing some ints with some letters in between");
-	
+
+	describe("\nYes, I copied all of the tests above for %i, how did you know?");
+
+	PRINTF(("%1i", 0),
+			"Test printing 0 passing a width of 1");
+
+	PRINTF(("%1i", -4),
+			"Test printing a negative number with a width of 1");
+
+	PRINTF(("%10i", 42),
+			"Test printing a number with a width of 10");
+
+	PRINTF(("%42i", 42000),
+			"Test printing a number with a width of 42");
+
+	PRINTF(("%20i", -42000),
+			"Test printing a negative number with a width of 20");
+
+	PRINTF(("wait for it... %50i", 42),
+			"Test printing a number with a width of 50 in the end of a string");
+
+	PRINTF(("%20i is how many tests are going to be made", 8000),
+			"Test printing a number with a width of 50 in the beginning of a string");
+
+	PRINTF(("%5i", 2147483647),
+			"Test printing INT_MAX with a small width");
+
+	PRINTF(("%30i", 2147483647),
+			"Test printing INT_MAX with a big width");
+
+	PRINTF(("%10i", 2147483647),
+			"Test printing INT_MAX with its exact width");
+
+	PRINTF(("%5i", (int)-2147483648),
+			"Test printing INT_MIN with a small width");
+
+	PRINTF(("%30i", (int)-2147483648),
+			"Test printing INT_MIN with a big width");
+
+	PRINTF(("%10i", (int)-2147483648),
+			"Test printing INT_MIN with almost its exact width");
+
+	PRINTF(("%11i", (int)-2147483648),
+			"Test printing INT_MIN with its exact width");
+
+	PRINTF(("%12i", (int)-2147483648),
+			"Test printing INT_MIN with a slightly bigger width");
+
+	PRINTF(("%12i, %20i, %2i, %42i", (int)-2147483648, 3, 30, -1),
+			"Test printing some ints with varying widths");
+
+	PRINTF(("%12i, %i, %2i, %42i", (int)-2147483648, 3, 30, -1),
+			"Test printing some ints with varying widths and no width");
+
+	PRINTF(("%14i%20i%2i%i", (int)-2147483648, 3, 30, -1),
+			"Test printing some ints glued, varying widths");
+
+	PRINTF(("%14ic%20is%2ix%du", (int)-2147483648, 3, 30, -1),
+			"Test printing some ints with some letters in between");
+
+	describe("\nTest printing %u with some widths");
+
+	PRINTF(("%1u", 0),
+			"Test printing a simple %u with a width of 1");
+
+	PRINTF(("%2u", 1),
+			"Test printing a simple %u with a width of 2");
+
+	PRINTF(("%1u", 1000),
+			"Test printing a bigger %u with a width of 1");
+
+	PRINTF(("%4u", 1000),
+			"Test printing a bigger %u with a width of 4");
+
+	PRINTF(("%30u", 1000),
+			"Test printing a bigger %u with a width of 4");
+
+	PRINTF(("%9u is the biggest unsigned int", (unsigned int)-1),
+			"Test printing the biggest %u with a width of 9");
+
+	PRINTF(("%10uis the biggest unsigned int", (unsigned int)-1),
+			"Test printing the biggest %u with a width of 10");
+
+	PRINTF(("%11uis the biggest unsigned int", (unsigned int)-1),
+			"Test printing the biggest %u with a width of 11");
+
+	PRINTF(("the biggest unsigned int is %9u", (unsigned int)-1),
+			"Test printing the biggest %u with a width of 9");
+
+	PRINTF(("the biggest unsigned int is %10u", (unsigned int)-1),
+			"Test printing the biggest %u with a width of 10");
+
+	PRINTF(("the biggest unsigned int is %11u", (unsigned int)-1),
+			"Test printing the biggest %u with a width of 11");
+
+	describe("\nTest simple %x with some widths");
+
+	PRINTF(("%1x", 0),
+			"Another day, another positive int");
+
+	PRINTF(("%2x", 1),
+			"Test printing the number 1");
+
+	PRINTF(("%3x", 10),
+			"Test printing the number 10");
+
+	PRINTF(("%1x", 16),
+			"Test printing the number 16");
+
+	PRINTF(("%2x", 160),
+			"Test printing the number 16");
+
+	PRINTF(("%3x", 255),
+			"Test printing the number 255");
+
+	PRINTF(("%42x", 256),
+			"Test printing the number 256");
+
+	PRINTF(("%7x", (unsigned int)3735929054),
+			"Test printing the number 3735929054");
+
+	PRINTF(("%8x", (unsigned int)3735929054),
+			"Test printing the number 3735929054");
+
+	PRINTF(("%9x", (unsigned int)3735929054),
+			"Test printing the number 3735929054");
+
+	PRINTF(("the password is %7x", (unsigned int)3735929054),
+			"Test printing a number in the end of the string");
+
+	PRINTF(("the password is %8x", (unsigned int)3735929054),
+			"Test printing a number in the end of the string");
+
+	PRINTF(("the password is %9x", (unsigned int)3735929054),
+			"Test printing a number in the end of the string");
+
+	PRINTF(("%1x is the definitive answer", (unsigned int)66),
+			"Test printing a number in the beginning of the string");
+
+	PRINTF(("%2x is the definitive answer", (unsigned int)66),
+			"Test printing a number in the beginning of the string");
+
+	PRINTF(("%3x is the definitive answer", (unsigned int)66),
+			"Test printing a number in the beginning of the string");
+
+	PRINTF(("this is the real number: %7x", (unsigned int)-1),
+			"Test printing the max unsigned integer");
+
+	PRINTF(("this is the real number: %8x", (unsigned int)-1),
+			"Test printing the max unsigned integer");
+
+	PRINTF(("this is the real number: %9x", (unsigned int)-1),
+			"Test printing the max unsigned integer");
+
 	ft_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
