@@ -25,9 +25,9 @@
 # define RESET		"\x1b[0m"
 
 size_t	tester_strlen(const char *str);
-void ft_putchar(char c);
-void ft_putstr(char *str);
-void ft_putnbr(int nbr);
+void tester_putchar(char c);
+void tester_putstr(char *str);
+void tester_putnbr(int nbr);
 char *tester_strnstr(const char *big, const char *little, size_t len);
 void print_int_diff(int expected, int result);
 void print_string_diff(char expected[], char result[], unsigned int size);

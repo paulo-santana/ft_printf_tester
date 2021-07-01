@@ -3,11 +3,11 @@
 void print_success(char *desc, int success)
 {
 	if (success)
-		ft_putstr(BOLD GREEN "OK" RESET);
+		tester_putstr(BOLD GREEN "OK" RESET);
 	else
 	{
-		ft_putstr(BOLD RED "KO - ");
-		ft_putstr(desc);
+		tester_putstr(BOLD RED "KO - ");
+		tester_putstr(desc);
 	}
 }
 

@@ -63,18 +63,18 @@ char	*tester_strnstr(const char *big, const char *little, size_t len)
 	return (0);
 }
 
-void ft_putchar(char c)
+void tester_putchar(char c)
 {
 	write(1, &c, 1);
 }
 
-void ft_putstr(char *str)
+void tester_putstr(char *str)
 {
 	size_t len = strlen(str);
 	write(1, str, len);
 }
 
-void ft_putnbr(int nbr)
+void tester_putnbr(int nbr)
 {
 	long	number;
 	char	digit;
@@ -87,8 +87,8 @@ void ft_putnbr(int nbr)
 	}
 	if (number > 9)
 	{
-		ft_putnbr(number / 10);
-		ft_putnbr(number % 10);
+		tester_putnbr(number / 10);
+		tester_putnbr(number % 10);
 	}
 	else
 	{

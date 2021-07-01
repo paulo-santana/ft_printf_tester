@@ -17,32 +17,32 @@ void pretty_printf(char *params)
 	int i = 0;
 	int inside_string = 0;
 
-	ft_putstr(BLUE "ft_printf" RESET);
+	tester_putstr(BLUE "ft_printf" RESET);
 	while (params[i])
 	{
 		if (params[i] == '"' || params[i] == '\'')
 		{
 			if (inside_string)
-				ft_putchar(params[i]), ft_putstr(RESET), inside_string = 0;
+				tester_putchar(params[i]), tester_putstr(RESET), inside_string = 0;
 			else
-				ft_putstr(GREEN), ft_putchar(params[i]), inside_string = 1;
+				tester_putstr(GREEN), tester_putchar(params[i]), inside_string = 1;
 		}
 		else if (isdigit(params[i]) && !inside_string)
 		{
 			if (!isdigit(params[i - 1]))
-				ft_putstr(YELLOW);
-			ft_putchar(params[i]);
+				tester_putstr(YELLOW);
+			tester_putchar(params[i]);
 		}
 		else
 		{
 			if (isdigit(params[i - 1]) && !inside_string)
-				ft_putstr(RESET);
-			ft_putchar(params[i]);
+				tester_putstr(RESET);
+			tester_putchar(params[i]);
 
 		}
 		i++;
 	}
-	ft_putchar('\n');
+	tester_putchar('\n');
 }
 
 int already_printed_help = 0;
@@ -51,11 +51,11 @@ void print_help(char *params_used)
 	if (already_printed_help)
 		return ;
 	already_printed_help = 1;
-	ft_putstr("\n     ");
-	ft_putstr(RESET BOLD "You can rerun this test with " RESET YELLOW "make ");
-	ft_putnbr(current_test);
-	ft_putstr(RESET "\n     ");
-	ft_putstr("The function was called like this:\n   ");
+	tester_putstr("\n     ");
+	tester_putstr(RESET BOLD "You can rerun this test with " RESET YELLOW "make ");
+	tester_putnbr(current_test);
+	tester_putstr(RESET "\n     ");
+	tester_putstr("The function was called like this:\n   ");
 	pretty_printf(params_used);
 }
 
@@ -77,9 +77,9 @@ int check_leaks(int success, char *params_used)
 		if (!tester_strnstr(line, "current: 0", tester_strlen(line)))
 		{
 			if (success)
-				ft_putstr(BOLD RED " - But there were LEAKS!! " RESET);
+				tester_putstr(BOLD RED " - But there were LEAKS!! " RESET);
 			else
-				ft_putstr(BOLD RED " - And there were LEAKS!! " RESET);
+				tester_putstr(BOLD RED " - And there were LEAKS!! " RESET);
 			//print_atomic_help(params_used);
 			leaked = 1;
 		}
@@ -113,20 +113,20 @@ int check_result(char *desc, char *params_used)
 		success = test_string(expected, result);
 		wrong_return = check_return();
 		if (success && !wrong_return)
-			ft_putstr(GREEN);
+			tester_putstr(GREEN);
 		else
-			ft_putstr(RED);
-		ft_putnbr(current_test);
-		ft_putchar('.');
+			tester_putstr(RED);
+		tester_putnbr(current_test);
+		tester_putchar('.');
 		print_success(desc, success && !wrong_return);
 		leaked = check_leaks(success, params_used);
 		if (!success)
 		{
-			ft_putstr("\n");
+			tester_putstr("\n");
 			print_string_diff(expected, result, tester_strlen(expected) + 1);
 		}
 		else
-			passed_tests++, ft_putchar(' ');
+			passed_tests++, tester_putchar(' ');
 		if (!success || leaked || wrong_return)
 			print_help(params_used);
 		free(result);
@@ -141,9 +141,9 @@ void describe(char *test_title)
 {
 	if (test_nbr != 0)
 		return ;
-	ft_putstr(BOLD);
-	ft_putstr(test_title);
-	ft_putstr(RESET "\n   ");
+	tester_putstr(BOLD);
+	tester_putstr(test_title);
+	tester_putstr(RESET "\n   ");
 }
 
 int main(int argc, char *argv[])
@@ -683,6 +683,9 @@ int main(int argc, char *argv[])
 	PRINTF(("the biggest unsigned int is %11u", (unsigned int)-1),
 			"Test printing the biggest %u with a width of 11");
 
+	PRINTF(("Here are some numbers: %1u%2u%5u%3u%9u and %ui", 11, (unsigned int)-1, 2, 200, 3, 10),
+			"Test printing glued and separated numbers");
+
 	describe("\nTest simple %x with some widths");
 
 	PRINTF(("%1x", 0),
@@ -742,13 +745,13 @@ int main(int argc, char *argv[])
 	PRINTF(("this is the real number: %9x", (unsigned int)-1),
 			"Test printing the max unsigned integer");
 
-	ft_putstr("\n" RESET);
+	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
-		ft_putstr("\nTests passed: ");
-		ft_putnbr(passed_tests);
-		ft_putstr("/");
-		ft_putnbr(--current_test);
-		ft_putchar('\n');
+		tester_putstr("\nTests passed: ");
+		tester_putnbr(passed_tests);
+		tester_putstr("/");
+		tester_putnbr(--current_test);
+		tester_putchar('\n');
 	}
 }

@@ -42,19 +42,19 @@
 			waitpid(child, &wstatus, 0); \
 			if (wstatus != 0) \
 			{ \
-				ft_putstr(BOLD RED); \
-				ft_putnbr(current_test); \
+				tester_putstr(BOLD RED); \
+				tester_putnbr(current_test); \
 				switch(wstatus - 128) { \
 					case SIGSEGV: /* classic segfault */ \
-						ft_putstr(".SIGSEGV! " RESET); \
+						tester_putstr(".SIGSEGV! " RESET); \
 						break; \
 					case 14 - 128: /* timeout */ \
-						ft_putstr(".TIMEOUT! " RESET); \
+						tester_putstr(".TIMEOUT! " RESET); \
 						break; \
 					default: /* something yet to be discovered */ \
-						ft_putstr(".UNKNOWN CRASH! wstatus: "); \
-						ft_putnbr(wstatus); \
-						ft_putstr(RESET); \
+						tester_putstr(".UNKNOWN CRASH! wstatus: "); \
+						tester_putnbr(wstatus); \
+						tester_putstr(RESET); \
 				} \
 				print_help(#params); \
 			} \
