@@ -4,6 +4,7 @@
 #include "get_next_line.h"
 #include "libftprintf.h"
 #include "helpers.h"
+#include "ft_printf_tester.h"
 #include <fcntl.h>
 
 char *program_name;
@@ -71,9 +72,10 @@ int check_leaks(int success, char *params_used)
 	while (result > 0)
 	{
 		result = get_next_line(user_stderr, &line);
-		if (result != 1)
-			break ;
-
+		if (result <= 0)
+		{
+			free(line); break ;
+		}
 		if (!tester_strnstr(line, "current: 0", tester_strlen(line)))
 		{
 			if (success)
@@ -85,15 +87,8 @@ int check_leaks(int success, char *params_used)
 		}
 		free(line);
 	}
-	free(line);
+	close(user_stderr);
 	return (leaked);
-}
-
-int check_return()
-{
-	int failed = 0;
-
-	return (failed);
 }
 
 int check_result(char *desc, char *params_used)
@@ -104,14 +99,14 @@ int check_result(char *desc, char *params_used)
 		char *expected;
 		int success = 1;
 		int leaked = 0;
-		int wrong_return = 1;
+		int wrong_return = 0;
 
 		int orig_file = open("files/original_output.txt", O_RDONLY);
 		int user_file = open("files/user_output.txt", O_RDONLY);
 		get_next_line(user_file, &result);
 		get_next_line(orig_file, &expected);
 		success = test_string(expected, result);
-		wrong_return = check_return();
+		wrong_return = check_return(user_file, orig_file);
 		if (success && !wrong_return)
 			tester_putstr(GREEN);
 		else
@@ -126,9 +121,11 @@ int check_result(char *desc, char *params_used)
 			print_string_diff(expected, result, tester_strlen(expected) + 1);
 		}
 		else
-			passed_tests++, tester_putchar(' ');
+			tester_putchar(' ');
 		if (!success || leaked || wrong_return)
 			print_help(params_used);
+		else
+			passed_tests++;
 		free(result);
 		free(expected);
 		close(user_file);
@@ -143,7 +140,7 @@ void describe(char *test_title)
 		return ;
 	tester_putstr(BOLD);
 	tester_putstr(test_title);
-	tester_putstr(RESET "\n   ");
+	tester_putstr(": "RESET "\n  ");
 }
 
 int main(int argc, char *argv[])

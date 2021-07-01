@@ -21,6 +21,7 @@ OBJ_DIR = ./obj
 SRCS_FILES = main.c \
 			 get_next_line.c \
 			 get_next_line_utils.c \
+			 utils.c \
 			 malloc_count.c
 
 HEADERS_FILES = helpers.h
@@ -55,7 +56,7 @@ run: #${STRINGS} ${STRINGS_FLAGS}
 	${VALGRIND} ./${NAME} 2>myleaks.txt
 
 ${TESTS}: ${NAME}
-	${VALGRIND} ./${NAME} $@ 2>/dev/null
+	${VALGRIND} ./${NAME} $@ 2>myleaks.txt
 
 clean:
 	make -C ./libtest clean

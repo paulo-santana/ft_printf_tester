@@ -16,11 +16,13 @@
 		int child = fork(); \
 		if (child == 0) \
 		{ \
+			int result; \
 			int file = open("files/original_output.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644); \
 			int err = open("files/original_stderr.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644); /* get rid of real printf errors*/ \
 			dup2(file, 1); \
 			dup2(err, 2); \
-			printf expected; \
+			result = printf expected; \
+			printf("\n%d", result); \
 			return (0); \
 		} \
 		else \
@@ -29,12 +31,15 @@
 		} \
 		child = fork(); \
 		if (child == 0) { \
+			int result; \
 			int file = open("files/user_output.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644); \
 			int err = open("files/user_stderr.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644); \
 			dup2(file, 1); \
 			dup2(err, 2); \
 			alarm(1); \
-			ft_printf params; \
+			result = ft_printf params; \
+			tester_putchar('\n'); \
+			tester_putnbr(result); \
 			return (0); \
 		} \
 		else \
