@@ -39,7 +39,7 @@ CC = clang ${CFLAGS}
 all: ${NAME} run
 	@echo ""
 
-${NAME}: ${LIBFTPRINTF} ${LIBTEST} ${HEADERS} ${OBJS}
+${NAME}: update ${LIBFTPRINTF} ${LIBTEST} ${HEADERS} ${OBJS}
 	${CC} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} -o ${NAME} -ltest -lftprintf -ldl
 	mkdir -p files
 
@@ -57,6 +57,9 @@ run: #${STRINGS} ${STRINGS_FLAGS}
 
 ${TESTS}: ${NAME}
 	${VALGRIND} ./${NAME} $@ 2>myleaks.txt
+
+update:
+	git pull
 
 clean:
 	make -C ./libtest clean
