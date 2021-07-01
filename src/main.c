@@ -742,6 +742,77 @@ int main(int argc, char *argv[])
 	PRINTF(("this is the real number: %9x", (unsigned int)-1),
 			"Test printing the max unsigned integer");
 
+	PRINTF(("%1x%2x%9x", (unsigned int)-1, 0xf0ca, 123456),
+			"Test printing some glued numbers");
+
+	PRINTF(("%1xis doomed%2xpost%9xX args", (unsigned int)-1, 0xf0b1a, 7654321),
+			"test printing some other numbers");
+
+	describe("\nI did it again for %X");
+
+	PRINTF(("%1X", 0),
+			"Another day, another positive int");
+
+	PRINTF(("%2X", 1),
+			"Test printing the number 1");
+
+	PRINTF(("%3X", 10),
+			"Test printing the number 10");
+
+	PRINTF(("%1X", 16),
+			"Test printing the number 16");
+
+	PRINTF(("%2X", 160),
+			"Test printing the number 16");
+
+	PRINTF(("%3X", 255),
+			"Test printing the number 255");
+
+	PRINTF(("%42X", 256),
+			"Test printing the number 256");
+
+	PRINTF(("%7X", (unsigned int)3735929054),
+			"Test printing the number 3735929054");
+
+	PRINTF(("%8X", (unsigned int)3735929054),
+			"Test printing the number 3735929054");
+
+	PRINTF(("%9X", (unsigned int)3735929054),
+			"Test printing the number 3735929054");
+
+	PRINTF(("the password is %7X", (unsigned int)3735929054),
+			"Test printing a number in the end of the string");
+
+	PRINTF(("the password is %8X", (unsigned int)3735929054),
+			"Test printing a number in the end of the string");
+
+	PRINTF(("the password is %9X", (unsigned int)3735929054),
+			"Test printing a number in the end of the string");
+
+	PRINTF(("%1X is the definitive answer", (unsigned int)66),
+			"Test printing a number in the beginning of the string");
+
+	PRINTF(("%2X is the definitive answer", (unsigned int)66),
+			"Test printing a number in the beginning of the string");
+
+	PRINTF(("%3X is the definitive answer", (unsigned int)66),
+			"Test printing a number in the beginning of the string");
+
+	PRINTF(("this is the real number: %7X", (unsigned int)-1),
+			"Test printing the max unsigned integer");
+
+	PRINTF(("this is the real number: %8X", (unsigned int)-1),
+			"Test printing the max unsigned integer");
+
+	PRINTF(("this is the real number: %9X", (unsigned int)-1),
+			"Test printing the max unsigned integer");
+
+	PRINTF(("%1X%2X%9X", (unsigned int)-1, 0xf0ca, 123456),
+			"Test printing some glued numbers");
+
+	PRINTF(("%1Xis doomed%2Xpost%9Xx args", (unsigned int)-1, 0xf0b1a, 7654321),
+			"test printing some other numbers");
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
