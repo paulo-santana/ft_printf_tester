@@ -830,6 +830,10 @@ int main(int argc, char *argv[])
 			("the world is 2         %% more big today"),
 			"Test printing a %% in the middle of the string");
 
+	PRINTF_EXPECTED(("%2%%1%%%%5%%9%"),
+			(" %%%%%%    %%        %%"),
+			"What the fuck is that?");
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
