@@ -844,6 +844,9 @@ int main(int argc, char *argv[])
 
 	describe("\nTest some simple precisions with %s");
 
+	PRINTF(("%.0s", "hi there"),
+			"Print a simple string with a precision of 1");
+
 	PRINTF(("%.1s", "hi there"),
 			"Print a simple string with a precision of 1");
 
