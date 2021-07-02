@@ -4,7 +4,7 @@ PRINTER_USER = user_printer
 LIBFTPRINTF_DIR = ../
 
 # I'm not proud of this
-TESTS = $(shell for ((i=1;i<=200;i++)); do echo "$$i "; done)
+TESTS = $(shell for ((i=1;i<=300;i++)); do echo "$$i "; done)
 
 NAME = tester
 LIBTEST = libtest/libtest.a
