@@ -818,7 +818,8 @@ int main(int argc, char *argv[])
 	PRINTF(("%1%"),
 			"Test printing a simple % with a width of 1");
 
-	PRINTF(("%5%"),
+	PRINTF_EXPECTED(("%5%"),
+			("    %%"),
 			"Test printing a simple % with a width of 5");
 
 	tester_putstr("\n" RESET);
