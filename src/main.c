@@ -828,7 +828,7 @@ int main(int argc, char *argv[])
 
 	PRINTF_EXPECTED(("the world is 2%10% more big today"),
 			("the world is 2         %% more big today"),
-			"Test printing a simple % with a width of 5");
+			"Test printing a %% in the middle of the string");
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
