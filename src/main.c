@@ -842,10 +842,19 @@ int main(int argc, char *argv[])
 			("hey, what's     %% up%%?"),
 			"Test printing a simple % with a width of 5");
 
-	describe("\nTest some simple precisions with %c");
+	describe("\nTest some simple precisions with %s");
 
-	PRINTF(("%.1c", 'a'),
-			"Print a simple char with a precision of 1");
+	PRINTF(("%.1s", "hi there"),
+			"Print a simple string with a precision of 1");
+
+	PRINTF(("%.2s", "hi there"),
+			"Print a simple string with a precision of 1");
+
+	PRINTF(("%.3s", "hi there"),
+			"Print a simple string with a precision of 1");
+
+	PRINTF(("%.4s", "hi there"),
+			"Print a simple string with a precision of 1");
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
