@@ -874,6 +874,15 @@ int main(int argc, char *argv[])
 	PRINTF(("%.12s", "hi there"),
 			"Print a simple string with a precision of 12");
 
+	PRINTF(("%.2s, motherfucker", "hi there"),
+			"Print a string using pars of the other");
+
+	PRINTF(("This %.3s a triumph ", "wasabi"),
+			"Print half a string inside of another");
+
+	PRINTF(("%.4s making a %.4s here: %.13s", "I'm delighted", "notation", "HUGE SUCCESS!"),
+			"Print more half strings and a full one");
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
