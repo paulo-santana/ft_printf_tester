@@ -883,6 +883,12 @@ int main(int argc, char *argv[])
 	PRINTF(("%.4s making a %.4s here: %.13s", "I'm delighted", "notation", "HUGE SUCCESS!"),
 			"Print more half strings and a full one");
 
+	PRINTF(("It's %.4s to over%.50s my%s", "hardware", "state", " satisfaction"),
+			"Print more half strings and one without precision");
+
+	PRINTF(("%.11s%.6s%.4s", "Aperture", " Scientists", "ce"),
+			"Print more half strings and one without precision");
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
