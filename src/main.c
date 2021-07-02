@@ -838,6 +838,10 @@ int main(int argc, char *argv[])
 			(" %%s%%id%%10    %%        %%"),
 			"WTFFFFFFFFFFFFFFFF???");
 
+	PRINTF_EXPECTED(("hey, what's %5% up%%?"),
+			("hey, what's     %% up%%?"),
+			"Test printing a simple % with a width of 5");
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
