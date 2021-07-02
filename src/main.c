@@ -822,6 +822,14 @@ int main(int argc, char *argv[])
 			("    %%"),
 			"Test printing a simple % with a width of 5");
 
+	PRINTF_EXPECTED(("%2%"),
+			(" %%"),
+			"Test printing a simple % with a width of 2");
+
+	PRINTF_EXPECTED(("the world is 2%10% more big today"),
+			("the world is 2         % more big today"),
+			"Test printing a simple % with a width of 5");
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
