@@ -834,6 +834,10 @@ int main(int argc, char *argv[])
 			(" %%%%%%    %%        %%"),
 			"What the fuck is that?");
 
+	PRINTF_EXPECTED(("%2%s%1%id%%10%5%%9%"),
+			(" %%s%%id%%10    %%        %%"),
+			"WTFFFFFFFFFFFFFFFF???");
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
