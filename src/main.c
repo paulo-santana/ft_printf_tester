@@ -813,6 +813,14 @@ int main(int argc, char *argv[])
 	PRINTF(("%1Xis doomed%2Xpost%9Xx args", (unsigned int)-1, 0xf0b1a, 7654321),
 			"test printing some other numbers");
 
+	describe("\nTest printing %% with some widths");
+
+	PRINTF(("%1%"),
+			"Test printing a simple % with a width of 1");
+
+	PRINTF(("%5%"),
+			"Test printing a simple % with a width of 5");
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
