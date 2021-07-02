@@ -845,22 +845,34 @@ int main(int argc, char *argv[])
 	describe("\nTest some simple precisions with %s");
 
 	PRINTF(("%.s", "hi there"),
-			"Print a simple string with a precision of 1");
+			"Print a simple string with the precision not specified");
 
 	PRINTF(("%.0s", "hi there"),
-			"Print a simple string with a precision of 1");
+			"Print a simple string with a precision of 0");
 
 	PRINTF(("%.1s", "hi there"),
 			"Print a simple string with a precision of 1");
 
 	PRINTF(("%.2s", "hi there"),
-			"Print a simple string with a precision of 1");
+			"Print a simple string with a precision of 2");
 
 	PRINTF(("%.3s", "hi there"),
-			"Print a simple string with a precision of 1");
+			"Print a simple string with a precision of 3");
 
 	PRINTF(("%.4s", "hi there"),
-			"Print a simple string with a precision of 1");
+			"Print a simple string with a precision of 4");
+
+	PRINTF(("%.7s", "hi there"),
+			"Print a simple string with a precision of 7");
+
+	PRINTF(("%.8s", "hi there"),
+			"Print a simple string with a precision of 8");
+
+	PRINTF(("%.9s", "hi there"),
+			"Print a simple string with a precision of 9");
+
+	PRINTF(("%.12s", "hi there"),
+			"Print a simple string with a precision of 12");
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
