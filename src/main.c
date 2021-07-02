@@ -889,6 +889,11 @@ int main(int argc, char *argv[])
 	PRINTF(("%.11s%.6s%.4s", "Aperture", " Scientists", "ce"),
 			"Print more half strings and one without precision");
 
+	describe("\nTest some simple precisions with %p");
+
+	PRINTF(("%.2p", (void *) 2),
+			"test")
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
