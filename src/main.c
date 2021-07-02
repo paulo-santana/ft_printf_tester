@@ -69,7 +69,7 @@ int check_leaks(int success, char *params_used)
 
 	int user_stderr = open("files/user_stderr.txt", O_RDONLY);
 
-	while (result > 0)
+	while (1)
 	{
 		result = get_next_line(user_stderr, &line);
 		if (result <= 0)
