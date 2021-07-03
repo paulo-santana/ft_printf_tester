@@ -36,7 +36,7 @@ void pretty_printf(char *params)
 		}
 		else
 		{
-			if (isdigit(params[i - 1]) && !inside_string)
+			if (i > 0 && isdigit(params[i - 1]) && !inside_string)
 				tester_putstr(RESET);
 			tester_putchar(params[i]);
 

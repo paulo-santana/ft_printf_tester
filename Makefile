@@ -44,10 +44,10 @@ ${NAME}: update ${LIBFTPRINTF} ${LIBTEST} ${HEADERS} ${OBJS}
 	mkdir -p files
 
 ${LIBFTPRINTF}:
-	make -C ${LIBFTPRINTF_DIR}
+	make -C ${LIBFTPRINTF_DIR} CFLAGS="${CFLAGS}"
 
 ${LIBTEST}:
-	make -C libtest
+	make -C libtest CFLAGS="${CFLAGS}"
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c ${HEADERS} Makefile
 	${CC} -DBUFFER_SIZE=32 -c $< -o $@
