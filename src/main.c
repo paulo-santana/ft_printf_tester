@@ -892,7 +892,10 @@ int main(int argc, char *argv[])
 	describe("\nTest some simple precisions with %d");
 
 	PRINTF(("%.1d", 2),
-			"test")
+			"Test printing a single char number with a precision of 1")
+
+	PRINTF(("%.2d", 3),
+			"test printing a single char number with a precision of 2")
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
