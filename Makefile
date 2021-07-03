@@ -22,7 +22,7 @@ SRCS_FILES = main.c \
 			 get_next_line.c \
 			 get_next_line_utils.c \
 			 utils.c \
-			 malloc_count.c
+			 malloc_count.c 
 
 HEADERS_FILES = helpers.h
 HEADERS = ${addprefix ${SRC_DIR}/, ${HEADERS_FILES}}
@@ -33,6 +33,12 @@ OBJS_FILES = ${SRCS_FILES:.c=.o}
 OBJS = ${addprefix ${OBJ_DIR}/, ${OBJS_FILES}}
 
 CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
+
+#VALGRIND = valgrind -q --leak-check=full --show-leak-kinds=all
+UNAME = ${shell uname -s}
+ifeq (${UNAME}, Darwin)
+	CFLAGS := ${CFLAGS} -fsanitize=address
+endif
 
 CC = clang ${CFLAGS}
 
@@ -52,11 +58,11 @@ ${LIBTEST}:
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c ${HEADERS} Makefile
 	${CC} -DBUFFER_SIZE=32 -c $< -o $@
 
-run: #${STRINGS} ${STRINGS_FLAGS}
+run:
 	${VALGRIND} ./${NAME} 2>myleaks.txt
 
 ${TESTS}: ${NAME}
-	${VALGRIND} ./${NAME} $@ 2>myleaks.txt
+	${VALGRIND} ./${NAME} $@  2>myleaks.txt
 
 update:
 	git pull

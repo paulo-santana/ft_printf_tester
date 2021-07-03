@@ -909,6 +909,15 @@ int main(int argc, char *argv[])
 	PRINTF(("%.3d", -1),
 			"Test printing a negative number with a precision of 3")
 
+	PRINTF(("%.3d", -1234),
+			"Test printing a negative number with a precision of 3")
+
+	PRINTF(("%.4d", -1234),
+			"Test printing a negative number with a precision of 4")
+
+	PRINTF(("%.5d", -1234),
+			"Test printing a negative number with a precision of 4")
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
