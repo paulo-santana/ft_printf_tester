@@ -110,7 +110,7 @@ int check_result(char *desc, char *params_used)
 		if (success && !wrong_return)
 			tester_putstr(GREEN);
 		else
-			tester_putstr(RED);
+			tester_putstr(RED "\n  ");
 		tester_putnbr(current_test);
 		tester_putchar('.');
 		print_success(desc, success && !wrong_return);
