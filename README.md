@@ -12,4 +12,4 @@ what should've been print.
 TODO:
 - [ ] Print useful information in case of errors
     - [x] print the diff between `printf` and `ft_printf`
-	- [ ] print the function that was called on that specific test
+	- [x] print the function that was called on that specific test
