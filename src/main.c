@@ -895,7 +895,19 @@ int main(int argc, char *argv[])
 			"Test printing a single char number with a precision of 1")
 
 	PRINTF(("%.2d", 3),
-			"test printing a single char number with a precision of 2")
+			"Test printing a single char number with a precision of 2")
+
+	PRINTF(("%.4d", 32),
+			"Test printing a double char number with a precision of 4")
+
+	PRINTF(("%.3d", 420000),
+			"Test printintg a number bigger than the precision")
+
+	PRINTF(("%.0d", 420000),
+			"Test printing a number with a precision of 0")
+
+	PRINTF(("%.3d", -1),
+			"Test printing a negative number with a precision of 3")
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
