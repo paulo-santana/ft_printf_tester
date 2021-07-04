@@ -921,6 +921,51 @@ int main(int argc, char *argv[])
 	PRINTF(("%.5d", -1234),
 			"Test printing a negative number with a precision of 4")
 
+	PRINTF(("%.5d", (int)-2147483648),
+			"Test printing INT_MIN with a small precision")
+
+	PRINTF(("%.9d", (int)-2147483648),
+			"Test printing INT_MIN with a slightly precision")
+
+	PRINTF(("%.10d", (int)-2147483648),
+			"Test printing INT_MIN with a slightly precision")
+
+	PRINTF(("%.11d", (int)-2147483648),
+			"Test printing INT_MIN with a small precision")
+
+	PRINTF(("%.12d", (int)-2147483648),
+			"Test printing INT_MIN with a small precision")
+
+	PRINTF(("%.13d", (int)-2147483648),
+			"Test printing INT_MIN with a small precision")
+
+	PRINTF(("%.5d", 2147483647),
+			"Test printing INT_MAX with a small precision")
+
+	PRINTF(("%.9d", 2147483647),
+			"Test printing INT_MAX with a slightly small precision")
+
+	PRINTF(("%.10d", 2147483647),
+			"Test printing INT_MAX with its exact precision")
+
+	PRINTF(("%.11d", 2147483647),
+			"Test printing INT_MAX with a slightly bigger precision")
+
+	PRINTF(("%.12d", 2147483647),
+			"Test printing INT_MAX with a even bigger precision")
+
+	PRINTF(("%.0d", 2),
+			"Test printing a small number with a precision of 0")
+
+	PRINTF(("%.0d", 2147483647),
+			"Test printing a big number with a precision of 0")
+
+	PRINTF(("%.0d", 0),
+			"Test printing a 0 with a precision of 0")
+
+	PRINTF(("%.0d", 10),
+			"Test printing a 0 with a precision of 0")
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
