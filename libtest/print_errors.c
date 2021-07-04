@@ -28,9 +28,10 @@ void	print_string_diff(char expected[], char result[], unsigned int size)
 
 	tester_putstr("]\n        Got:      [");
 	int i = 0;
+	int expected_ended = 0;
 	while (1)
 	{
-		if (expected[i] != result[i] && !is_red_already)
+		if (expected_ended || ((expected[i] != result[i]) && !is_red_already))
 		{
 			is_red_already = 1;
 			tester_putstr(BOLD RED);
@@ -48,6 +49,8 @@ void	print_string_diff(char expected[], char result[], unsigned int size)
 			tester_putchar(result[i]);
 		if (result[i] == '\0')
 			break ;
+		if (!expected_ended && expected[i] == '\0')
+			expected_ended = 1;
 		i++;
 	}
 	tester_putstr(RESET "]\n");
