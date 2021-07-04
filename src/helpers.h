@@ -3,10 +3,15 @@
 
 # define PRINTF(params, description) __PRINTF_EXPECTED(params, params, description)
 
+# define MALLOC_COUNT 1
+# define LEAK_SANITIZER 2
+
 #ifdef __linux__
 # define PRINTF_EXPECTED(params, expected, description) __PRINTF_EXPECTED(params, expected, description)
+# define LEAK_CHECKER LEAK_SANITIZER
 #elif defined __APPLE__
 # define PRINTF_EXPECTED(params, expected, description) __PRINTF_EXPECTED(params, params, description)
+# define LEAK_CHECKER MALLOC_COUNT
 #endif
 
 #define __PRINTF_EXPECTED(params, expected, description) { \
@@ -45,7 +50,8 @@
 		else \
 		{ \
 			waitpid(child, &wstatus, 0); \
-			if (wstatus != 0) \
+			/* 30 is the status code for the leak sanitizer   */ \
+			if (wstatus != 0 && wstatus != 256 * 30) \
 			{ \
 				tester_putstr(BOLD RED); \
 				tester_putnbr(current_test); \
@@ -57,7 +63,7 @@
 						tester_putstr(".TIMEOUT! " RESET); \
 						break; \
 					default: /* something yet to be discovered */ \
-						tester_putstr(".UNKNOWN CRASH! wstatus: "); \
+						tester_putstr(".CRASH! wstatus: "); \
 						tester_putnbr(wstatus); \
 						tester_putstr(RESET); \
 				} \

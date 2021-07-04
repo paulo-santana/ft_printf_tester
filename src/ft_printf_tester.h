@@ -3,4 +3,7 @@
 
 int check_return(int user_file, int orig_file);
 
+# define ERRORS_LEAK 1
+# define ERRORS_BUFFER_OVERFLOW 2
+
 #endif

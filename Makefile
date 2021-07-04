@@ -3,6 +3,8 @@ PRINTER_USER = user_printer
 
 LIBFTPRINTF_DIR = ../
 
+SHELL = /bin/sh
+
 # I'm not proud of this
 TESTS = $(shell for ((i=1;i<=300;i++)); do echo "$$i "; done)
 
@@ -39,12 +41,14 @@ else ifeq(${UNAME}, Linux)
 	CFLAGS := ${CFLAGS} -fsanitize=address
 endif
 
-CC = gcc ${CFLAGS}
+CC = clang ${CFLAGS}
 
-all: ${NAME} run
+export LSAN_OPTIONS=exitcode=30
+
+all: update ${NAME} run
 	@echo ""
 
-${NAME}: update ${LIBFTPRINTF} ${LIBTEST} ${HEADERS} ${OBJS}
+${NAME}: ${LIBFTPRINTF} ${LIBTEST} ${HEADERS} ${OBJS}
 	${CC} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} -o ${NAME} -ltest -lftprintf -ldl
 	mkdir -p files
 

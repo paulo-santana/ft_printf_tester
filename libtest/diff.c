@@ -1,16 +1,5 @@
 #include "libtest.h"
 
-void print_success(char *desc, int success)
-{
-	if (success)
-		tester_putstr(BOLD GREEN "OK" RESET);
-	else
-	{
-		tester_putstr(BOLD RED "KO - ");
-		tester_putstr(desc);
-	}
-}
-
 int test_string(char *expected, char *got)
 {
 	int success = 1;
@@ -32,16 +21,3 @@ int test_string(char *expected, char *got)
 	//	print_string_diff(expected, got, len);
 	return (success);
 }
-
-int test_int(char *description, int expected, int result)
-{
-	int success = expected == result;
-
-	if (!success)
-	{
-		print_success(description, success);
-		print_int_diff(expected, result);
-	}
-	return (success);
-}
-

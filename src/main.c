@@ -60,14 +60,39 @@ void print_help(char *params_used)
 	pretty_printf(params_used);
 }
 
-int check_leaks(int success, char *params_used)
+int check_leaks_sanitizer(int user_stderr)
 {
+	int error = 0;
 	char *line;
-	int result = 1;
-	int leaked = 0;
-	(void) params_used;
+	int result = get_next_line(user_stderr, &line);
+	free(line);
+	if (result == 0)
+		return (0);
+	result = get_next_line(user_stderr, &line); // get rid of the first line
+	if (tester_strnstr(line, "heap-buffer-overflow", strlen(line)))
+	{
+		error = ERRORS_BUFFER_OVERFLOW;
+	}
+	free(line);
+	result = get_next_line(user_stderr, &line); // get rid of the first line
+	if (tester_strnstr(line, "leaks", strlen(line)))
+	{
+		error = 1;
+	}
+	free(line);
+	// get rid of the rest of the file
+	char dummy_buffer[32];
+	while (read(user_stderr, dummy_buffer, 32));
+	get_next_line(user_stderr, &line);
+	free(line);
+	return (error);
+}
 
-	int user_stderr = open("files/user_stderr.txt", O_RDONLY);
+int check_leaks_malloc_count(int user_stderr)
+{
+	int result;
+	int leaked = 0;
+	char *line;
 
 	while (1)
 	{
@@ -78,17 +103,26 @@ int check_leaks(int success, char *params_used)
 		}
 		if (!tester_strnstr(line, "current: 0", tester_strlen(line)))
 		{
-			if (success)
-				tester_putstr(BOLD RED " - But there were LEAKS!! " RESET);
-			else
-				tester_putstr(BOLD RED " - And there were LEAKS!! " RESET);
-			//print_atomic_help(params_used);
 			leaked = 1;
 		}
 		free(line);
 	}
-	close(user_stderr);
 	return (leaked);
+}
+
+int check_errors(char *params_used)
+{
+	int error = 0;
+	(void) params_used;
+
+	int user_stderr = open("files/user_stderr.txt", O_RDONLY);
+
+	if (LEAK_CHECKER == LEAK_SANITIZER)
+		error = check_leaks_sanitizer(user_stderr);
+	else if (LEAK_CHECKER == MALLOC_COUNT)
+		error = check_leaks_malloc_count(user_stderr);
+	close(user_stderr);
+	return (error);
 }
 
 int check_result(char *desc, char *params_used)
@@ -98,25 +132,50 @@ int check_result(char *desc, char *params_used)
 		char *result;
 		char *expected;
 		int success = 1;
-		int leaked = 0;
+		int errors = 0;
 		int wrong_return = 0;
 
 		int orig_file = open("files/original_output.txt", O_RDONLY);
 		int user_file = open("files/user_output.txt", O_RDONLY);
 		get_next_line(user_file, &result);
 		get_next_line(orig_file, &expected);
-		success = test_string(expected, result);
-		wrong_return = check_return(user_file, orig_file);
-		if (success && !wrong_return)
+
+		errors = check_errors(params_used);
+		if (errors == ERRORS_LEAK)
+		{
+			success = test_string(expected, result);
+			wrong_return = check_return(user_file, orig_file);
+		}
+
+		if (success && !wrong_return && !errors)
 			tester_putstr(GREEN);
 		else
-			tester_putstr(RED "\n  ");
+			tester_putstr(BOLD RED "\n  ");
 		tester_putnbr(current_test);
 		tester_putchar('.');
-		print_success(desc, success && !wrong_return);
+		if (success && !wrong_return && (!errors || errors == ERRORS_LEAK))
+			tester_putstr(BOLD "OK" RESET);
+		else if (errors != ERRORS_LEAK)
+			tester_putstr(BOLD "CRASH!" RESET);
+		else
+			tester_putstr("KO");
+		if (!errors || errors == ERRORS_LEAK)
+		{
+			if (!success)
+				tester_putstr(desc);
+		}
+		else
+			tester_putstr(RESET RED "- check files/user_stderr.txt");
 		if (wrong_return)
-			tester_putstr(BOLD RED " (Wrong return)");
-		leaked = check_leaks(success, params_used);
+			tester_putstr(" (Wrong return)");
+		if (errors == ERRORS_LEAK)
+		{
+			tester_putstr(RED);
+			if (success)
+				tester_putstr(" - But there were leaks");
+			else	
+				tester_putstr(" - And there were leaks");
+		}
 		if (!success)
 		{
 			tester_putstr("\n");
@@ -124,7 +183,7 @@ int check_result(char *desc, char *params_used)
 		}
 		else
 			tester_putchar(' ');
-		if (!success || leaked || wrong_return)
+		if (!success || errors || wrong_return)
 			print_help(params_used);
 		else
 			passed_tests++;
@@ -1083,6 +1142,14 @@ int main(int argc, char *argv[])
 
 	PRINTF(("%.4i%.2i%.20i%.0i%.0i%.i%.i%.i", 127, 0, 1023, 0, (int)-2147483648, 0, 1, (int)-2147483648),
 			"Print multiple numbers glued together")
+
+	describe("\nTest some simple precisions with %u");
+
+	PRINTF(("%.1u", 1),
+			"Print a simple number with a precision of 1")
+
+	PRINTF(("%.2u", 1),
+			"Print a simple number with a precision of 2")
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
