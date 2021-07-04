@@ -153,28 +153,19 @@ int check_result(char *params_used)
 			tester_putstr(BOLD RED "\n  ");
 		tester_putnbr(current_test);
 		tester_putchar('.');
+
 		if (success && !wrong_return && (!errors || errors == ERRORS_LEAK))
 			tester_putstr(BOLD "OK" RESET);
 		else if (errors && errors != ERRORS_LEAK)
-			tester_putstr(BOLD "CRASH!" RESET);
+			tester_putstr(BOLD "CRASH!" RESET RED "- check files/user_stderr.txt");
 		else
-			tester_putstr("KO ");
-		if (!errors || errors == ERRORS_LEAK)
-		{
-			if (!success)
-				tester_putstr(desc);
-		}
-		else
-			tester_putstr(RESET RED "- check files/user_stderr.txt");
+			tester_putstr("KO (Wrong output)");
+
 		if (wrong_return)
 			tester_putstr(" (Wrong return)");
 		if (errors == ERRORS_LEAK)
 		{
-			tester_putstr(RED);
-			if (success)
-				tester_putstr(" - But there were leaks");
-			else	
-				tester_putstr(" - And there were leaks");
+			tester_putstr(RED " (LEAKS!)");
 		}
 		if (!success)
 		{
@@ -859,8 +850,29 @@ int main(int argc, char *argv[])
 
 	describe("\nTest some simple precisions with %u");
 
-	PRINTF(("%.1u", 1),
-			"Print a simple number with a precision of 1")
+	PRINTF(("%.1u", 1))
+
+	PRINTF(("%.2u", 1))
+
+	PRINTF(("%.2u", 0))
+
+	PRINTF(("%.0u", 0))
+
+	PRINTF(("%.u", 0))
+
+	PRINTF(("%.2u", 30000))
+
+	PRINTF(("%.20u", 30000))
+
+	PRINTF(("%.0u", (unsigned int)-1))
+
+	PRINTF(("%.5u", (unsigned int)-1))
+
+	PRINTF(("%.9u", (unsigned int)-1))
+
+	PRINTF(("%.10u", (unsigned int)-1))
+
+	PRINTF(("%.11u", (unsigned int)-1))
 
 	PRINTF(("%.10uis a big number", (unsigned int)-1))
 
