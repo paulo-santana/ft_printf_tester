@@ -1,20 +1,20 @@
 #ifndef HELPERS_H
 # define HELPERS_H
 
-# define PRINTF(params, description) __PRINTF_EXPECTED(params, params, description)
+# define PRINTF(params) __PRINTF_EXPECTED(params, params)
 
 # define MALLOC_COUNT 1
 # define LEAK_SANITIZER 2
 
 #ifdef __linux__
-# define PRINTF_EXPECTED(params, expected, description) __PRINTF_EXPECTED(params, expected, description)
+# define PRINTF_EXPECTED(params, expected) __PRINTF_EXPECTED(params, expected)
 # define LEAK_CHECKER LEAK_SANITIZER
 #elif defined __APPLE__
-# define PRINTF_EXPECTED(params, expected, description) __PRINTF_EXPECTED(params, params, description)
+# define PRINTF_EXPECTED(params, expected) __PRINTF_EXPECTED(params, params)
 # define LEAK_CHECKER MALLOC_COUNT
 #endif
 
-#define __PRINTF_EXPECTED(params, expected, description) { \
+#define __PRINTF_EXPECTED(params, expected) { \
 	already_printed_help = 0; \
 	if (current_test == test_nbr || test_nbr == 0) \
 	{ \
@@ -71,7 +71,7 @@
 			} \
 			else \
 			{ \
-				check_result(description, #params); \
+				check_result(#params); \
 			} \
 		} \
 	} \
