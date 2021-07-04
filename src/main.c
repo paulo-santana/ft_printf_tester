@@ -1151,6 +1151,12 @@ int main(int argc, char *argv[])
 	PRINTF(("%.2u", 1),
 			"Print a simple number with a precision of 2")
 
+	PRINTF(("%.2u", 0),
+			"Print a 0 with a precision of 2")
+
+	PRINTF(("%.0u", 0),
+			"Print a 0 with a precision of 2")
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
