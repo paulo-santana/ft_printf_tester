@@ -880,6 +880,180 @@ int main(int argc, char *argv[])
 
 	PRINTF(("%.4us a big number", (unsigned int)-1))
 
+	PRINTF(("%.9uxs a big number", (unsigned int)-1))
+
+	PRINTF(("%.11ups a big number", (unsigned int)-1))
+
+	PRINTF(("the number is %.0u", (unsigned int)-1))
+
+	PRINTF(("the number is %.u", (unsigned int)-1))
+
+	PRINTF(("the number is %.5u", (unsigned int)-1))
+
+	PRINTF(("the number is %.9u", (unsigned int)-1))
+
+	PRINTF(("the number is %.10u", (unsigned int)-1))
+
+	PRINTF(("the number is %.11u", (unsigned int)-1))
+
+	PRINTF(("the number is %.11u", (unsigned int)-1))
+
+	PRINTF(("%.0uis a big number", 0))
+
+	PRINTF(("%.4us a big number", 0))
+
+	PRINTF(("the number is %.0u", 0))
+
+	PRINTF(("the number is %.u", 0))
+
+	PRINTF(("the number is %.5u", 0))
+
+	PRINTF(("%u%.5u%.0u%.u%.9u", 5, 55, 2, 0, 42))
+
+	PRINTF(("%us%.5ui%.0uc%.up%.9ux", 5, 55, 2, 0, 42))
+
+	describe("\nTest some simple precisions with %x");
+
+	PRINTF(("%.1x", 0xa))
+
+	PRINTF(("%.4x", 11))
+
+	PRINTF(("%.0x", 0))
+
+	PRINTF(("%.1x", -1))
+
+	PRINTF(("%.10x", -1))
+
+	PRINTF(("%.14x", -1))
+
+	PRINTF(("%.8x", 0))
+
+	PRINTF(("%.2x", 30000))
+
+	PRINTF(("%.20x", 30000))
+
+	PRINTF(("%.0x", (unsigned int)-1))
+
+	PRINTF(("%.5x", (unsigned int)-1))
+
+	PRINTF(("%.9x", (unsigned int)-1))
+
+	PRINTF(("%.10x", (unsigned int)-1))
+
+	PRINTF(("%.11x", (unsigned int)-1))
+
+	PRINTF(("%.10xis a big number", (unsigned int)-1))
+
+	PRINTF(("%.0xis a big number", (unsigned int)-1))
+
+	PRINTF(("%.4xs a big number", (unsigned int)-1))
+
+	PRINTF(("%.9xxs a big number", (unsigned int)-1))
+
+	PRINTF(("%.11xps a big number", (unsigned int)-1))
+
+	PRINTF(("the number is %.0x", (unsigned int)-1))
+
+	PRINTF(("the number is %.x", (unsigned int)-1))
+
+	PRINTF(("the number is %.5x", (unsigned int)-1))
+
+	PRINTF(("the number is %.9x", (unsigned int)-1))
+
+	PRINTF(("the number is %.10x", (unsigned int)-1))
+
+	PRINTF(("the number is %.11x", (unsigned int)-1))
+
+	PRINTF(("the number is %.11x", (unsigned int)-1))
+
+	PRINTF(("%.0xis a big number", 0))
+
+	PRINTF(("%.4xs a big number", 0))
+
+	PRINTF(("the number is %.0x", 0))
+
+	PRINTF(("the number is %.x", 0))
+
+	PRINTF(("the number is %.5x", 0))
+
+	PRINTF(("%x%.5x%.0x%.x%.9x", 5, 55, 2, 0, 42))
+
+	PRINTF(("%xs%.5xi%.0xc%.xp%.9xu", 5, 55, 2, 0, 42))
+
+	describe("\nTest the same tests above for %X");
+
+	PRINTF(("%.1X", 0xa))
+
+	PRINTF(("%.4X", 11))
+
+	PRINTF(("%.0X", 0))
+
+	PRINTF(("%.1X", -1))
+
+	PRINTF(("%.10X", -1))
+
+	PRINTF(("%.14X", -1))
+
+	PRINTF(("%.8X", 0))
+
+	PRINTF(("%.2X", 30000))
+
+	PRINTF(("%.20X", 30000))
+
+	PRINTF(("%.0X", (unsigned int)-1))
+
+	PRINTF(("%.5X", (unsigned int)-1))
+
+	PRINTF(("%.9X", (unsigned int)-1))
+
+	PRINTF(("%.10X", (unsigned int)-1))
+
+	PRINTF(("%.11X", (unsigned int)-1))
+
+	PRINTF(("%.10Xis a big number", (unsigned int)-1))
+
+	PRINTF(("%.0Xis a big number", (unsigned int)-1))
+
+	PRINTF(("%.4Xs a big number", (unsigned int)-1))
+
+	PRINTF(("%.9XXs a big number", (unsigned int)-1))
+
+	PRINTF(("%.11Xps a big number", (unsigned int)-1))
+
+	PRINTF(("the number is %.0X", (unsigned int)-1))
+
+	PRINTF(("the number is %.X", (unsigned int)-1))
+
+	PRINTF(("the number is %.5X", (unsigned int)-1))
+
+	PRINTF(("the number is %.9X", (unsigned int)-1))
+
+	PRINTF(("the number is %.10X", (unsigned int)-1))
+
+	PRINTF(("the number is %.11X", (unsigned int)-1))
+
+	PRINTF(("the number is %.11X", (unsigned int)-1))
+
+	PRINTF(("%.0Xis a big number", 0))
+
+	PRINTF(("%.4Xs a big number", 0))
+
+	PRINTF(("the number is %.0X", 0))
+
+	PRINTF(("the number is %.X", 0))
+
+	PRINTF(("the number is %.5X", 0))
+
+	PRINTF(("%X%.5X%.0X%.X%.9X", 5, 55, 2, 0, 42))
+
+	PRINTF(("%Xs%.5Xi%.0Xc%.Xp%.9Xu", 5, 55, 2, 0, 42))
+
+	describe("\nTest some simple precisions with %%");
+
+	PRINTF(("%.3%"))
+
+	PRINTF(("%3.3%"))
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
