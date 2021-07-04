@@ -114,6 +114,9 @@ int check_result(char *desc, char *params_used)
 		tester_putnbr(current_test);
 		tester_putchar('.');
 		print_success(desc, success && !wrong_return);
+		if (wrong_return)
+			if (!success)
+			tester_putstr(" (Wrong return)");
 		leaked = check_leaks(success, params_used);
 		if (!success)
 		{
