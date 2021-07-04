@@ -12,9 +12,6 @@ LIBFTPRINTF = ${LIBFTPRINTF_DIR}/libftprintf.a
 
 LIB_DIR = ../
 
-# Uncomment the line bellow to run the program under valgrind's monitoring
-#VALGRIND = valgrind -q --leak-check=full --show-leak-kinds=all --suppressions=./tester.supp
-
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 
@@ -59,10 +56,10 @@ ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c ${HEADERS} Makefile
 	${CC} -DBUFFER_SIZE=32 -c $< -o $@
 
 run:
-	${VALGRIND} ./${NAME} 2>myleaks.txt
+	./${NAME} 2>myleaks.txt
 
 ${TESTS}: ${NAME}
-	${VALGRIND} ./${NAME} $@  2>myleaks.txt
+	./${NAME} $@  2>myleaks.txt
 
 update:
 	git pull
