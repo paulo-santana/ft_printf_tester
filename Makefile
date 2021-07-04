@@ -18,8 +18,7 @@ OBJ_DIR = ./obj
 SRCS_FILES = main.c \
 			 get_next_line.c \
 			 get_next_line_utils.c \
-			 utils.c \
-			 malloc_count.c 
+			 utils.c
 
 HEADERS_FILES = helpers.h
 HEADERS = ${addprefix ${SRC_DIR}/, ${HEADERS_FILES}}
@@ -35,9 +34,12 @@ CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
 UNAME = ${shell uname -s}
 ifeq (${UNAME}, Darwin)
 	CFLAGS := ${CFLAGS} -fsanitize=address
+	SRCS_FILES := ${SRCS_FILES} malloc_count.c 
+else ifeq(${UNAME}, Linux)
+	CFLAGS := ${CFLAGS} -fsanitize=address
 endif
 
-CC = clang ${CFLAGS}
+CC = gcc ${CFLAGS}
 
 all: ${NAME} run
 	@echo ""
