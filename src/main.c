@@ -971,6 +971,14 @@ int main(int argc, char *argv[])
 	PRINTF(("%.d", 0),
 			"Test printing a 10 with a precision of .")
 
+	describe("\nTest some simple precisions with %i");
+
+	PRINTF(("%.1i", 7),
+			"Test printing a 7 with a precision of 1")
+
+	PRINTF(("%.3i", 7),
+			"Test printing a 7 with a precision of 3")
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
