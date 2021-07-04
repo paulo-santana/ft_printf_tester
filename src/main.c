@@ -141,7 +141,7 @@ int check_result(char *desc, char *params_used)
 		get_next_line(orig_file, &expected);
 
 		errors = check_errors(params_used);
-		if (errors == ERRORS_LEAK)
+		if (!errors || errors == ERRORS_LEAK)
 		{
 			success = test_string(expected, result);
 			wrong_return = check_return(user_file, orig_file);
@@ -155,10 +155,10 @@ int check_result(char *desc, char *params_used)
 		tester_putchar('.');
 		if (success && !wrong_return && (!errors || errors == ERRORS_LEAK))
 			tester_putstr(BOLD "OK" RESET);
-		else if (errors != ERRORS_LEAK)
+		else if (errors && errors != ERRORS_LEAK)
 			tester_putstr(BOLD "CRASH!" RESET);
 		else
-			tester_putstr("KO");
+			tester_putstr("KO ");
 		if (!errors || errors == ERRORS_LEAK)
 		{
 			if (!success)
