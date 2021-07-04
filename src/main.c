@@ -971,6 +971,21 @@ int main(int argc, char *argv[])
 	PRINTF(("%.d", 0),
 			"Test printing a 10 with a precision of .")
 
+	PRINTF(("I'm gonna watch %.3d", 7),
+			"Test printing a number with a larger precision in the end of a string")
+
+	PRINTF(("%.3d is the movie I'm gonna watch", 7),
+			"Test printing a number with a larger precision in the beginning of a string")
+
+	PRINTF(("Then take these %.7d things and get the hell out of here", 2),
+			"Print a number in the middle of a string")
+
+	PRINTF(("Bla %.2di bla %.5dsbla bla %.dx bla %.d", 127, 42, 1023, 0),
+			"Print multiple numbers in the middle of a string")
+
+	PRINTF(("%.4d%.2d%.20d%.0d%.0d%.d%.d%.d", 127, 0, 1023, 0, (int)-2147483648, 0, 1, (int)-2147483648),
+			"Print multiple numbers glued together")
+
 	describe("\nTest some simple precisions with %i");
 
 	PRINTF(("%.1i", 7),
@@ -978,6 +993,96 @@ int main(int argc, char *argv[])
 
 	PRINTF(("%.3i", 7),
 			"Test printing a 7 with a precision of 3")
+
+	PRINTF(("%.2i", 3),
+			"Test printing a single char number with a precision of 2")
+
+	PRINTF(("%.4i", 32),
+			"Test printing a double char number with a precision of 4")
+
+	PRINTF(("%.3i", 420000),
+			"Test printintg a number bigger than the precision")
+
+	PRINTF(("%.0i", 420000),
+			"Test printing a number with a precision of 0")
+
+	PRINTF(("%.3i", -1),
+			"Test printing a negative number with a precision of 3")
+
+	PRINTF(("%.3i", -1234),
+			"Test printing a negative number with a precision of 3")
+
+	PRINTF(("%.4i", -1234),
+			"Test printing a negative number with a precision of 4")
+
+	PRINTF(("%.5i", -1234),
+			"Test printing a negative number with a precision of 4")
+
+	PRINTF(("%.5i", (int)-2147483648),
+			"Test printing INT_MIN with a small precision")
+
+	PRINTF(("%.9i", (int)-2147483648),
+			"Test printing INT_MIN with a slightly precision")
+
+	PRINTF(("%.10i", (int)-2147483648),
+			"Test printing INT_MIN with a slightly precision")
+
+	PRINTF(("%.11i", (int)-2147483648),
+			"Test printing INT_MIN with a small precision")
+
+	PRINTF(("%.12i", (int)-2147483648),
+			"Test printing INT_MIN with a small precision")
+
+	PRINTF(("%.13i", (int)-2147483648),
+			"Test printing INT_MIN with a small precision")
+
+	PRINTF(("%.5i", 2147483647),
+			"Test printing INT_MAX with a small precision")
+
+	PRINTF(("%.9i", 2147483647),
+			"Test printing INT_MAX with a slightly small precision")
+
+	PRINTF(("%.10i", 2147483647),
+			"Test printing INT_MAX with its exact precision")
+
+	PRINTF(("%.11i", 2147483647),
+			"Test printing INT_MAX with a slightly bigger precision")
+
+	PRINTF(("%.12i", 2147483647),
+			"Test printing INT_MAX with a even bigger precision")
+
+	PRINTF(("%.0i", 2),
+			"Test printing a small number with a precision of 0")
+
+	PRINTF(("%.0i", 2147483647),
+			"Test printing a big number with a precision of 0")
+
+	PRINTF(("%.0i", 0),
+			"Test printing a 0 with a precision of 0")
+
+	PRINTF(("%.0i", 10),
+			"Test printing a 10 with a precision of 0")
+
+	PRINTF(("%.i", 10),
+			"Test printing a 10 with a precision of .")
+
+	PRINTF(("%.i", 0),
+			"Test printing a 10 with a precision of .")
+
+	PRINTF(("I'm gonna watch %.3i", 7),
+			"Test printing a number with a larger precision in the end of a string")
+
+	PRINTF(("%.3i is the movie I'm gonna watch", 7),
+			"Test printing a number with a larger precision in the beginning of a string")
+
+	PRINTF(("Then take these %.7i things and get the hell out of here", 2),
+			"Print a number in the middle of a string")
+
+	PRINTF(("Bla %.2ii bla %.5isbla bla %.ix bla %.i", 127, 42, 1023, 0),
+			"Print multiple numbers in the middle of a string")
+
+	PRINTF(("%.4i%.2i%.20i%.0i%.0i%.i%.i%.i", 127, 0, 1023, 0, (int)-2147483648, 0, 1, (int)-2147483648),
+			"Print multiple numbers glued together")
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
