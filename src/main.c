@@ -1080,6 +1080,19 @@ int main(int argc, char *argv[])
 
 	PRINTF(("%-ci%-cp%4cs%-11cx", 'a', 'b', 'c', 'd'));
 
+	PRINTF(("%----ci%---cp%4cs%--11cx", 'a', 'b', 'c', 'd'));
+
+	describe("\nTest %s with the '-' flag and variable widths and precisions");
+
+	PRINTF(("%-9sScience!", "Aperture"));
+
+	PRINTF(("We %-s what we %8s, %-2s we %-20s", "do", "must", "because", "can"));
+
+	PRINTF(("%--4s %s %------------------9s of %s of %-5s", "for", "the", "goooood", "aaall", "us"));
+
+	PRINTF(("%--4s %s %------------------9s of %s of %-5s", "for", "the", "goooood", "aaall", "us"));
+
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
