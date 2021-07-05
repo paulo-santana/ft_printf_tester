@@ -30,14 +30,14 @@ SRCS = ${addprefix ${SRC_DIR}/, ${SRCS_FILES}}
 OBJS_FILES = ${SRCS_FILES:.c=.o}
 OBJS = ${addprefix ${OBJ_DIR}/, ${OBJS_FILES}}
 
-CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g3
 
 #VALGRIND = valgrind -q --leak-check=full --show-leak-kinds=all
 UNAME = ${shell uname -s}
 ifeq (${UNAME}, Darwin)
 	CFLAGS := ${CFLAGS} -fsanitize=address
 	SRCS_FILES := ${SRCS_FILES} malloc_count.c 
-else ifeq(${UNAME}, Linux)
+else ifeq (${UNAME}, Linux)
 	CFLAGS := ${CFLAGS} -fsanitize=address
 endif
 
