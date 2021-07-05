@@ -1090,7 +1090,9 @@ int main(int argc, char *argv[])
 
 	PRINTF(("%--4s %s %------------------9s of %s of %-5s", "for", "the", "goooood", "aaall", "us"));
 
-	PRINTF(("%--4s %s %------------------9s of %s of %-5s", "for", "the", "goooood", "aaall", "us"));
+	PRINTF(("%--4.1s %s %------------------9.3s of %s of %-5.7s", "for", "the", "goooood", "aaall", "us"));
+
+	PRINTF(("%--.sp--.su kkkk", "pegadinha po"));
 
 
 	tester_putstr("\n" RESET);
