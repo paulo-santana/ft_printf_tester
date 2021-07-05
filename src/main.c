@@ -1739,9 +1739,9 @@ int main(int argc, char *argv[])
 
 	PRINTF(("---%.0%"))
 
-	/* 387 */PRINTF(("you have 100%-.10% chance of approval"))
+	PRINTF(("you have 100%-.10% chance of approval"))
 
-	/* 388 */PRINTF(("%---.9%%---.5% is how you print %% in printf"))
+	PRINTF(("%---.9%%---.5% is how you print %% in printf"))
 
 	PRINTF_EXPECTED(("%----.9%i%.5%s%-10.%d%.3%p%.3%----.6c%.6%u%-.8%x"),
 			("%%i%%s%%         d%%p%%----.6c%%u%%x"))
