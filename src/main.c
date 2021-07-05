@@ -1786,6 +1786,58 @@ int main(int argc, char *argv[])
 	
 	PRINTF(("%014dc%020ds%02dx%0du", (int)-2147483648, 3, 30, -1));
 
+	PRINTF(("%01.1d", 0));
+
+	PRINTF(("%01.2d", 0));
+
+	PRINTF(("%01.3d", 0));
+
+	PRINTF(("%01.0d", 0));
+
+	PRINTF(("%01.d", 0));
+
+	PRINTF(("%01.0d", -4));
+
+	PRINTF(("%01.1d", -4));
+
+	PRINTF(("%01.2d", -4));
+
+	PRINTF(("%01.3d", -4));
+
+	PRINTF(("%010.20d", 42));
+
+	PRINTF(("%042.20d", 42000));
+	
+	PRINTF(("%020.10d", -42000));
+	
+	PRINTF(("wait for it... %050.50d", 42));
+	
+	PRINTF(("%020d is how many tests are going to be made", 8000));
+	
+	PRINTF(("%05d", 2147483647));
+	
+	PRINTF(("%030d", 2147483647));
+	
+	PRINTF(("%010d", 2147483647));
+	
+	PRINTF(("%05d", (int)-2147483648));
+	
+	PRINTF(("%030d", (int)-2147483648));
+	
+	PRINTF(("%010d", (int)-2147483648));
+	
+	PRINTF(("%011d", (int)-2147483648));
+	
+	PRINTF(("%012d", (int)-2147483648));
+	
+	PRINTF(("%012d, %20d, %2d, %42d", (int)-2147483648, 3, 30, -1));
+	
+	PRINTF(("%012d, %d, %2d, %42d", (int)-2147483648, 3, 30, -1));
+	
+	PRINTF(("%014d%020d%02d%0d", (int)-2147483648, 3, 30, -1));
+	
+	PRINTF(("%014dc%020ds%02dx%0du", (int)-2147483648, 3, 30, -1));
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
