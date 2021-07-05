@@ -1735,7 +1735,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%--.3%"))
 
 	PRINTF_EXPECTED(("%-3.3%"),
-			("  %%"))
+			("%%  "))
 
 	PRINTF(("---%.0%"))
 
@@ -1743,7 +1743,8 @@ int main(int argc, char *argv[])
 
 	/* 388 */PRINTF(("%---.9%%---.5% is how you print %% in printf"))
 
-	PRINTF(("%----.9%i%.5%s%-.%d%.3%p%.3%----.6c%.6%u%-.8%x"))
+	PRINTF_EXPECTED(("%----.9%i%.5%s%-10.%d%.3%p%.3%----.6c%.6%u%-.8%x"),
+			("%%i%%s%%         d%%p%%----.6c%%u%%x"))
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
