@@ -1746,6 +1746,12 @@ int main(int argc, char *argv[])
 	PRINTF_EXPECTED(("%----.9%i%.5%s%-10.%d%.3%p%.3%----.6c%.6%u%-.8%x"),
 			("%%i%%s%%         d%%p%%----.6c%%u%%x"))
 
+	describe("\nTest %d with the 0 flag");
+
+	PRINTF(("%0d", 1))
+
+	PRINTF(("%04d", 1))
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
