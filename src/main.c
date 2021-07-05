@@ -1063,6 +1063,23 @@ int main(int argc, char *argv[])
 
 	PRINTF(("%.9%i%.5%s%.%d%.3%p%.3%.6c%.6%u%.8%x"))
 
+	describe("\n==> Flag testing");
+	describe("\nTest %c with the '-' flag and variable widths");
+
+	PRINTF(("%-c", 'p'));
+
+	PRINTF(("%-1c", 'b'));
+
+	PRINTF(("%-5c", 'w'));
+
+	PRINTF((" kk daora%-5cblz", 'w'));
+
+	PRINTF(("%-20carigatou", 'w'));
+
+	PRINTF(("%-c%-c%-4c%-11c", 'a', 'b', 'c', 'd'));
+
+	PRINTF(("%-ci%-cp%4cs%-11cx", 'a', 'b', 'c', 'd'));
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
