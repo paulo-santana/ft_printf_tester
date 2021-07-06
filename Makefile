@@ -35,10 +35,7 @@ CFLAGS = -Wall -Werror -Wextra -g3
 #VALGRIND = valgrind -q --leak-check=full --show-leak-kinds=all
 UNAME = ${shell uname -s}
 ifeq (${UNAME}, Darwin)
-	CFLAGS := ${CFLAGS} -fsanitize=address
 	SRCS_FILES := ${SRCS_FILES} malloc_count.c 
-else ifeq (${UNAME}, Linux)
-	CFLAGS := ${CFLAGS} -fsanitize=address
 endif
 
 CC = clang ${CFLAGS}
@@ -47,6 +44,9 @@ export LSAN_OPTIONS=exitcode=30
 
 all: update ${NAME} run
 	@echo ""
+
+san: CFLAGS := ${CFLAGS} -fsanitize=address
+san: all
 
 ${NAME}: ${LIBFTPRINTF} ${LIBTEST} ${HEADERS} ${OBJS}
 	${CC} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} -o ${NAME} -ltest -lftprintf -ldl
