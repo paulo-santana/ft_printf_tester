@@ -6,7 +6,7 @@ LIBFTPRINTF_DIR = ../
 SHELL = /bin/sh
 
 # I'm not proud of this
-TESTS = $(shell for ((i=1;i<=900;i++)); do echo "$$i "; done)
+TESTS = $(shell for ((i=1;i<=2000;i++)); do echo "$$i "; done)
 
 NAME = tester
 LIBTEST = libtest/libtest.a
