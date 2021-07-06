@@ -64,6 +64,7 @@ ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c ${HEADERS} Makefile
 run:
 	./${NAME} 2>myleaks.txt
 
+${TESTS}: CFLAGS := ${CFLAGS} -fsanitize=address
 ${TESTS}: ${NAME}
 	./${NAME} $@  2>myleaks.txt
 

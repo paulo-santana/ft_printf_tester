@@ -62,6 +62,7 @@ void print_help(char *params_used)
 
 int check_leaks_sanitizer(int user_stderr)
 {
+	int n = 0;
 	int error = 0;
 	char *line;
 	int result = get_next_line(user_stderr, &line);
@@ -69,20 +70,22 @@ int check_leaks_sanitizer(int user_stderr)
 	if (result == 0)
 		return (0);
 	result = get_next_line(user_stderr, &line); // get rid of the first line
-	if (tester_strnstr(line, "heap-buffer-overflow", strlen(line)))
+	n = strlen(line);
+	if (tester_strnstr(line, "heap-buffer-overflow", n))
 	{
 		error = ERRORS_BUFFER_OVERFLOW;
 	}
 	free(line);
 	result = get_next_line(user_stderr, &line); // get rid of the first line
-	if (tester_strnstr(line, "leaks", strlen(line)))
-	{
-		error = 1;
-	}
+	n = strlen(line);
+	if (tester_strnstr(line, "leaks", n))
+		error = ERRORS_LEAK;
+	else if (tester_strnstr(line, "SEGV", n))
+		error = ERRORS_SIGSEGV;
 	free(line);
 	// get rid of the rest of the file
-	char dummy_buffer[32];
-	while (read(user_stderr, dummy_buffer, 32));
+	char dummy_buffer[100];
+	while (read(user_stderr, dummy_buffer, 100));
 	get_next_line(user_stderr, &line);
 	free(line);
 	return (error);
@@ -156,8 +159,11 @@ int check_result(char *params_used)
 
 		if (success && !wrong_return && (!errors || errors == ERRORS_LEAK))
 			tester_putstr(BOLD "OK" RESET);
-		else if (errors && errors != ERRORS_LEAK)
-			tester_putstr(BOLD "CRASH!" RESET RED "- check files/user_stderr.txt");
+		else if (errors) {
+			if (errors == ERRORS_SIGSEGV)
+				tester_putstr(BOLD "SIGSEGV!" RESET RED "- check files/user_stderr.txt");
+
+		}
 		else
 			tester_putstr("KO (Wrong output)");
 
@@ -1805,6 +1811,8 @@ int main(int argc, char *argv[])
 	PRINTF(("%01.3d", -4));
 
 	PRINTF(("%010.20d", 42));
+
+	PRINTF(("%042.2d", 42000));
 
 	PRINTF(("%042.20d", 42000));
 	
