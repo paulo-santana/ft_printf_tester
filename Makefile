@@ -30,7 +30,9 @@ SRCS = ${addprefix ${SRC_DIR}/, ${SRCS_FILES}}
 OBJS_FILES = ${SRCS_FILES:.c=.o}
 OBJS = ${addprefix ${OBJ_DIR}/, ${OBJS_FILES}}
 
-CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS = -Wall -Wextra -g3
+
+PRINTF_FLAGS = ${CFLAGS} -Werror
 
 #VALGRIND = valgrind -q --leak-check=full --show-leak-kinds=all
 UNAME = ${shell uname -s}
@@ -53,7 +55,7 @@ ${NAME}: ${LIBFTPRINTF} ${LIBTEST} ${HEADERS} ${OBJS}
 	mkdir -p files
 
 ${LIBFTPRINTF}:
-	make -C ${LIBFTPRINTF_DIR} CFLAGS="${CFLAGS}"
+	make -C ${LIBFTPRINTF_DIR} CFLAGS="${PRINTF_FLAGS}"
 
 ${LIBTEST}:
 	make -C libtest CFLAGS="${CFLAGS}"
