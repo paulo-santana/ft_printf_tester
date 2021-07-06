@@ -236,6 +236,9 @@ int main(int argc, char *argv[])
 	PRINTF(("this is 1 %s with %s %s", "test", "multiple", "strings"));
 	PRINTF(("%s%s%s%s", "This ", "is", " an ugly ", "test"));
 	PRINTF(("%s", "This is a rather simple test."));
+	PRINTF(("%s", "-2"));
+	PRINTF(("%s", "-24"));
+	PRINTF(("%s", "-stop"));
 	PRINTF(("t"));
 	PRINTF(("%s", "h"));
 	PRINTF(("t%st%s", "a", "u"));
@@ -338,6 +341,12 @@ int main(int argc, char *argv[])
 	PRINTF(("%1s", "abc"));
 	PRINTF(("%7s", "a"));
 	PRINTF(("%7s", "abc"));
+	PRINTF(("%1s", "-42"));
+	PRINTF(("%2s", "-42"));
+	PRINTF(("%3s", "-42"));
+	PRINTF(("%4s", "-42"));
+	PRINTF(("%5s", "-42"));
+	PRINTF(("%6s", "-42"));
 	PRINTF(("%7s is as easy as %13s", "abc", "123"));
 	PRINTF(("%13s are the three first letter of the %3s", "a, b and c", "alphabet"));
 	PRINTF(("%s%13s%42s%3s", "a, b and c", " are letters", " of the", " alphabet"));
@@ -498,6 +507,13 @@ int main(int argc, char *argv[])
 	PRINTF(("%.8s", "hi there"));
 	PRINTF(("%.9s", "hi there"));
 	PRINTF(("%.12s", "hi there"));
+	PRINTF(("%.s", "-42"));
+	PRINTF(("%.0s", "-42"));
+	PRINTF(("%.1s", "-42"));
+	PRINTF(("%.2s", "-42"));
+	PRINTF(("%.3s", "-42"));
+	PRINTF(("%.4s", "-42"));
+	PRINTF(("%.7s", "-42"));
 	PRINTF(("%.2s, motherfucker", "hi there"));
 	PRINTF(("This %.3s a triumph ", "wasabi"));
 	PRINTF(("%.4s making a %.4s here: %.13s", "I'm delighted", "notation", "HUGE SUCCESS!"));
@@ -707,6 +723,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%--4s %s %------------------9s of %s of %-5s", "for", "the", "goooood", "aaall", "us"));
 	PRINTF(("%--4.1s %s %------------------9.3s of %s of %-5.7s", "for", "the", "goooood", "aaall", "us"));
 	PRINTF(("%--.sp--.su kkkk", "pegadinha po"));
+	PRINTF(("%-9sScience!", "-42"));
 
 	describe("\nTest %p with the '-' flag and variable widths");
 
@@ -1340,6 +1357,14 @@ int main(int argc, char *argv[])
 	PRINTF(("%012X, %X, %002X, %42X", -1, 3, 30, -1));
 	PRINTF(("%0014.2X%020X%0002.X%000.5X", -1, 3, 30, -1));
 	PRINTF(("%014Xc%020Xs%02XX%0Xi", -1, 3, 30, -1));
+
+	describe("\nTest %c with some * widths");
+
+	PRINTF(("%*c", 1, 'a'));
+	PRINTF(("%*c", 4, 'a'));
+	PRINTF(("%*c%c", 4, 'a', 'b'));
+	PRINTF(("%*c*%c", 8, 'a', 'b'));
+	PRINTF(("%*c*%*c", 8, 'a', 2, 'b'));
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
