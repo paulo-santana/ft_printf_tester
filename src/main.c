@@ -1361,6 +1361,7 @@ int main(int argc, char *argv[])
 
 	describe("\nTest %c with some * widths");
 
+	PRINTF(("%*c", 0, 'a'));
 	PRINTF(("%*c", 1, 'a'));
 	PRINTF(("%*c", 4, 'a'));
 	PRINTF(("%*c%c", 4, 'a', 'b'));
@@ -1382,6 +1383,9 @@ int main(int argc, char *argv[])
 	PRINTF(("%*s", -2, "a"));
 	PRINTF(("%*s", -3, "a"));
 	PRINTF(("%-*s%s", 3, "a", "bc"));
+	PRINTF(("%-*s%-s", -8, "a", "bc"));
+	PRINTF(("%-*s%-s", -8, "a", "bc"));
+	PRINTF(("%--------**s", -8, 2, "abc"));
 
 
 	tester_putstr("\n" RESET);
