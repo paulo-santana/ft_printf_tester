@@ -1374,7 +1374,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%*c*%*c*", -1, 'a', 1, 'b'));
 	PRINTF(("%-*c*%-*c*", 3, 'a', -3, 'b'));
 
-	describe("\nTest %c with some * widths");
+	describe("\nTest %s with some * widths");
 
 	PRINTF(("%*s", 1, "a"));
 	PRINTF(("%*s", 2, "a"));
@@ -1386,6 +1386,17 @@ int main(int argc, char *argv[])
 	PRINTF(("%-*s%-s", -8, "a", "bc"));
 	PRINTF(("%*s%-*s*", -8, "a", 8, "bc"));
 	PRINTF(("%*s%-*s*", -8, "a", -8, "bc"));
+
+	describe("\nTest %p with some * widths");
+
+	char *str = "test";
+	PRINTF(("%*p", 1, str));
+	PRINTF(("%*p", 2, str));
+	PRINTF(("%*p", 12, str));
+	PRINTF(("%*p", 13, str));
+	PRINTF(("%*p", 14, str));
+	PRINTF(("%*p", 15, str));
+	PRINTF(("%*p", 16, str));
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
