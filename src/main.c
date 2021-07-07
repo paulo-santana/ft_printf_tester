@@ -1371,6 +1371,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%*c*%*c*", -8, 'a', -2, 'b'));
 	PRINTF(("%*c*%*c*", 8, 'a', -1, 'b'));
 	PRINTF(("%*c*%*c*", -1, 'a', 1, 'b'));
+	PRINTF(("%-*c*%-*c*", 3, 'a', -3, 'b'));
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
