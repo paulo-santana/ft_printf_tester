@@ -1375,7 +1375,7 @@ int main(int argc, char *argv[])
 	PRINTF_EXPECTED(("%0%"),  /* expected: */ ("%%"));
 	PRINTF_EXPECTED(("%05%"), /* expected: */ ("0000%%"));
 	PRINTF_EXPECTED(("%0-5%"), /* expected: */ ("%%    "));
-	PRINTF_EXPECTED(("%010.5%"), /* expected: */ ("%%    "));
+	PRINTF_EXPECTED(("%010.5%"), /* expected: */ ("000000000%%"));
 
 	describe("\nTest %c with some * widths");
 
