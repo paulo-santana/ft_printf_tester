@@ -1378,6 +1378,9 @@ int main(int argc, char *argv[])
 	PRINTF(("%*s", 1, "a"));
 	PRINTF(("%*s", 2, "a"));
 	PRINTF(("%*s", 3, "a"));
+	PRINTF(("%*s", -1, "a"));
+	PRINTF(("%*s", -2, "a"));
+	PRINTF(("%*s", -3, "a"));
 
 
 	tester_putstr("\n" RESET);
