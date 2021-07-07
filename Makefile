@@ -72,6 +72,10 @@ ${TESTS}: ${NAME}
 
 update:
 	git pull
+push:
+	git add -A
+	git commit -m "chore: automated commit"
+	git push
 
 clean:
 	make -C ./libtest clean
