@@ -44,11 +44,13 @@ CC = clang ${CFLAGS}
 
 export LSAN_OPTIONS=exitcode=30
 
-all: update ${NAME} run
+all: san
 	@echo ""
 
 san: SANITIZE := -fsanitize=address
-san: all
+san: update ${NAME} run
+
+nosan: update ${NAME} run
 
 ${NAME}: ${LIBFTPRINTF} ${LIBTEST} ${HEADERS} ${OBJS}
 	${CC} ${SANITIZE} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} -o ${NAME} -ltest -lftprintf -ldl
