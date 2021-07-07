@@ -47,11 +47,11 @@ export LSAN_OPTIONS=exitcode=30
 all: update ${NAME} run
 	@echo ""
 
-san: CFLAGS := ${CFLAGS} -fsanitize=address
+san: SANITIZE := -fsanitize=address
 san: all
 
 ${NAME}: ${LIBFTPRINTF} ${LIBTEST} ${HEADERS} ${OBJS}
-	${CC} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} -o ${NAME} -ltest -lftprintf -ldl
+	${CC} ${SANITIZE} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} -o ${NAME} -ltest -lftprintf -ldl
 	mkdir -p files
 
 ${LIBFTPRINTF}:
@@ -66,7 +66,7 @@ ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c ${HEADERS} Makefile
 run:
 	./${NAME} 2>myleaks.txt
 
-${TESTS}: CFLAGS := ${CFLAGS} -fsanitize=address
+${TESTS}: SANITIZE := -fsanitize=address
 ${TESTS}: ${NAME}
 	./${NAME} $@  2>myleaks.txt
 

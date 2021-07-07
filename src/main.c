@@ -347,6 +347,11 @@ int main(int argc, char *argv[])
 	PRINTF(("%4s", "-42"));
 	PRINTF(("%5s", "-42"));
 	PRINTF(("%6s", "-42"));
+	PRINTF(("%1s", (char *)NULL));
+	PRINTF(("%2s", (char *)NULL));
+	PRINTF(("%5s", (char *)NULL));
+	PRINTF(("%6s", (char *)NULL));
+	PRINTF(("%7s", (char *)NULL));
 	PRINTF(("%7s is as easy as %13s", "abc", "123"));
 	PRINTF(("%13s are the three first letter of the %3s", "a, b and c", "alphabet"));
 	PRINTF(("%s%13s%42s%3s", "a, b and c", " are letters", " of the", " alphabet"));
