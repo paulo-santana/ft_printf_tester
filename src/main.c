@@ -1397,6 +1397,13 @@ int main(int argc, char *argv[])
 	PRINTF(("%*p", 14, str));
 	PRINTF(("%*p", 15, str));
 	PRINTF(("%*p", 16, str));
+	PRINTF(("%*p", 17, str));
+	PRINTF(("%*p", 18, str));
+	PRINTF_EXPECTED(("%*p", 0, NULL), /* expected: */ ("0x0"));
+	PRINTF_EXPECTED(("%*p", 2, NULL), /* expected: */ ("0x0"));
+	PRINTF_EXPECTED(("%*p", 3, NULL), /* expected: */ ("0x0"));
+	PRINTF_EXPECTED(("%*p", 4, NULL), /* expected: */ ("0x0"));
+	PRINTF_EXPECTED(("%*p", 5, NULL), /* expected: */ ("0x0"));
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
