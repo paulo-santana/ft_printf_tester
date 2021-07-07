@@ -40,7 +40,7 @@ ifeq (${UNAME}, Darwin)
 	SRCS_FILES := ${SRCS_FILES} malloc_count.c 
 endif
 
-CC = clang ${CFLAGS}
+CC = gcc ${CFLAGS}
 
 export LSAN_OPTIONS=exitcode=30
 

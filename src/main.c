@@ -1344,7 +1344,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%01.3X", 0));
 	PRINTF(("%01.0X", 4));
 	PRINTF(("%01.1X", 4));
-	PRINTF(("%01.-2X", 4));
+	PRINTF(("%01.----2X", 4));
 	PRINTF(("%01.3X", 4));
 	PRINTF(("%010.20X", 42));
 	PRINTF(("%042.2X", 42000));
