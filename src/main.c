@@ -519,9 +519,9 @@ int main(int argc, char *argv[])
 	PRINTF(("%.3s", "-42"));
 	PRINTF(("%.4s", "-42"));
 	PRINTF(("%.7s", "-42"));
-	PRINTF(("%.1s", (char *)NULL));
-	PRINTF(("%.2s", (char *)NULL));
-	PRINTF(("%.5s", (char *)NULL));
+	PRINTF_EXPECTED(("%.1s", (char *)NULL), /* expected: */ ("("));
+	PRINTF_EXPECTED(("%.2s", (char *)NULL), /* expected: */ ("(n"));
+	PRINTF_EXPECTED(("%.5s", (char *)NULL), /* expected: */ ("(null"));
 	PRINTF(("%.6s", (char *)NULL));
 	PRINTF(("%.7s", (char *)NULL));
 	PRINTF(("%.2s, motherfucker", "hi there"));
