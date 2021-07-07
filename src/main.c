@@ -239,7 +239,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%s", "-2"));
 	PRINTF(("%s", "-24"));
 	PRINTF(("%s", "-stop"));
-	PRINTF(("t"));
+	PRINTF(("%s", (char *)NULL));
 	PRINTF(("%s", "h"));
 	PRINTF(("t%st%s", "a", "u"));
 	PRINTF(("%s%s%s%s%s%s", "a", "i", "u", "e", "o", "l"));
