@@ -1373,6 +1373,11 @@ int main(int argc, char *argv[])
 	PRINTF(("%*c*%*c*", -1, 'a', 1, 'b'));
 	PRINTF(("%-*c*%-*c*", 3, 'a', -3, 'b'));
 
+	describe("\nTest %c with some * widths");
+
+	PRINTF(("%*s", 1, "a"));
+
+
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
 	{
