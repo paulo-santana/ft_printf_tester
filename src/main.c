@@ -239,7 +239,8 @@ int main(int argc, char *argv[])
 	PRINTF(("%s", "-2"));
 	PRINTF(("%s", "-24"));
 	PRINTF(("%s", "-stop"));
-	PRINTF(("%s", (char *)NULL));
+	char *null_str = NULL;
+	PRINTF(("%s", null_str));
 	PRINTF(("%s", "h"));
 	PRINTF(("t%st%s", "a", "u"));
 	PRINTF(("%s%s%s%s%s%s", "a", "i", "u", "e", "o", "l"));
@@ -347,11 +348,11 @@ int main(int argc, char *argv[])
 	PRINTF(("%4s", "-42"));
 	PRINTF(("%5s", "-42"));
 	PRINTF(("%6s", "-42"));
-	PRINTF(("%1s", (char *)NULL));
-	PRINTF(("%2s", (char *)NULL));
-	PRINTF(("%5s", (char *)NULL));
-	PRINTF(("%6s", (char *)NULL));
-	PRINTF(("%7s", (char *)NULL));
+	PRINTF(("%1s", null_str));
+	PRINTF(("%2s", null_str));
+	PRINTF(("%5s", null_str));
+	PRINTF(("%6s", null_str));
+	PRINTF(("%7s", null_str));
 	PRINTF(("%7s is as easy as %13s", "abc", "123"));
 	PRINTF(("%13s are the three first letter of the %3s", "a, b and c", "alphabet"));
 	PRINTF(("%s%13s%42s%3s", "a, b and c", " are letters", " of the", " alphabet"));
@@ -519,11 +520,11 @@ int main(int argc, char *argv[])
 	PRINTF(("%.3s", "-42"));
 	PRINTF(("%.4s", "-42"));
 	PRINTF(("%.7s", "-42"));
-	PRINTF_EXPECTED(("%.1s", (char *)NULL), /* expected: */ ("("));
-	PRINTF_EXPECTED(("%.2s", (char *)NULL), /* expected: */ ("(n"));
-	PRINTF_EXPECTED(("%.5s", (char *)NULL), /* expected: */ ("(null"));
-	PRINTF(("%.6s", (char *)NULL));
-	PRINTF(("%.7s", (char *)NULL));
+	PRINTF_EXPECTED(("%.1s", null_str), /* expected: */ ("("));
+	PRINTF_EXPECTED(("%.2s", null_str), /* expected: */ ("(n"));
+	PRINTF_EXPECTED(("%.5s", null_str), /* expected: */ ("(null"));
+	PRINTF(("%.6s", null_str));
+	PRINTF(("%.7s", null_str));
 	PRINTF(("%.2s, motherfucker", "hi there"));
 	PRINTF(("This %.3s a triumph ", "wasabi"));
 	PRINTF(("%.4s making a %.4s here: %.13s", "I'm delighted", "notation", "HUGE SUCCESS!"));
@@ -1368,6 +1369,10 @@ int main(int argc, char *argv[])
 	PRINTF(("%012X, %X, %002X, %42X", -1, 3, 30, -1));
 	PRINTF(("%0014.2X%020X%0002.X%000.5X", -1, 3, 30, -1));
 	PRINTF(("%014Xc%020Xs%02XX%0Xi", -1, 3, 30, -1));
+
+	describe("\nTest %% with the 0 flag");
+
+	PRINTF(("%05%"));
 
 	describe("\nTest %c with some * widths");
 
