@@ -728,6 +728,7 @@ int main(int argc, char *argv[])
 
 	// this is literally a negative width '-'
 	PRINTF(("%-c", 'p'));
+	PRINTF(("%-c%-c%c*", 0, '1', 1));
 	PRINTF(("%-1c", 'b'));
 	PRINTF(("%-5c", 'w'));
 	PRINTF((" kk daora%-5cblz", 'w'));
@@ -1451,7 +1452,30 @@ int main(int argc, char *argv[])
 	PRINTF(("%*p", -16, str));
 	PRINTF(("%*p", -17, str));
 	PRINTF(("%*p", -18, str));
-	PRINTF(("%4.*s", -3, str));
+
+	describe("\nTest %d with some * widths");
+
+	PRINTF(("%*d", 2, 0));
+	PRINTF(("%*d", 1, -4));
+	PRINTF(("%*d", 2, -4));
+	PRINTF(("%*d", 3, -4));
+	PRINTF(("%*d", 2, 42));
+	PRINTF(("%*d", 6, 42000));
+	PRINTF(("%*d", 7, -42000));
+	PRINTF(("wait for it... %*d", 50, 42));
+	PRINTF(("%*d is how many tests are going to be made", 10, 8000));
+	PRINTF(("%*d", 9, 2147483647));
+	PRINTF(("%*d", 10, 2147483647));
+	PRINTF(("%*d", 11, 2147483647));
+	PRINTF(("%*d", 5, (int)-2147483648));
+	PRINTF(("%*d", 10, (int)-2147483648));
+	PRINTF(("%*d", 11, (int)-2147483648));
+	PRINTF(("%*d", 12, (int)-2147483648));
+	PRINTF(("%*d", 13, (int)-2147483648));
+	PRINTF(("%*d, %20d, %*d, %42d", 10, (int)-2147483648, 3, 3, 30, -1));
+	PRINTF(("%15d, %d, %2d, %42d", (int)-2147483648, 3, 30, -1));
+	PRINTF(("%*d%*d%2d%d", 5, (int)-2147483648, 10, 3, 30, -1));
+	PRINTF(("%*dc%*ds%2dx%du", (int)-2147483648, 3, 30, -1));
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
