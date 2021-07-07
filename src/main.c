@@ -1372,7 +1372,7 @@ int main(int argc, char *argv[])
 
 	describe("\nTest %% with the 0 flag");
 
-	PRINTF(("%05%"));
+	PRINTF_EXPECTED(("%05%"), /* expected: */ ("0000%%"));
 
 	describe("\nTest %c with some * widths");
 
