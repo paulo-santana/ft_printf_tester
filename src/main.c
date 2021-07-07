@@ -1381,6 +1381,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%*s", -1, "a"));
 	PRINTF(("%*s", -2, "a"));
 	PRINTF(("%*s", -3, "a"));
+	PRINTF(("%-*s%s", 3, "a", "bc"));
 
 
 	tester_putstr("\n" RESET);
