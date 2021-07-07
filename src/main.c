@@ -519,6 +519,11 @@ int main(int argc, char *argv[])
 	PRINTF(("%.3s", "-42"));
 	PRINTF(("%.4s", "-42"));
 	PRINTF(("%.7s", "-42"));
+	PRINTF(("%.1s", (char *)NULL));
+	PRINTF(("%.2s", (char *)NULL));
+	PRINTF(("%.5s", (char *)NULL));
+	PRINTF(("%.6s", (char *)NULL));
+	PRINTF(("%.7s", (char *)NULL));
 	PRINTF(("%.2s, motherfucker", "hi there"));
 	PRINTF(("This %.3s a triumph ", "wasabi"));
 	PRINTF(("%.4s making a %.4s here: %.13s", "I'm delighted", "notation", "HUGE SUCCESS!"));
