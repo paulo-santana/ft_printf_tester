@@ -707,6 +707,7 @@ int main(int argc, char *argv[])
 	describe("\n\n==> Flag testing");
 	describe("\nTest %c with the '-' flag and variable widths");
 
+	// this is literally a negative width '-'
 	PRINTF(("%-c", 'p'));
 	PRINTF(("%-1c", 'b'));
 	PRINTF(("%-5c", 'w'));
@@ -1366,6 +1367,10 @@ int main(int argc, char *argv[])
 	PRINTF(("%*c*%c", 8, 'a', 'b'));
 	PRINTF(("%*c*%*c", 8, 'a', 2, 'b'));
 	PRINTF(("%*c*%*c", -8, 'a', 2, 'b'));
+	PRINTF(("%*c*%*c", -8, 'a', -2, 'b'));
+	PRINTF(("%*c*%*c*", -8, 'a', -2, 'b'));
+	PRINTF(("%*c*%*c*", 8, 'a', -1, 'b'));
+	PRINTF(("%*c*%*c*", -1, 'a', 1, 'b'));
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
