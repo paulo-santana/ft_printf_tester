@@ -149,6 +149,14 @@ int check_result(char *params_used)
 			success = test_string(expected, result);
 			wrong_return = check_return(user_file, orig_file);
 		}
+		else
+		{
+			char *dummy_str;
+			get_next_line(orig_file, &dummy_str);
+			free(dummy_str);
+			get_next_line(user_file, &dummy_str);
+			free(dummy_str);
+		}
 
 		if (success && !wrong_return && !errors)
 			tester_putstr(GREEN);
@@ -1344,7 +1352,6 @@ int main(int argc, char *argv[])
 	PRINTF(("%01.3X", 0));
 	PRINTF(("%01.0X", 4));
 	PRINTF(("%01.1X", 4));
-	PRINTF(("%01.----2X", 4));
 	PRINTF(("%01.3X", 4));
 	PRINTF(("%010.20X", 42));
 	PRINTF(("%042.2X", 42000));
@@ -1444,6 +1451,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%*p", -16, str));
 	PRINTF(("%*p", -17, str));
 	PRINTF(("%*p", -18, str));
+	PRINTF(("%4.*s", -3, str));
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
