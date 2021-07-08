@@ -9,27 +9,27 @@ void print_int_diff(int expected, int result)
 	tester_putstr(RESET "\n");
 }
 
-void	print_string_diff(char expected[], char result[], unsigned int size)
+void	print_string_diff(char expected[], char result[], unsigned int expected_size, unsigned int result_size)
 {
 	int is_red_already = 0;
 
 	tester_putstr(RESET "        Expected: [");
-	for (unsigned int i = 0; i < size; i++)
+	for (unsigned int i = 0; i < expected_size; i++)
 	{
 		if (expected[i] == '\0')
 			tester_putstr(MAGENTA "\\0" RESET);
 		else if (expected[i] == '\n')
 			tester_putstr(MAGENTA "\\n" RESET);
 		else if (!isprint(expected[i]))
-			tester_putchar('*');
+			tester_putstr(MAGENTA "*");
 		else
 			tester_putchar(expected[i]);
 	}
 
 	tester_putstr("]\n        Got:      [");
-	int i = 0;
+	unsigned int i = 0;
 	int expected_ended = 0;
-	while (1)
+	while (i < result_size)
 	{
 		if (expected_ended || ((expected[i] != result[i]) && !is_red_already))
 		{

@@ -1,24 +1,191 @@
 #include "get_next_line.h"
 #include "libftprintf.h"
+#include "../libtest/libtest.h"
+#include "ft_printf_tester.h"
+#include "helpers.h"
 
+extern int current_test;
+extern int test_nbr;
+extern int passed_tests;
 
-int check_return(int user_file, int orig_file)
+void pretty_printf(char *params)
 {
-	int failed = 0;
-	char *orig_return_str;
-	char *user_return_str;
-	int orig_return;
-	int user_return;
-	int result = 1;
+	int i = 0;
+	int inside_string = 0;
 
-	get_next_line(orig_file, &orig_return_str);
-	result = get_next_line(user_file, &user_return_str);
-	orig_return = atoi(orig_return_str);
-	user_return = atoi(user_return_str);
-	free(orig_return_str);
-	free(user_return_str);
-	if (user_return != orig_return)
-		failed = 1;
+	tester_putstr(BLUE "ft_printf" RESET);
+	while (params[i])
+	{
+		if (params[i] == '"' || params[i] == '\'')
+		{
+			if (inside_string)
+				tester_putchar(params[i]), tester_putstr(RESET), inside_string = 0;
+			else
+				tester_putstr(GREEN), tester_putchar(params[i]), inside_string = 1;
+		}
+		else if (isdigit(params[i]) && !inside_string)
+		{
+			if (!isdigit(params[i - 1]))
+				tester_putstr(YELLOW);
+			tester_putchar(params[i]);
+		}
+		else
+		{
+			if (i > 0 && isdigit(params[i - 1]) && !inside_string)
+				tester_putstr(RESET);
+			tester_putchar(params[i]);
 
-	return (failed);
+		}
+		i++;
+	}
+	tester_putchar('\n');
+}
+
+int already_printed_help = 0;
+void print_help(char *params_used)
+{
+	if (already_printed_help)
+		return ;
+	already_printed_help = 1;
+	tester_putstr("\n     ");
+	tester_putstr(RESET BOLD "You can rerun this test with " RESET YELLOW "make ");
+	tester_putnbr(current_test);
+	tester_putstr(RESET "\n     ");
+	tester_putstr("The function was called like this:\n   ");
+	pretty_printf(params_used);
+}
+
+int check_leaks_sanitizer(int user_stderr)
+{
+	int n = 0;
+	int error = 0;
+	char *line;
+	int result = get_next_line(user_stderr, &line);
+	free(line);
+	if (result == 0)
+		return (0);
+	result = get_next_line(user_stderr, &line); // get rid of the first line
+	n = strlen(line);
+	if (tester_strnstr(line, "heap-buffer-overflow", n))
+	{
+		error = ERRORS_BUFFER_OVERFLOW;
+	}
+	free(line);
+	result = get_next_line(user_stderr, &line); // get rid of the first line
+	n = strlen(line);
+	if (tester_strnstr(line, "leaks", n))
+		error = ERRORS_LEAK;
+	else if (tester_strnstr(line, "SEGV", n))
+		error = ERRORS_SIGSEGV;
+	free(line);
+	// get rid of the rest of the file
+	char dummy_buffer[100];
+	while (read(user_stderr, dummy_buffer, 100));
+	get_next_line(user_stderr, &line);
+	free(line);
+	return (error);
+}
+
+int check_leaks_malloc_count(int user_stderr)
+{
+	int result;
+	int leaked = 0;
+	char *line;
+
+	while (1)
+	{
+		result = get_next_line(user_stderr, &line);
+		if (result <= 0)
+		{
+			free(line); break ;
+		}
+		if (!tester_strnstr(line, "current: 0", tester_strlen(line)))
+		{
+			leaked = 1;
+		}
+		free(line);
+	}
+	return (leaked);
+}
+
+int check_errors(char *params_used)
+{
+	int error = 0;
+	(void) params_used;
+
+	int user_stderr = open("files/user_stderr.txt", O_RDONLY);
+
+	if (LEAK_CHECKER == LEAK_SANITIZER)
+		error = check_leaks_sanitizer(user_stderr);
+	else if (LEAK_CHECKER == MALLOC_COUNT)
+		error = check_leaks_malloc_count(user_stderr);
+	close(user_stderr);
+	return (error);
+}
+
+int check_result(t_result user_result, t_result orig_result, char *params_used)
+{
+	if (current_test == test_nbr || test_nbr == 0)
+	{
+		char *result;
+		char *expected;
+		int success = 1;
+		int errors = 0;
+		int wrong_return = 0;
+
+		errors = check_errors(params_used);
+		expected = orig_result.output_str;
+		result = user_result.output_str;
+		if (!errors || errors == ERRORS_LEAK)
+		{
+			success = test_string(expected, result, orig_result.bytes_read);
+			wrong_return = user_result.return_value != orig_result.return_value;
+		}
+
+		if (success && !wrong_return && !errors)
+			tester_putstr(GREEN);
+		else
+			tester_putstr(BOLD RED "\n  ");
+		tester_putnbr(current_test);
+		tester_putchar('.');
+
+		if (success && !wrong_return && (!errors || errors == ERRORS_LEAK))
+			tester_putstr(BOLD "OK" RESET);
+		else if (errors) {
+			if (errors == ERRORS_SIGSEGV)
+				tester_putstr(BOLD "SIGSEGV!" RESET RED " - check files/user_stderr.txt");
+		}
+		else
+			tester_putstr("KO");
+
+		if (!success)
+			tester_putstr(" (Wrong output)");
+		if (wrong_return)
+			tester_putstr(" (Wrong return)");
+		if (errors == ERRORS_LEAK)
+		{
+			tester_putstr(RED " (LEAKS!)");
+		}
+		if (!success)
+		{
+			tester_putstr("\n");
+			print_string_diff(expected, result, orig_result.bytes_read, user_result.bytes_read);
+		}
+		else
+			tester_putchar(' ');
+		if (!success || errors || wrong_return)
+			print_help(params_used);
+		else
+			passed_tests++;
+	}
+	return (0);
+}
+
+void describe(char *test_title)
+{
+	if (test_nbr != 0)
+		return ;
+	tester_putstr(BOLD);
+	tester_putstr(test_title);
+	tester_putstr(": "RESET "\n  ");
 }

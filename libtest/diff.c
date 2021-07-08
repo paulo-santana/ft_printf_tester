@@ -1,6 +1,6 @@
 #include "libtest.h"
 
-int test_string(char *expected, char *got)
+int test_string(char *expected, char *got, int limit)
 {
 	int success = 1;
 	//int len = 0;
@@ -12,7 +12,7 @@ int test_string(char *expected, char *got)
 	}
 	else if (got == NULL)
 		success = 0;
-	else if (strcmp(expected, got) != 0)
+	else if (strncmp(expected, got, limit) != 0)
 	{
 		success = 0;
 		//len = strlen(expected) + 1;

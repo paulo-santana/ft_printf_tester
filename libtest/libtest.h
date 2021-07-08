@@ -30,8 +30,8 @@ void tester_putstr(char *str);
 void tester_putnbr(int nbr);
 char *tester_strnstr(const char *big, const char *little, size_t len);
 void print_int_diff(int expected, int result);
-void print_string_diff(char expected[], char result[], unsigned int size);
-int test_string(char *expected, char *got);
+void print_string_diff(char expected[], char result[], unsigned int expected_size, unsigned int result_size);
+int test_string(char *expected, char *got, int limit);
 int test_int(char *description, int expected, int result);
 void print_success(char *desc, int success);
 
