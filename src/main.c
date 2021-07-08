@@ -37,11 +37,15 @@ int main(int argc, char *argv[])
 	describe("\nTest simple %c formats");
 
 	PRINTF(("%c", 'a'));
+	PRINTF(("%c%c%c*", '\0', '1', 1));
 	PRINTF(("%c small string", 'a'));
+	PRINTF(("%c small string", '\0'));
 	PRINTF(("the char is: %c", 'a'));
+	PRINTF(("the char is: %c", '\0'));
 	PRINTF(("n%cs", 'a'));
 	PRINTF(("%c%c%c%c%c", 'a', 'i', 'u', 'e', 'o'));
 	PRINTF(("l%cl%cl%cl%cl%c", 'a', 'i', 'u', 'e', 'o'));
+	PRINTF(("l%cl%cl%cl%cl%c", '\0', '\0', '\0', 'e', '\0'));
 
 	describe("\nTest simple %s formats");
 
@@ -1205,6 +1209,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%*c*%*c*", 8, 'a', -1, 'b'));
 	PRINTF(("%*c*%*c*", -1, 'a', 1, 'b'));
 	PRINTF(("%-*c*%-*c*", 3, 'a', -3, 'b'));
+	PRINTF(("%-*c*%-*c*", 3, '\0', -3, 'b'));
 
 	describe("\nTest %s with some * widths");
 
@@ -1218,6 +1223,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%-*s%-s", -8, "a", "bc"));
 	PRINTF(("%*s%-*s*", -8, "a", 8, "bc"));
 	PRINTF(("%*s%-*s*", -8, "a", -8, "bc"));
+	PRINTF(("%*s who would %-*s* say?", 5, "a", 2, "bc"));
 
 	describe("\nTest %p with some * widths");
 
@@ -1261,6 +1267,9 @@ int main(int argc, char *argv[])
 
 	describe("\nTest %d with some * widths");
 
+	PRINTF(("%*d", 0, 0));
+	PRINTF(("%*d", 0, 7));
+	PRINTF(("%*d", 0, 237));
 	PRINTF(("%*d", 2, 0));
 	PRINTF(("%*d", 1, -4));
 	PRINTF(("%*d", 2, -4));
