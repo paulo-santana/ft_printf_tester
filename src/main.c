@@ -1475,7 +1475,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%*d, %20d, %*d, %42d", 10, (int)-2147483648, 3, 3, 30, -1));
 	PRINTF(("%15d, %d, %2d, %42d", (int)-2147483648, 3, 30, -1));
 	PRINTF(("%*d%*d%2d%d", 5, (int)-2147483648, 10, 3, 30, -1));
-	PRINTF(("%*dc%*ds%2dx%du", (int)-2147483648, 3, 30, -1));
+	PRINTF(("%*dc%*ds%2dx%du", 7, (int)-2147483648, 3, 30, -1));
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
