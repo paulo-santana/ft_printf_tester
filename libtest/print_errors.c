@@ -37,7 +37,7 @@ void	print_string_diff(char expected[], char result[], unsigned int expected_siz
 {
 	int is_red_already = 0;
 
-	tester_putstr(RESET "        Expected: \"");
+	tester_putstr(RESET "        Expected: [");
 	for (unsigned int i = 0; i < expected_size; i++)
 	{
 		if (expected[i] == '\0')
@@ -50,7 +50,7 @@ void	print_string_diff(char expected[], char result[], unsigned int expected_siz
 			tester_putchar(expected[i]);
 	}
 
-	tester_putstr("\"\n        Got:      \"");
+	tester_putstr("]\n        Got:      [");
 	unsigned int i = 0;
 	int expected_ended = 0;
 	while (i < result_size)
@@ -77,5 +77,5 @@ void	print_string_diff(char expected[], char result[], unsigned int expected_siz
 			expected_ended = 1;
 		i++;
 	}
-	tester_putstr(RESET "\"\n");
+	tester_putstr(RESET "]\n");
 }
