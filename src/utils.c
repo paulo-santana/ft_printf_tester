@@ -164,12 +164,9 @@ int check_result(t_result user_result, t_result orig_result, char *params_used)
 			tester_putstr(" (Wrong return)");
 		if (errors == ERRORS_LEAK)
 			tester_putstr(RED " (LEAKS!)");
-		if (1) {
+		if (!success) {
 			tester_putstr("\n");
 			print_string_diff(expected, result, orig_result.bytes_read, user_result.bytes_read);
-			tester_putnbr(orig_result.return_value);
-			tester_putstr("\n");
-			tester_putnbr(user_result.return_value);
 		}
 		else
 			tester_putchar(' ');
