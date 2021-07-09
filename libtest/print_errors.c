@@ -71,8 +71,6 @@ void	print_string_diff(char expected[], char result[], unsigned int expected_siz
 			print_non_print(result[i]);
 		else
 			tester_putchar(result[i]);
-		if (result[i] == '\0')
-			break ;
 		if (!expected_ended && expected[i] == '\0')
 			expected_ended = 1;
 		i++;
