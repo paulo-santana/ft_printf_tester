@@ -9,9 +9,7 @@ int test_string(char *expected, char *got, int limit)
 			success = 0;
 	} else if (got == NULL)
 		success = 0;
-	else if (memcmp(expected, got, limit) != 0) {
+	else if (memcmp(expected, got, limit) != 0)
 		success = 0;
-		//len = strlen(expected) + 1;
-	}
 	return (success);
 }

@@ -1419,6 +1419,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%015i, %i, %*i, %*i", (int)-2147483648, 3, 30, 4, 5, -1));
 	PRINTF(("%0*i%*i%0000002i%i", 5, (int)-2147483648, 10, 3, 30, -1));
 	PRINTF(("%0*ic%*is%2ix%iu", 7, (int)-2147483648, 3, 30, -5, -1));
+	PRINTF((NULL));
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
