@@ -231,6 +231,7 @@ void fetch_result(t_result *result, char *output_buffer, int *stdout_pipe, int *
 	close(stdout_pipe[WRITE]);
 	close(rtrn_pipe[WRITE]);
 	int bytes_read = read(stdout_pipe[READ], output_buffer, BUFSIZE);
+	g_function_return = -10;
 	read(rtrn_pipe[READ], &g_function_return, sizeof(int));
 	close(stdout_pipe[READ]);
 	close(rtrn_pipe[READ]);
