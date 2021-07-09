@@ -1656,6 +1656,36 @@ int main(int argc, char *argv[])
 	PRINTF_EXPECTED(("%*%s%*%id%%10%*%%*%", 2, 1, 5, 9),               /* expected: */ (" %%s%%id%%10    %%        %%"));
 	PRINTF_EXPECTED(("hey, what's %*% up%%?", 5),             /* expected: */ ("hey, what's     %% up%%?"));
 
+	describe("\nTest %s with some * precisions");
+
+	PRINTF(("%.*s", 0, "hi there"));
+	PRINTF(("%.*s", 0, "hi there"));
+	PRINTF(("%.*s", 1, "hi there"));
+	PRINTF(("%.*s", 2, "hi there"));
+	PRINTF(("%.*s", 3, "hi there"));
+	PRINTF(("%.*s", 4, "hi there"));
+	PRINTF(("%.*s", 7, "hi there"));
+	PRINTF(("%.*s", 8, "hi there"));
+	PRINTF(("%.*s", 9, "hi there"));
+	PRINTF(("%.*s", 12, "hi there"));
+	PRINTF(("%.*s", 0, "-42"));
+	PRINTF(("%.*s", 0, "-42"));
+	PRINTF(("%.*s", 1, "-42"));
+	PRINTF(("%.*s", 2, "-42"));
+	PRINTF(("%.*s", 3, "-42"));
+	PRINTF(("%.*s", 4, "-42"));
+	PRINTF(("%.*s", 7, "-42"));
+	PRINTF_EXPECTED(("%.*s", 1, null_str), /* expected: */ ("("));
+	PRINTF_EXPECTED(("%.*s", 2,null_str), /* expected: */ ("(n"));
+	PRINTF_EXPECTED(("%.*s", 5, null_str), /* expected: */ ("(null"));
+	PRINTF(("%.6s", null_str));
+	PRINTF(("%.7s", null_str));
+	PRINTF(("%.2s, motherfucker", "hi there"));
+	PRINTF(("This %.3s a triumph ", "wasabi"));
+	PRINTF(("%.4s making a %.4s here: %.13s", "I'm delighted", "notation", "HUGE SUCCESS!"));
+	PRINTF(("It's %.4s to over%.50s my%s", "hardware", "state", " satisfaction"));
+	PRINTF(("%.11s%.6s%.4s", "Aperture", " Scientists", "ce"));
+
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
