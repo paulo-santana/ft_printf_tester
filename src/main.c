@@ -1345,6 +1345,49 @@ int main(int argc, char *argv[])
 	PRINTF(("%015d, %d, %*d, %*d", (int)-2147483648, 3, 30, 4, 5, -1));
 	PRINTF(("%0*d%*d%0000002d%d", 5, (int)-2147483648, 10, 3, 30, -1));
 	PRINTF(("%0*dc%*ds%2dx%du", 7, (int)-2147483648, 3, 30, -5, -1));
+	PRINTF(("%*d", -2, 0));
+	PRINTF(("%*d", -1, -4));
+	PRINTF(("%*d", -2, -4));
+	PRINTF(("%*d", -3, -4));
+	PRINTF(("%*d", -2, 42));
+	PRINTF(("%*d", -6, 42000));
+	PRINTF(("%*d", -7, -42000));
+	PRINTF(("wait for it... %*d", -50, 42));
+	PRINTF(("%*d is how many tests are going to be made", 10, 8000));
+	PRINTF(("%*d", -9, 2147483647));
+	PRINTF(("%*d", -10, 2147483647));
+	PRINTF(("%*d", -11, 2147483647));
+	PRINTF(("%*d", -5, (int)-2147483648));
+	PRINTF(("%*d", -10, (int)-2147483648));
+	PRINTF(("%*d", -11, (int)-2147483648));
+	PRINTF(("%*d", -12, (int)-2147483648));
+	PRINTF(("%*d", -13, (int)-2147483648));
+	PRINTF(("%*d, %20d, %*d, %42d", -10, (int)-2147483648, 3, 3, -30, -1));
+	PRINTF(("%*d%*d%2d%d", -5, (int)-2147483648, -10, 3, 30, -1));
+	PRINTF(("%*dc%*ds%2dx%du", -7, (int)-2147483648, -3, 30, -5, -1));
+	PRINTF(("%-*d", -0, 7));
+	PRINTF(("%-*d", -0, 237));
+	PRINTF(("%-*d", -2, 0));
+	PRINTF(("%-*d", -1, -4));
+	PRINTF(("%-*d", -2, -4));
+	PRINTF(("%-*d", -3, -4));
+	PRINTF(("%-*d", -2, 42));
+	PRINTF(("%-*d", -6, 42000));
+	PRINTF(("%-*d", -7, -42000));
+	PRINTF(("wait for it... %-*d", -50, 42));
+	PRINTF(("%-*d is how many tests are going to be made", 10, 8000));
+	PRINTF(("%-*d", 9, 2147483647));
+	PRINTF(("%-*d", 10, 2147483647));
+	PRINTF(("%-*d", 11, 2147483647));
+	PRINTF(("%-*d", 5, (int)-2147483648));
+	PRINTF(("%-*d", 10, (int)-2147483648));
+	PRINTF(("%-*d", 11, (int)-2147483648));
+	PRINTF(("%-*d", 12, (int)-2147483648));
+	PRINTF(("%-*d", 13, (int)-2147483648));
+	PRINTF(("%-*d, %20d, %*d, %42d", 10, (int)-2147483648, 3, 3, 30, -1));
+	PRINTF(("%-15d, %d, %*d, %*d", (int)-2147483648, 3, 30, 4, 5, -1));
+	PRINTF(("%-*d%*d%2d%d", 5, (int)-2147483648, 10, 3, 30, -1));
+	PRINTF(("%-*dc%*ds%2dx%du", 7, (int)-2147483648, 3, 30, -5, -1));
 
 	describe("\nTest %i with some * widths");
 
@@ -1676,16 +1719,15 @@ int main(int argc, char *argv[])
 	PRINTF(("%.*s", 4, "-42"));
 	PRINTF(("%.*s", 7, "-42"));
 	PRINTF_EXPECTED(("%.*s", 1, null_str), /* expected: */ ("("));
-	PRINTF_EXPECTED(("%.*s", 2,null_str), /* expected: */ ("(n"));
+	PRINTF_EXPECTED(("%.*s", 2,null_str),  /* expected: */ ("(n"));
 	PRINTF_EXPECTED(("%.*s", 5, null_str), /* expected: */ ("(null"));
 	PRINTF(("%.*s", 6, null_str));
 	PRINTF(("%.*s", 7, null_str));
 	PRINTF(("%.*s, motherfucker", 2, "hi there"));
-	PRINTF(("This %.*s a triumph ", 3, "wasabi"));
-	PRINTF(("%.*s making a %.*s here: %.*s", 4, "I'm delighted", 4,"notation", 13, "HUGE SUCCESS!"));
-	PRINTF(("It's %.*s to over%.*s my%s", 4, "hardware", 50, "state", " satisfaction"));
-	PRINTF(("%.*s%.*s%.*s", 11, "Aperture", 6, " Scientists", 4, "ce"));
-
+	PRINTF(("Except %.*s ones who are dead ", 3, "theme"));
+	PRINTF(("%.*s there's no %.*s crying %.*s mistake", 3, "Buttom", 5, "sense", 13, "over every"));
+	PRINTF(("You %.*s keep on%.*s till %s run out of cake", 4, "justice", 20, " trying", "you"));
+	PRINTF(("%.*s%.*s%.*s", 16, "And the science", 6, " gets", 4, "done"));
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
