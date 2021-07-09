@@ -15,6 +15,7 @@ int test_nbr;
 char g_user_fake_stdout[BUFSIZE];
 char g_orig_fake_stdout[BUFSIZE];
 int g_function_return;
+char *test_params;
 
 extern int already_printed_help;
 

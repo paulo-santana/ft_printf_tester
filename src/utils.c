@@ -237,19 +237,30 @@ void fetch_result(t_result *result, char *output_buffer, int *stdout_pipe, int *
 	result->bytes_read = bytes_read;
 }
 
-void handle_errors(int wstatus) {
-	tester_putstr(BOLD RED);
-	tester_putnbr(g_current_test);
-	switch(wstatus - 128) {
-		case SIGSEGV: /* classic segfault */
-			tester_putstr(".SIGSEGV! " RESET);
-			break;
-		case 14 - 128: /* timeout */
-			tester_putstr(".TIMEOUT! " RESET);
-			break;
-		default: /* something yet to be discovered */
-			tester_putstr(".CRASH! wstatus: ");
-			tester_putnbr(wstatus);
-			tester_putstr(RESET);
+extern char *test_params;
+extern char *g_user_fake_stdout;
+
+void handle_errors(int wstatus, t_result *user_r, t_result *orig_r,
+		char *user_output, int *output_pipe, int *return_pipe) {
+	/* 30 is the status code for the leak sanitizer   */
+	if (wstatus != 0 && wstatus != 256 * 30) {
+		tester_putstr(BOLD RED);
+		tester_putnbr(g_current_test);
+		switch(wstatus - 128) {
+			case SIGSEGV: /* classic segfault */
+				tester_putstr(".SIGSEGV! " RESET);
+				break;
+			case 14 - 128: /* timeout */
+				tester_putstr(".TIMEOUT! " RESET);
+				break;
+			default: /* something yet to be discovered */
+				tester_putstr(".CRASH! wstatus: ");
+				tester_putnbr(wstatus);
+				tester_putstr(RESET);
+		}
+		print_help(test_params);
+	} else {
+		fetch_result(user_r, user_output, output_pipe, return_pipe);
+		check_result(*user_r, *orig_r, test_params);
 	}
 }

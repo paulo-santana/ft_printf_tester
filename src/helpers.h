@@ -19,44 +19,46 @@
 # define READ 0
 # define WRITE 1
 
+/*
+ * trying to make the define smaller
+ * or = orig_result;
+ * ur = user_result;
+ * op = stdout_pipe;
+ * rp = rtrn_pipe;
+ * 
+ * */
+
 #define __PRINTF_EXPECTED(params, expected) { \
 	already_printed_help = 0; \
 	if (g_current_test == test_nbr || test_nbr == 0) \
 	{ \
-		t_result orig_result, user_result; \
-		int stdout_pipe[2]; \
-		int rtrn_pipe[2]; \
-		open_pipes(stdout_pipe, rtrn_pipe); \
+		t_result or, ur; \
+		int op[2], rp[2]; \
+		open_pipes(op, rp); \
 		int child = fork(); \
 		if (child == 0) { \
-			prepare_test("files/original_stderr.txt", stdout_pipe, rtrn_pipe); \
+			prepare_test("files/original_stderr.txt", op, rp); \
 			int result = printf expected; \
-			finish_test(result, stdout_pipe, rtrn_pipe); \
+			finish_test(result, op, rp); \
 		} \
 		else \
 		{ \
-			fetch_result(&orig_result, g_orig_fake_stdout, stdout_pipe, rtrn_pipe); \
+			fetch_result(&or, g_orig_fake_stdout, op, rp); \
 			waitpid(child, &wstatus, 0); \
 		} \
-		open_pipes(stdout_pipe, rtrn_pipe); \
+		open_pipes(op, rp); \
 		child = fork(); \
 		if (child == 0) { \
-			prepare_test("files/user_stderr.txt", stdout_pipe, rtrn_pipe); \
+			prepare_test("files/user_stderr.txt", op, rp); \
 			alarm(1); \
 			int result = ft_printf params; \
-			finish_test(result, stdout_pipe, rtrn_pipe); \
+			finish_test(result, op, rp); \
 		} \
 		else \
 		{ \
 			waitpid(child, &wstatus, 0); \
-			/* 30 is the status code for the leak sanitizer   */ \
-			if (wstatus != 0 && wstatus != 256 * 30) { \
-				handle_errors(wstatus); \
-				print_help(#params); \
-			} else { \
-				fetch_result(&user_result, g_user_fake_stdout, stdout_pipe, rtrn_pipe); \
-				check_result(user_result, orig_result, #params); \
-			} \
+			test_params = #params; \
+			handle_errors(wstatus, &ur, &or, g_user_fake_stdout, op, rp); \
 		} \
 	} \
 	g_current_test++; \

@@ -25,6 +25,7 @@ void open_pipes(int *p1, int *p2);
 void prepare_test(char *err_file, int *outpipe, int *retpipe);
 void finish_test(int result, int *outpipe, int *retpipe);
 void fetch_result(t_result *result, char *output_buffer, int *stdout_pipe, int *rtrn_pipe);
-void handle_errors(int wstatus);
+void handle_errors(int wstatus, t_result *user_r, t_result *orig_r,
+		char *user_output, int *output_pipe, int *return_pipe);
 
 #endif
