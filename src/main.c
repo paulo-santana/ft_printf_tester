@@ -1967,7 +1967,7 @@ int main(int argc, char *argv[])
 	PRINTF(("%0*Xc%*Xs%2Xx%Xu", -7, (int)-2147483648, -3, 30, -5, -1));
 
 	describe("\nTest %% with some * widths");
-
+    
 	PRINTF(("%*%", 1));
 	PRINTF_EXPECTED(("%*%", 5),                               /* expected: */ ("    %%"));
 	PRINTF_EXPECTED(("%*%", 2),                               /* expected: */ (" %%"));
@@ -2012,6 +2012,8 @@ int main(int argc, char *argv[])
 	PRINTF(("%.*s there's no %.*s crying %.*s mistake", 3, "Buttom", 5, "sense", 13, "over every"));
 	PRINTF(("You %.*s keep on%.*s till %s run out of cake", 4, "justice", 20, " trying", "you"));
 	PRINTF(("%.*s%.*s%.*s", 16, "And the science", 6, " gets", 4, "done"));
+
+	PRINTF(("{%05.*d}", -15, 42))
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
