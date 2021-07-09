@@ -1320,6 +1320,30 @@ int main(int argc, char *argv[])
 	PRINTF(("%-15d, %d, %*d, %*d", (int)-2147483648, 3, 30, 4, 5, -1));
 	PRINTF(("%-*d%*d%2d%d", 5, (int)-2147483648, 10, 3, 30, -1));
 	PRINTF(("%-*dc%*ds%2dx%du", 7, (int)-2147483648, 3, 30, -5, -1));
+	PRINTF(("%0*d", 0, 0));
+	PRINTF(("%0*d", 0, 7));
+	PRINTF(("%0*d", 0, 237));
+	PRINTF(("%0*d", 2, 0));
+	PRINTF(("%0*d", 1, -4));
+	PRINTF(("%0*d", 2, -4));
+	PRINTF(("%0*d", 3, -4));
+	PRINTF(("%0*d", 2, 42));
+	PRINTF(("%0*d", 6, 42000));
+	PRINTF(("%0*d", 7, -42000));
+	PRINTF(("wait for it... %*d", 50, 42));
+	PRINTF(("%0*d is how many tests are going to be made", 10, 8000));
+	PRINTF(("%0*d", 9, 2147483647));
+	PRINTF(("%0*d", 10, 2147483647));
+	PRINTF(("%0*d", 11, 2147483647));
+	PRINTF(("%0*d", 5, (int)-2147483648));
+	PRINTF(("%0*d", 10, (int)-2147483648));
+	PRINTF(("%0*d", 11, (int)-2147483648));
+	PRINTF(("%0*d", 12, (int)-2147483648));
+	PRINTF(("%0*d", 13, (int)-2147483648));
+	PRINTF(("%0*d, %20d, %*d, %-42d", 10, (int)-2147483648, 3, 3, 30, -1));
+	PRINTF(("%015d, %d, %*d, %*d", (int)-2147483648, 3, 30, 4, 5, -1));
+	PRINTF(("%0*d%*d%0000002d%d", 5, (int)-2147483648, 10, 3, 30, -1));
+	PRINTF(("%0*dc%*ds%2dx%du", 7, (int)-2147483648, 3, 30, -5, -1));
 
 	describe("\nTest %i with some * widths");
 
