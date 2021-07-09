@@ -204,6 +204,8 @@ void open_pipes(int *p1, int *p2)
 	}
 }
 
+extern int g_function_return;
+
 void prepare_test(char *err_file, int *outpipe, int *retpipe) {
 	/* the child don't need to read anything */
 	close(outpipe[READ]);
@@ -212,6 +214,7 @@ void prepare_test(char *err_file, int *outpipe, int *retpipe) {
 	int err = open(err_file, O_CREAT | O_WRONLY | O_TRUNC, 0644); /* get rid of real printf errors*/
 	dup2(outpipe[WRITE], 1);
 	dup2(err, 2);
+	g_function_return = -10;
 }
 
 void finish_test(int result, int *outpipe, int *retpipe)
@@ -222,8 +225,6 @@ void finish_test(int result, int *outpipe, int *retpipe)
 	exit (0);
 
 }
-
-extern int g_function_return;
 
 void fetch_result(t_result *result, char *output_buffer, int *stdout_pipe, int *rtrn_pipe)
 {
