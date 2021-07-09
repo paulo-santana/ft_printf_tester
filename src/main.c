@@ -1678,13 +1678,13 @@ int main(int argc, char *argv[])
 	PRINTF_EXPECTED(("%.*s", 1, null_str), /* expected: */ ("("));
 	PRINTF_EXPECTED(("%.*s", 2,null_str), /* expected: */ ("(n"));
 	PRINTF_EXPECTED(("%.*s", 5, null_str), /* expected: */ ("(null"));
-	PRINTF(("%.6s", null_str));
-	PRINTF(("%.7s", null_str));
-	PRINTF(("%.2s, motherfucker", "hi there"));
-	PRINTF(("This %.3s a triumph ", "wasabi"));
-	PRINTF(("%.4s making a %.4s here: %.13s", "I'm delighted", "notation", "HUGE SUCCESS!"));
-	PRINTF(("It's %.4s to over%.50s my%s", "hardware", "state", " satisfaction"));
-	PRINTF(("%.11s%.6s%.4s", "Aperture", " Scientists", "ce"));
+	PRINTF(("%.*s", 6, null_str));
+	PRINTF(("%.*s", 7, null_str));
+	PRINTF(("%.*s, motherfucker", 2, "hi there"));
+	PRINTF(("This %.*s a triumph ", 3, "wasabi"));
+	PRINTF(("%.*s making a %.*s here: %.*s", 4, "I'm delighted", 4,"notation", 13, "HUGE SUCCESS!"));
+	PRINTF(("It's %.*s to over%.*s my%s", 4, "hardware", 50, "state", " satisfaction"));
+	PRINTF(("%.*s%.*s%.*s", 11, "Aperture", 6, " Scientists", 4, "ce"));
 
 
 	tester_putstr("\n" RESET);
