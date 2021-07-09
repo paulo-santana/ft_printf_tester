@@ -1976,11 +1976,11 @@ int main(int argc, char *argv[])
 	PRINTF_EXPECTED(("%*%s%*%id%%10%*%%*%", 2, 1, 5, 9),      /* expected: */ (" %%s%%id%%10    %%        %%"));
 	PRINTF_EXPECTED(("hey, what's %*% up%%?", 5),             /* expected: */ ("hey, what's     %% up%%?"));
 	PRINTF(("%*%", -1));
-	PRINTF_EXPECTED(("%*%", -5),                               /* expected: */ ("    %%"));
-	PRINTF_EXPECTED(("%*%", -2),                               /* expected: */ (" %%"));
-	PRINTF_EXPECTED(("the world is 2%*% more big today", -10), /* expected: */ ("the world is 2         %% more big today"));
-	PRINTF_EXPECTED(("%*%%*%%%%5%%*%", -2, -1, -9),            /* expected: */ (" %%%%%%    %%        %%"));
-	PRINTF_EXPECTED(("%*%s%*%id%%10%*%%*%", -2, -1, -5, -9),   /* expected: */ (" %%s%%id%%10    %%        %%"));
+	PRINTF_EXPECTED(("%*%", -5),                               /* expected: */ ("%%    "));
+	PRINTF_EXPECTED(("%*%", -2),                               /* expected: */ ("%% "));
+	PRINTF_EXPECTED(("the world is 2%*% more big today", -10), /* expected: */ ("the world is 2%%          more big today"));
+	PRINTF_EXPECTED(("%*%%*%%%%5%%*%", -2, -1, -9),            /* expected: */ ("%% %%%%    %%%%        "));
+	PRINTF_EXPECTED(("%*%s%*%id%%10%*%%*%", -2, -1, -5, -9),   /* expected: */ ("%% s%%id%%10    %%        %%"));
 	PRINTF_EXPECTED(("hey, what's %*% up%%?", -5),             /* expected: */ ("hey, what's     %% up%%?"));
 
 	describe("\nTest %s with some * precisions");
