@@ -1,6 +1,8 @@
 #ifndef FT_PRINTF_TESTER_H
 # define FT_PRINTF_TESTER_H
 # include <unistd.h>
+# include <stdlib.h>
+# include <signal.h>
 
 typedef struct s_result {
 	int return_value;
@@ -16,5 +18,13 @@ void print_help(char *params_used);
 # define ERRORS_LEAK 1
 # define ERRORS_BUFFER_OVERFLOW 2
 # define ERRORS_SIGSEGV 3
+
+# define BUFSIZE 100
+
+void open_pipes(int *p1, int *p2);
+void prepare_test(char *err_file, int *outpipe, int *retpipe);
+void finish_test(int result, int *outpipe, int *retpipe);
+void fetch_result(t_result *result, char *output_buffer, int *stdout_pipe, int *rtrn_pipe);
+void handle_errors(int wstatus);
 
 #endif

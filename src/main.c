@@ -9,9 +9,12 @@
 
 char *program_name;
 char *test;
-int current_test;
+int g_current_test;
 int passed_tests = 0;
 int test_nbr;
+char g_user_fake_stdout[BUFSIZE];
+char g_orig_fake_stdout[BUFSIZE];
+int g_function_return;
 
 extern int already_printed_help;
 
@@ -28,7 +31,7 @@ int main(int argc, char *argv[])
 		test = argv[1];
 		test_nbr = atoi(test);
 	}
-	current_test = 1;
+	g_current_test = 1;
 
 	describe("Basic test");
 
@@ -59,6 +62,8 @@ int main(int argc, char *argv[])
 	PRINTF(("%s", "-stop"));
 	char *null_str = NULL;
 	PRINTF(("%s", null_str));
+	PRINTF(("%s everywhere", null_str));
+	PRINTF(("everywhere %s", null_str));
 	PRINTF(("%s", "h"));
 	PRINTF(("t%st%s", "a", "u"));
 	PRINTF(("%s%s%s%s%s%s", "a", "i", "u", "e", "o", "l"));
@@ -1291,6 +1296,105 @@ int main(int argc, char *argv[])
 	PRINTF(("%15d, %d, %2d, %42d", (int)-2147483648, 3, 30, -1));
 	PRINTF(("%*d%*d%2d%d", 5, (int)-2147483648, 10, 3, 30, -1));
 	PRINTF(("%*dc%*ds%2dx%du", 7, (int)-2147483648, 3, 30, -5, -1));
+	PRINTF(("%-*d", 0, 0));
+	PRINTF(("%-*d", 0, 7));
+	PRINTF(("%-*d", 0, 237));
+	PRINTF(("%-*d", 2, 0));
+	PRINTF(("%-*d", 1, -4));
+	PRINTF(("%-*d", 2, -4));
+	PRINTF(("%-*d", 3, -4));
+	PRINTF(("%-*d", 2, 42));
+	PRINTF(("%-*d", 6, 42000));
+	PRINTF(("%-*d", 7, -42000));
+	PRINTF(("wait for it... %*d", 50, 42));
+	PRINTF(("%-*d is how many tests are going to be made", 10, 8000));
+	PRINTF(("%-*d", 9, 2147483647));
+	PRINTF(("%-*d", 10, 2147483647));
+	PRINTF(("%-*d", 11, 2147483647));
+	PRINTF(("%-*d", 5, (int)-2147483648));
+	PRINTF(("%-*d", 10, (int)-2147483648));
+	PRINTF(("%-*d", 11, (int)-2147483648));
+	PRINTF(("%-*d", 12, (int)-2147483648));
+	PRINTF(("%-*d", 13, (int)-2147483648));
+	PRINTF(("%-*d, %20d, %*d, %42d", 10, (int)-2147483648, 3, 3, 30, -1));
+	PRINTF(("%-15d, %d, %*d, %*d", (int)-2147483648, 3, 30, 4, 5, -1));
+	PRINTF(("%-*d%*d%2d%d", 5, (int)-2147483648, 10, 3, 30, -1));
+	PRINTF(("%-*dc%*ds%2dx%du", 7, (int)-2147483648, 3, 30, -5, -1));
+
+	describe("\nTest %i with some * widths");
+
+	PRINTF(("%*i", 0, 0));
+	PRINTF(("%*i", 0, 7));
+	PRINTF(("%*i", 0, 237));
+	PRINTF(("%*i", 2, 0));
+	PRINTF(("%*i", 1, -4));
+	PRINTF(("%*i", 2, -4));
+	PRINTF(("%*i", 3, -4));
+	PRINTF(("%*i", 2, 42));
+	PRINTF(("%*i", 6, 42000));
+	PRINTF(("%*i", 7, -42000));
+	PRINTF(("wait for it... %*i", 50, 42));
+	PRINTF(("%*i is how many tests are going to be made", 10, 8000));
+	PRINTF(("%*i", 9, 2147483647));
+	PRINTF(("%*i", 10, 2147483647));
+	PRINTF(("%*i", 11, 2147483647));
+	PRINTF(("%*i", 5, (int)-2147483648));
+	PRINTF(("%*i", 10, (int)-2147483648));
+	PRINTF(("%*i", 11, (int)-2147483648));
+	PRINTF(("%*i", 12, (int)-2147483648));
+	PRINTF(("%*i", 13, (int)-2147483648));
+	PRINTF(("%*i, %20i, %*i, %42i", 10, (int)-2147483648, 3, 3, 30, -1));
+	PRINTF(("%15i, %i, %2i, %42i", (int)-2147483648, 3, 30, -1));
+	PRINTF(("%*i%*i%2i%i", 5, (int)-2147483648, 10, 3, 30, -1));
+	PRINTF(("%*ic%*is%2ix%iu", 7, (int)-2147483648, 3, 30, -5, -1));
+	PRINTF(("%-*i", 0, 0));
+	PRINTF(("%-*i", 0, 7));
+	PRINTF(("%-*i", 0, 237));
+	PRINTF(("%-*i", 2, 0));
+	PRINTF(("%-*i", 1, -4));
+	PRINTF(("%-*i", 2, -4));
+	PRINTF(("%-*i", 3, -4));
+	PRINTF(("%-*i", 2, 42));
+	PRINTF(("%-*i", 6, 42000));
+	PRINTF(("%-*i", 7, -42000));
+	PRINTF(("wait for it... %*i", 50, 42));
+	PRINTF(("%-*i is how many tests are going to be made", 10, 8000));
+	PRINTF(("%-*i", 9, 2147483647));
+	PRINTF(("%-*i", 10, 2147483647));
+	PRINTF(("%-*i", 11, 2147483647));
+	PRINTF(("%-*i", 5, (int)-2147483648));
+	PRINTF(("%-*i", 10, (int)-2147483648));
+	PRINTF(("%-*i", 11, (int)-2147483648));
+	PRINTF(("%-*i", 12, (int)-2147483648));
+	PRINTF(("%-*i", 13, (int)-2147483648));
+	PRINTF(("%-*i, %20i, %*i, %-42i", 10, (int)-2147483648, 3, 3, 30, -1));
+	PRINTF(("%-15i, %i, %*i, %*i", (int)-2147483648, 3, 30, 4, 5, -1));
+	PRINTF(("%-*i%*i%------2i%i", 5, (int)-2147483648, 10, 3, 30, -1));
+	PRINTF(("%-*ic%*is%2ix%iu", 7, (int)-2147483648, 3, 30, -5, -1));
+	PRINTF(("%0*i", 0, 0));
+	PRINTF(("%0*i", 0, 7));
+	PRINTF(("%0*i", 0, 237));
+	PRINTF(("%0*i", 2, 0));
+	PRINTF(("%0*i", 1, -4));
+	PRINTF(("%0*i", 2, -4));
+	PRINTF(("%0*i", 3, -4));
+	PRINTF(("%0*i", 2, 42));
+	PRINTF(("%0*i", 6, 42000));
+	PRINTF(("%0*i", 7, -42000));
+	PRINTF(("wait for it... %*i", 50, 42));
+	PRINTF(("%0*i is how many tests are going to be made", 10, 8000));
+	PRINTF(("%0*i", 9, 2147483647));
+	PRINTF(("%0*i", 10, 2147483647));
+	PRINTF(("%0*i", 11, 2147483647));
+	PRINTF(("%0*i", 5, (int)-2147483648));
+	PRINTF(("%0*i", 10, (int)-2147483648));
+	PRINTF(("%0*i", 11, (int)-2147483648));
+	PRINTF(("%0*i", 12, (int)-2147483648));
+	PRINTF(("%0*i", 13, (int)-2147483648));
+	PRINTF(("%0*i, %20i, %*i, %-42i", 10, (int)-2147483648, 3, 3, 30, -1));
+	PRINTF(("%015i, %i, %*i, %*i", (int)-2147483648, 3, 30, 4, 5, -1));
+	PRINTF(("%0*i%*i%0000002i%i", 5, (int)-2147483648, 10, 3, 30, -1));
+	PRINTF(("%0*ic%*is%2ix%iu", 7, (int)-2147483648, 3, 30, -5, -1));
 
 	tester_putstr("\n" RESET);
 	if (test_nbr == 0)
@@ -1298,7 +1402,7 @@ int main(int argc, char *argv[])
 		tester_putstr("\nTests passed: ");
 		tester_putnbr(passed_tests);
 		tester_putstr("/");
-		tester_putnbr(--current_test);
+		tester_putnbr(--g_current_test);
 		tester_putchar('\n');
 	}
 }

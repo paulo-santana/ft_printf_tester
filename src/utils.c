@@ -4,7 +4,7 @@
 #include "ft_printf_tester.h"
 #include "helpers.h"
 
-extern int current_test;
+extern int g_current_test;
 extern int test_nbr;
 extern int passed_tests;
 
@@ -49,7 +49,7 @@ void print_help(char *params_used)
 	already_printed_help = 1;
 	tester_putstr("\n     ");
 	tester_putstr(RESET BOLD "You can rerun this test with " RESET YELLOW "make ");
-	tester_putnbr(current_test);
+	tester_putnbr(g_current_test);
 	tester_putstr(RESET "\n     ");
 	tester_putstr("The function was called like this:\n   ");
 	pretty_printf(params_used);
@@ -125,7 +125,7 @@ int check_errors(char *params_used)
 
 int check_result(t_result user_result, t_result orig_result, char *params_used)
 {
-	if (current_test == test_nbr || test_nbr == 0)
+	if (g_current_test == test_nbr || test_nbr == 0)
 	{
 		char *result;
 		char *expected;
@@ -146,7 +146,7 @@ int check_result(t_result user_result, t_result orig_result, char *params_used)
 			tester_putstr(GREEN);
 		else
 			tester_putstr(BOLD RED "\n  ");
-		tester_putnbr(current_test);
+		tester_putnbr(g_current_test);
 		tester_putchar('.');
 
 		if (success && !wrong_return && (!errors || errors == ERRORS_LEAK))
@@ -188,4 +188,69 @@ void describe(char *test_title)
 	tester_putstr(BOLD);
 	tester_putstr(test_title);
 	tester_putstr(": "RESET "\n  ");
+}
+
+void open_pipes(int *p1, int *p2)
+{
+	if (pipe(p1) < 0)
+	{
+		tester_putstr("error opening stdout_pipe\n");
+		exit(26);
+	}
+	if (pipe(p2) < 0)
+	{
+		tester_putstr("error opening rtrn_pipe\n");
+		exit(24);
+	}
+}
+
+void prepare_test(char *err_file, int *outpipe, int *retpipe) {
+	/* the child don't need to read anything */
+	close(outpipe[READ]);
+	close(retpipe[READ]); 
+	/* int file = open("files/original_output.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644); */
+	int err = open(err_file, O_CREAT | O_WRONLY | O_TRUNC, 0644); /* get rid of real printf errors*/
+	dup2(outpipe[WRITE], 1);
+	dup2(err, 2);
+}
+
+void finish_test(int result, int *outpipe, int *retpipe)
+{
+	write(retpipe[WRITE], &result, sizeof(int));
+	close(outpipe[WRITE]);
+	close(retpipe[WRITE]); 
+	exit (0);
+
+}
+
+extern int g_function_return;
+
+void fetch_result(t_result *result, char *output_buffer, int *stdout_pipe, int *rtrn_pipe)
+{
+	close(stdout_pipe[WRITE]);
+	close(rtrn_pipe[WRITE]);
+	int bytes_read = read(stdout_pipe[READ], output_buffer, BUFSIZE);
+	read(rtrn_pipe[READ], &g_function_return, sizeof(int));
+	close(stdout_pipe[READ]);
+	close(rtrn_pipe[READ]);
+	result->return_value = g_function_return;
+	result->output_str = output_buffer;
+	result->bytes_read = bytes_read;
+}
+
+void handle_errors(int wstatus) {
+	tester_putstr(BOLD RED);
+	tester_putnbr(g_current_test);
+	switch(wstatus - 128) {
+		case SIGSEGV: /* classic segfault */
+			tester_putstr(".SIGSEGV! " RESET);
+			break;
+		case 14 - 128: /* timeout */
+			tester_putstr(".TIMEOUT! " RESET);
+			break;
+		default: /* something yet to be discovered */
+			tester_putstr(".CRASH! wstatus: ");
+			tester_putnbr(wstatus);
+			tester_putstr(RESET);
+	}
 }
