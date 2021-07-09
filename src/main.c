@@ -1649,11 +1649,11 @@ int main(int argc, char *argv[])
 	describe("\nTest %% with some * widths");
 
 	PRINTF(("%*%", 1));
-	PRINTF_EXPECTED(("%5%"),                               /* expected: */ ("    %%"));
-	PRINTF_EXPECTED(("%2%"),                               /* expected: */ (" %%"));
-	PRINTF_EXPECTED(("the world is 2%10% more big today"), /* expected: */ ("the world is 2         %% more big today"));
-	PRINTF_EXPECTED(("%2%%1%%%%5%%9%"),                    /* expected: */ (" %%%%%%    %%        %%"));
-	PRINTF_EXPECTED(("%2%s%1%id%%10%5%%9%"),               /* expected: */ (" %%s%%id%%10    %%        %%"));
+	PRINTF_EXPECTED(("%*%", 5),                               /* expected: */ ("    %%"));
+	PRINTF_EXPECTED(("%*%", 2),                               /* expected: */ (" %%"));
+	PRINTF_EXPECTED(("the world is 2%*% more big today", 10), /* expected: */ ("the world is 2         %% more big today"));
+	PRINTF_EXPECTED(("%*%%*%%%%5%%*%", 2, 1, 9),                   /* expected: */ (" %%%%%%    %%        %%"));
+	PRINTF_EXPECTED(("%*%s%*%id%%10%*%%*%", 2, 1, 5, 9),               /* expected: */ (" %%s%%id%%10    %%        %%"));
 	PRINTF_EXPECTED(("hey, what's %5% up%%?"),             /* expected: */ ("hey, what's     %% up%%?"));
 
 
