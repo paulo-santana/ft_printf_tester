@@ -20,7 +20,7 @@ The tests run mainly through `make`. Here are all the commands:
 * `make`: run all the mandatory tests
 * `make d`: run all the tests related to the `%d` specifier. Currently, only the
 `cspdiuxX%` specifiers are supported
-* `make nosan run`: run all the mandatory tests without the AddressSanitizer
+* `make nosan r`: run all the mandatory tests without the AddressSanitizer
 * `make nosan p`: run all tests related to the `%p` without the AddressSanitizer
 * `make 1088`: run only the 1088th test
 
