@@ -1,5 +1,5 @@
 LIBFTPRINTF_DIR = ../
-ERROR_LIMIT = 10
+ERROR_LIMIT = 0
 
 SHELL = /bin/sh
 
