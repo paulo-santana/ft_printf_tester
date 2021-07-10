@@ -1,7 +1,5 @@
-PRINTER_SYSTEM = system_printer
-PRINTER_USER = user_printer
-
 LIBFTPRINTF_DIR = ../
+ERROR_LIMIT = 10
 
 SHELL = /bin/sh
 
@@ -13,8 +11,6 @@ SPECIFIERS = c s p d i u x X \%
 NAME = tester
 LIBTEST = libtest/libtest.a
 LIBFTPRINTF = ${LIBFTPRINTF_DIR}/libftprintf.a
-
-LIB_DIR = ../
 
 SRC_DIR = ./src
 OBJ_DIR = ./obj
@@ -69,8 +65,9 @@ ${LIBTEST}:
 	make -C libtest CFLAGS="${CFLAGS}"
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c ${HEADdRS} Makefile
-	${CC} -DBUFFER_SIZE=32 -c $< -o $@
+	${CC} -DERROR_LIMIT=${ERROR_LIMIT} -DBUFFER_SIZE=32 -c $< -o $@
 
+r: run
 run:
 	./${NAME} 2>myleaks.txt
 
@@ -92,13 +89,14 @@ push:
 	git push
 
 clean:
+	@echo cleaning...
 	@make -C ./libtest clean
-	make -C ${LIBFTPRINTF_DIR} clean
+	@make -C ${LIBFTPRINTF_DIR} clean
 	@${RM} ${OBJS}
 
 fclean: clean
 	@make -C ./libtest fclean
-	make -C ${LIBFTPRINTF_DIR} fclean
+	@make -C ${LIBFTPRINTF_DIR} fclean
 	@${RM} ${NAME}
 
 re: fclean all

@@ -29,6 +29,10 @@
  * 
  * */
 
+#ifndef ERROR_LIMIT
+# define ERROR_LIMIT 0
+#endif
+
 extern int g_tests_failed;
 
 #define __PRINTF_EXPECTED(params, expected) { \
@@ -60,7 +64,7 @@ extern int g_tests_failed;
 			handle_errors(wstatus, &ur, &or, g_user_fake_stdout, op, rp); \
 		} \
 	} \
-	if (g_tests_failed > 10) \
+	if (ERROR_LIMIT > 0 && g_tests_failed > ERROR_LIMIT) \
 		return (tester_putstr(BOLD RED "Failed on more than 10 tests, stopping...\n"), 5); \
 	g_current_test++; \
 }
