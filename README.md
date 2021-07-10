@@ -27,7 +27,8 @@ The tests run mainly through `make`. Here are all the commands:
 ### Limiting errors output
 
 If there are so many errors that you can't even see the whole output, you can
-limit the error tolerance by changing the `ERROR_LIMIT` variable in the Makefile
+limit the error tolerance by changing the `ERROR_LIMIT` variable in the Makefile.
+By default, it is set to 0, which means no limit.
 
 
 ### TODO:
