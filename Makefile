@@ -8,6 +8,8 @@ SHELL = /bin/sh
 # I'm not proud of this
 TESTS = $(shell for ((i=1;i<=2000;i++)); do echo "$$i "; done)
 
+SPECIFIERS = c s p d i u x X \%
+
 NAME = tester
 LIBTEST = libtest/libtest.a
 LIBFTPRINTF = ${LIBFTPRINTF_DIR}/libftprintf.a
@@ -18,6 +20,7 @@ SRC_DIR = ./src
 OBJ_DIR = ./obj
 
 SRCS_FILES = main.c \
+			 tests.c \
 			 get_next_line.c \
 			 get_next_line_utils.c \
 			 utils.c
@@ -34,7 +37,8 @@ CFLAGS = -Wall -Wextra -g3
 
 PRINTF_FLAGS = ${CFLAGS} -Werror
 
-#VALGRIND = valgrind -q --leak-check=full --show-leak-kinds=all
+SANITIZE = -fsanitize=address
+
 UNAME = ${shell uname -s}
 ifeq (${UNAME}, Darwin)
 	SRCS_FILES := ${SRCS_FILES} malloc_count.c 
@@ -44,13 +48,15 @@ CC = clang ${CFLAGS}
 
 export LSAN_OPTIONS=exitcode=30
 
-all: san
+all: san ${NAME} run
 	@echo ""
 
-san: SANITIZE := -fsanitize=address
-san: update ${NAME} run
+san:
+san: update
 
-nosan: update ${NAME} run
+nosan: SANITIZE :=
+nosan: update ${NAME}
+	@echo ""
 
 ${NAME}: ${LIBFTPRINTF} ${LIBTEST} ${HEADERS} ${OBJS}
 	${CC} ${SANITIZE} -L./libtest -L${LIBFTPRINTF_DIR} ${OBJS} -o ${NAME} -ltest -lftprintf -ldl
@@ -62,7 +68,7 @@ ${LIBFTPRINTF}:
 ${LIBTEST}:
 	make -C libtest CFLAGS="${CFLAGS}"
 
-${OBJ_DIR}/%.o: ${SRC_DIR}/%.c ${HEADERS} Makefile
+${OBJ_DIR}/%.o: ${SRC_DIR}/%.c ${HEADdRS} Makefile
 	${CC} -DBUFFER_SIZE=32 -c $< -o $@
 
 run:
@@ -70,24 +76,30 @@ run:
 
 ${TESTS}: SANITIZE := -fsanitize=address
 ${TESTS}: ${NAME}
-	./${NAME} $@  2>myleaks.txt
+	./${NAME} $@ 2>myleaks.txt
+
+${SPECIFIERS}: ${NAME}
+	./${NAME} $@
 
 update:
-	git pull
+	@echo -e "\x1b[33m"
+	@git pull
+	@echo -e "\x1b[32m"
+
 push:
 	git add -A
 	git commit -m "chore: automated commit"
 	git push
 
 clean:
-	make -C ./libtest clean
+	@make -C ./libtest clean
 	make -C ${LIBFTPRINTF_DIR} clean
-	${RM} ${OBJS}
+	@${RM} ${OBJS}
 
 fclean: clean
-	make -C ./libtest fclean
+	@make -C ./libtest fclean
 	make -C ${LIBFTPRINTF_DIR} fclean
-	${RM} ${NAME}
+	@${RM} ${NAME}
 
 re: fclean all
 

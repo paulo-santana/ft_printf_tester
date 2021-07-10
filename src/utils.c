@@ -5,7 +5,7 @@
 #include "helpers.h"
 
 extern int g_current_test;
-extern int test_nbr;
+extern int g_test_nbr;
 extern int passed_tests;
 
 void pretty_printf(char *params)
@@ -125,7 +125,7 @@ int check_errors(char *params_used)
 
 int check_result(t_result user_result, t_result orig_result, char *params_used)
 {
-	if (g_current_test == test_nbr || test_nbr == 0)
+	if (g_current_test == g_test_nbr || g_test_nbr == 0)
 	{
 		char *result;
 		char *expected;
@@ -178,9 +178,11 @@ int check_result(t_result user_result, t_result orig_result, char *params_used)
 	return (0);
 }
 
+extern int right_cat;
+
 void describe(char *test_title)
 {
-	if (test_nbr != 0)
+	if (!right_cat || g_test_nbr != 0)
 		return ;
 	tester_putstr(BOLD);
 	tester_putstr(test_title);
@@ -237,7 +239,7 @@ void fetch_result(t_result *result, char *output_buffer, int *stdout_pipe, int *
 	result->bytes_read = bytes_read;
 }
 
-extern char *test_params;
+extern char *g_test_params;
 extern char *g_user_fake_stdout;
 
 void handle_errors(int wstatus, t_result *user_r, t_result *orig_r,
@@ -258,9 +260,9 @@ void handle_errors(int wstatus, t_result *user_r, t_result *orig_r,
 				tester_putnbr(wstatus);
 				tester_putstr(RESET);
 		}
-		print_help(test_params);
+		print_help(g_test_params);
 	} else {
 		fetch_result(user_r, user_output, output_pipe, return_pipe);
-		check_result(*user_r, *orig_r, test_params);
+		check_result(*user_r, *orig_r, g_test_params);
 	}
 }

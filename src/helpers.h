@@ -2,6 +2,7 @@
 # define HELPERS_H
 
 # include "../libtest/libtest.h"
+# include <sys/wait.h>
 
 # define PRINTF(params) __PRINTF_EXPECTED(params, params)
 
@@ -30,8 +31,8 @@
 
 #define __PRINTF_EXPECTED(params, expected) { \
 	already_printed_help = 0; \
-	if (g_current_test == test_nbr || test_nbr == 0) \
-	{ \
+	should_run = (g_current_test == g_test_nbr) || (g_test_nbr == 0); \
+	if (should_run && right_cat) { \
 		t_result or, ur; \
 		int op[2], rp[2]; \
 		open_pipes(op, rp); \
@@ -40,9 +41,7 @@
 			prepare_test("files/original_stderr.txt", op, rp); \
 			int result = printf expected; \
 			finish_test(result, op, rp); \
-		} \
-		else \
-		{ \
+		} else { \
 			fetch_result(&or, g_orig_fake_stdout, op, rp); \
 			waitpid(child, &wstatus, 0); \
 		} \
@@ -53,11 +52,9 @@
 			alarm(1); \
 			int result = ft_printf params; \
 			finish_test(result, op, rp); \
-		} \
-		else \
-		{ \
+		} else { \
 			waitpid(child, &wstatus, 0); \
-			test_params = #params; \
+			g_test_params = #params; \
 			handle_errors(wstatus, &ur, &or, g_user_fake_stdout, op, rp); \
 		} \
 	} \
