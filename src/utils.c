@@ -123,6 +123,8 @@ int check_errors(char *params_used)
 	return (error);
 }
 
+int g_tests_failed = 0;
+
 int check_result(t_result user_result, t_result orig_result, char *params_used)
 {
 	if (g_current_test == g_test_nbr || g_test_nbr == 0)
@@ -145,7 +147,7 @@ int check_result(t_result user_result, t_result orig_result, char *params_used)
 		if (success && !wrong_return && !errors)
 			tester_putstr(GREEN);
 		else
-			tester_putstr(BOLD RED "\n  ");
+			tester_putstr(BOLD RED "\n  "), g_tests_failed++;
 		tester_putnbr(g_current_test);
 		tester_putchar('.');
 

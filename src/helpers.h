@@ -29,6 +29,8 @@
  * 
  * */
 
+extern int g_tests_failed;
+
 #define __PRINTF_EXPECTED(params, expected) { \
 	already_printed_help = 0; \
 	should_run = (g_current_test == g_test_nbr) || (g_test_nbr == 0); \
@@ -58,6 +60,8 @@
 			handle_errors(wstatus, &ur, &or, g_user_fake_stdout, op, rp); \
 		} \
 	} \
+	if (g_tests_failed > 10) \
+		return (tester_putstr(BOLD RED "Failed on more than 10 tests, stopping...\n"), 5); \
 	g_current_test++; \
 }
 
