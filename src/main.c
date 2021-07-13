@@ -27,7 +27,7 @@ int parse_arguments(int argc, char *argv[])
 	for (int i = 1; i < argc; i++)
 	{
 		char *str = argv[i];
-		if (strncmp(str, "c", 1) == 0)
+		if      (strncmp(str, "c", 1) == 0)
 			options = options | CAT_C;
 		else if (strncmp(str, "s", 1) == 0)
 			options = options | CAT_S;
