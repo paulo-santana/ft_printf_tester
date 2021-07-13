@@ -36,7 +36,7 @@ By default, it is set to 0, which means no limit.
 
 
 ### TODO:
-- [ ] Print useful information in case of errors
+- [x] Print useful information in case of errors
     - [x] print the diff between `printf` and `ft_printf`
     - [x] print the function that was called on that specific test
-    - [ ] give information about when the returned value was wrong
+    - [x] give information about when the returned value was wrong
