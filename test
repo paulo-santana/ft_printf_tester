@@ -1,0 +1,21 @@
+#!/bin/sh
+
+NOSAN=
+
+for i in $@
+do
+	if [ $i == "nosan" ]
+	then
+		NOSAN="nosan"
+	fi
+done
+
+make ${NOSAN}
+
+if [ $? -ne 0 ]
+then
+	echo -e "\ncompilation error kkkkkkkkkkkkkkkkkkkk"
+else
+	echo params: $@
+	./tester $@
+fi

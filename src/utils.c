@@ -55,6 +55,55 @@ void print_help(char *params_used)
 	pretty_printf(params_used);
 }
 
+void	print_output(t_result *expected, t_result *user, unsigned int expected_size, unsigned int result_size)
+//void	print_string_diff(char expected[], char result[], unsigned int expected_size, unsigned int result_size)
+{
+	int is_red_already = 0;
+
+	tester_putstr(RESET "        Expected: [");
+	for (unsigned int i = 0; i < expected_size; i++)
+	{
+		if (expected->output_str[i] == '\0')
+			tester_putstr(MAGENTA "\\0" RESET);
+		else if (expected->output_str[i] == '\n')
+			tester_putstr(MAGENTA "\\n" RESET);
+		else if (!isprint(expected->output_str[i]))
+			print_non_print(expected->output_str[i]);
+		else
+			tester_putchar(expected->output_str[i]);
+	}
+	tester_putstr("], return: ");
+	tester_putnbr(expected->return_value);
+
+	tester_putstr("\n        Got:      [");
+	unsigned int i = 0;
+	int expected_ended = 0;
+	while (i < result_size)
+	{
+		if (expected_ended || ((expected->output_str[i] != user->output_str[i]) && !is_red_already))
+		{
+			is_red_already = 1;
+			tester_putstr(BOLD RED);
+		}
+		else if (expected->output_str[i] == user->output_str[i] && is_red_already)
+		{
+			tester_putstr(RESET);
+			is_red_already = 0;
+		}
+		if (user->output_str[i] == '\0')
+			tester_putstr(BOLD MAGENTA "\\0" RESET);
+		else if (!isprint(user->output_str[i]))
+			print_non_print(user->output_str[i]);
+		else
+			tester_putchar(user->output_str[i]);
+		if (!expected_ended && expected->output_str[i] == '\0')
+			expected_ended = 1;
+		i++;
+	}
+	tester_putstr(RESET "], return: ");
+	tester_putnbr(user->return_value);
+}
+
 int check_leaks_sanitizer(int user_stderr)
 {
 	int n = 0;
@@ -168,7 +217,7 @@ int check_result(t_result user_result, t_result orig_result, char *params_used)
 			tester_putstr(RED " (LEAKS!)");
 		if (!success) {
 			tester_putstr("\n");
-			print_string_diff(expected, result, orig_result.bytes_read, user_result.bytes_read);
+			print_output(&orig_result, &user_result, orig_result.bytes_read, user_result.bytes_read);
 		}
 		else
 			tester_putchar(' ');

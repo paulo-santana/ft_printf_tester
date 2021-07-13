@@ -34,11 +34,13 @@
 #endif
 
 extern int g_tests_failed;
+extern int g_tests_run;
 
 #define __PRINTF_EXPECTED(params, expected) { \
 	already_printed_help = 0; \
 	should_run = (g_current_test == g_test_nbr) || (g_test_nbr == 0); \
 	if (should_run && right_cat) { \
+		g_tests_run++; \
 		t_result or, ur; \
 		int op[2], rp[2]; \
 		open_pipes(op, rp); \

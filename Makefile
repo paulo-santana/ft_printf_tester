@@ -6,7 +6,7 @@ SHELL = /bin/sh
 # I'm not proud of this
 TESTS = $(shell for ((i=1;i<=2000;i++)); do echo "$$i "; done)
 
-SPECIFIERS = c s p d i u x X \%
+#SPECIFIERS = c s p d i u x X \% \# . m b
 
 NAME = tester
 LIBTEST = libtest/libtest.a
@@ -44,7 +44,7 @@ CC = clang ${CFLAGS}
 
 export LSAN_OPTIONS=exitcode=30
 
-all: san ${NAME} run
+all: san ${NAME}
 	@echo ""
 
 san:
@@ -73,11 +73,7 @@ run:
 
 ${TESTS}: SANITIZE := -fsanitize=address
 ${TESTS}: ${NAME}
-	./${NAME} $@ 2>myleaks.txt
-
-${SPECIFIERS}: ${NAME}
-	./${NAME} $@
-
+	./${NAME} $@ 2>myle
 update:
 	@echo -e "\x1b[33m"
 	@git pull
