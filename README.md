@@ -17,12 +17,16 @@ file, then `cd` into it.
 
 The tests run mainly through `make`. Here are all the commands:
 
-* `make`: run all the mandatory tests
-* `make d`: run all the tests related to the `%d` specifier. Currently, only the
+* `sh test`: run all the tests
+* `sh test m`: run all the mandatory tests
+* `sh test b`: run all the bonus tests
+* `sh test d`: run all the tests related to the `%d` specifier. Currently, only the
 `cspdiuxX%` specifiers are supported
-* `make nosan r`: run all the mandatory tests without the AddressSanitizer
-* `make nosan p`: run all tests related to the `%p` without the AddressSanitizer
-* `make 1088`: run only the 1088th test
+* `sh test nosan`: run all the tests without the AddressSanitizer
+* `sh test nosan m`: run all the mandatory tests without the AddressSanitizer
+* `sh test nosan b`: run all the bonus tests without the AddressSanitizer
+* `sh test nosan p`: run all tests related to the `%p` without the AddressSanitizer
+* `sh test 1088`: run only the 1088th test
 
 ### Limiting errors output
 
