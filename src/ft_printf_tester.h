@@ -14,7 +14,7 @@ int run_tests(int tests);
 
 int check_return(int user_file, int orig_file);
 void describe(char *test_title);
-int check_result(t_result user_result, t_result orig_result, char *params_used);
+int check_result(t_result *user_result, t_result *orig_result, char *params_used);
 void print_help(char *params_used);
 
 # define ERRORS_LEAK 1

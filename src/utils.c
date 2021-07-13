@@ -48,7 +48,7 @@ void print_help(char *params_used)
 		return ;
 	already_printed_help = 1;
 	tester_putstr("\n     ");
-	tester_putstr(RESET BOLD "You can rerun this test with " RESET YELLOW "make ");
+	tester_putstr(RESET BOLD "You can rerun this test with " RESET YELLOW "sh test ");
 	tester_putnbr(g_current_test);
 	tester_putstr(RESET "\n     ");
 	tester_putstr("The function was called like this:\n   ");
@@ -174,7 +174,9 @@ int check_errors(char *params_used)
 
 int g_tests_failed = 0;
 
-int check_result(t_result user_result, t_result orig_result, char *params_used)
+# define MAX(x, y) ((x > y) ? x : y)
+
+int check_result(t_result *user_result, t_result *orig_result, char *params_used)
 {
 	if (g_current_test == g_test_nbr || g_test_nbr == 0)
 	{
@@ -185,12 +187,12 @@ int check_result(t_result user_result, t_result orig_result, char *params_used)
 		int wrong_return = 0;
 
 		errors = check_errors(params_used);
-		expected = orig_result.output_str;
-		result = user_result.output_str;
+		expected = orig_result->output_str;
+		result = user_result->output_str;
 		if (!errors || errors == ERRORS_LEAK)
 		{
-			success = test_string(expected, result, orig_result.bytes_read);
-			wrong_return = user_result.return_value != orig_result.return_value;
+			success = test_string(expected, result, MAX(orig_result->bytes_read, user_result->bytes_read));
+			wrong_return = user_result->return_value != orig_result->return_value;
 		}
 
 		if (success && !wrong_return && !errors)
@@ -217,7 +219,7 @@ int check_result(t_result user_result, t_result orig_result, char *params_used)
 			tester_putstr(RED " (LEAKS!)");
 		if (!success) {
 			tester_putstr("\n");
-			print_output(&orig_result, &user_result, orig_result.bytes_read, user_result.bytes_read);
+			print_output(orig_result, user_result, orig_result->bytes_read, user_result->bytes_read);
 		}
 		else
 			tester_putchar(' ');
@@ -314,6 +316,6 @@ void handle_errors(int wstatus, t_result *user_r, t_result *orig_r,
 		print_help(g_test_params);
 	} else {
 		fetch_result(user_r, user_output, output_pipe, return_pipe);
-		check_result(*user_r, *orig_r, g_test_params);
+		check_result(user_r, orig_r, g_test_params);
 	}
 }

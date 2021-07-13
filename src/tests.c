@@ -2,8 +2,8 @@
 #include "helpers.h"
 #include "libftprintf.h"
 
-extern char *g_orig_fake_stdout;
-extern char *g_user_fake_stdout;
+extern char g_orig_fake_stdout[BUFSIZ];
+extern char g_user_fake_stdout[BUFSIZ];
 extern char *g_test_params;
 extern int g_test_nbr;
 extern int already_printed_help;
@@ -102,7 +102,7 @@ int run_tests(int test_cat)
 	PRINTF(("%u", (unsigned int)2147483648));
 	PRINTF(("%u", (unsigned int)3147983649));
 	PRINTF(("%u", (unsigned int)4294967295));
-	PRINTF(("%u to the power of %d is %u", 2, 32, (unsigned int)4294967295));
+	PRINTF(("%u to the power of %u is %u", 2, 32, (unsigned int)4294967295));
 	PRINTF(("%u%u%u%u", (unsigned int)429896724, 0, 32, (unsigned int)4294967295));
 	
 	right_cat = test_cat ? test_cat & (CAT_X | CAT_MANDATORY ) : 1;
@@ -191,7 +191,7 @@ int run_tests(int test_cat)
 	PRINTF(("the address is %12p", (void *)0x7ffe6b8e60c7));
 	PRINTF(("the address is %13p", (void *)0x7ffe6b8e60c8));
 	PRINTF(("the address is %14p", (void *)0x7ffe6b8e60c9));
-	PRINTF_EXPECTED(("the address is %1p", (void *)0), /* expected: */ ("the address is 0x0"));
+	PRINTF_EXPECTED(("the address is %1p", (void *)0), /* expected: */ ("the addressxis 0x0"));
 	PRINTF_EXPECTED(("the address is %2p", (void *)0), /* expected: */ ("the address is 0x0"));
 	PRINTF_EXPECTED(("the address is %3p", (void *)0), /* expected: */ ("the address is 0x0"));
 	PRINTF_EXPECTED(("the address is %4p", (void *)0), /* expected: */ ("the address is  0x0"));
