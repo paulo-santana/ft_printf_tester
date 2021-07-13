@@ -44,11 +44,8 @@ CC = clang ${CFLAGS}
 
 export LSAN_OPTIONS=exitcode=30
 
-all: san ${NAME}
+all: update ${NAME}
 	@echo ""
-
-san:
-san: update
 
 nosan: SANITIZE :=
 nosan: update ${NAME}
@@ -74,10 +71,19 @@ run:
 ${TESTS}: SANITIZE := -fsanitize=address
 ${TESTS}: ${NAME}
 	./${NAME} $@ 2>myle
+
 update:
 	@echo -e "\x1b[33m"
 	@git pull
 	@echo -e "\x1b[32m"
+
+_bonus:
+	make CFLAGS="${PRINTF_FLAGS}" -C ${LIBFTPRINTF_DIR} bonus
+
+bonus: _bonus ${NAME}
+
+bonusnosan: SANITIZE :=
+bonusnosan: _bonus ${NAME}
 
 push:
 	git add -A
@@ -87,12 +93,12 @@ push:
 clean:
 	@echo cleaning...
 	@make -C ./libtest clean
-	@make -C ${LIBFTPRINTF_DIR} clean
+	make -C ${LIBFTPRINTF_DIR} clean
 	@${RM} ${OBJS}
 
 fclean: clean
 	@make -C ./libtest fclean
-	@make -C ${LIBFTPRINTF_DIR} fclean
+	make -C ${LIBFTPRINTF_DIR} fclean
 	@${RM} ${NAME}
 
 re: fclean all

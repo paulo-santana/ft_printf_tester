@@ -1,6 +1,7 @@
 #!/bin/sh
 
 NOSAN=
+BONUS=
 
 for i in $@
 do
@@ -8,9 +9,13 @@ do
 	then
 		NOSAN="nosan"
 	fi
+	if [ $i == "b" ]
+	then
+		BONUS="bonus"
+	fi
 done
 
-make ${NOSAN}
+make ${BONUS}${NOSAN}
 
 if [ $? -ne 0 ]
 then
