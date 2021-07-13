@@ -191,7 +191,7 @@ int run_tests(int test_cat)
 	PRINTF(("the address is %12p", (void *)0x7ffe6b8e60c7));
 	PRINTF(("the address is %13p", (void *)0x7ffe6b8e60c8));
 	PRINTF(("the address is %14p", (void *)0x7ffe6b8e60c9));
-	PRINTF_EXPECTED(("the address is %1p", (void *)0), /* expected: */ ("the addressxis 0x0"));
+	PRINTF_EXPECTED(("the address is %1p", (void *)0), /* expected: */ ("the address is 0x0"));
 	PRINTF_EXPECTED(("the address is %2p", (void *)0), /* expected: */ ("the address is 0x0"));
 	PRINTF_EXPECTED(("the address is %3p", (void *)0), /* expected: */ ("the address is 0x0"));
 	PRINTF_EXPECTED(("the address is %4p", (void *)0), /* expected: */ ("the address is  0x0"));

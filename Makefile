@@ -44,11 +44,11 @@ CC = clang ${CFLAGS}
 
 export LSAN_OPTIONS=exitcode=30
 
-all: update ${NAME}
+all: ${NAME}
 	@echo ""
 
 nosan: SANITIZE :=
-nosan: update ${NAME}
+nosan: ${NAME}
 	@echo ""
 
 ${NAME}: ${LIBFTPRINTF} ${LIBTEST} ${HEADERS} ${OBJS}
@@ -71,11 +71,6 @@ run:
 ${TESTS}: SANITIZE := -fsanitize=address
 ${TESTS}: ${NAME}
 	./${NAME} $@ 2>myle
-
-update:
-	@echo -e "\x1b[33m"
-	@git pull
-	@echo -e "\x1b[32m"
 
 _bonus:
 	make CFLAGS="${PRINTF_FLAGS}" -C ${LIBFTPRINTF_DIR} bonus
