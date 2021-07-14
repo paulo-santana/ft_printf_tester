@@ -1,4 +1,5 @@
 # ft_printf tester
+Updated for the new specification (2021 2nd semester)
 
 This is currently in alpha pre-release.
 
@@ -37,6 +38,9 @@ The tests are managed maily by a shell script. Here are all the commands:
 If there are so many errors that you can't even see the whole output, you can
 limit the error tolerance by changing the `ERROR_LIMIT` variable in the Makefile.
 By default, it is set to 0, which means no limit.
+
+You can also pipe the output to `less`:
+`sh test | less -r`
 
 
 ### TODO:
