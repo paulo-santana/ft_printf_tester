@@ -15,7 +15,7 @@ what should've been print.
 Clone the test repository inside the folder where you generate the `libftprintf.a`
 file, then `cd` into it.
 
-The tests run mainly through `make`. Here are all the commands:
+The tests are managed maily by a shell script. Here are all the commands:
 
 * `sh test`: run all the tests
 * `sh test m`: run all the mandatory tests
