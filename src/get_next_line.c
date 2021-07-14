@@ -31,7 +31,7 @@ static char	*merge_buffer(char *dest, t_buffer *buf)
 
 	dest_len = 0;
 	if (dest)
-		dest_len = ft_strlen(dest);
+		dest_len = gnl_ft_strlen(dest);
 	result_len = dest_len + buf->next_nl - buf->start;
 	result = malloc(sizeof(char) * (result_len + 1));
 	if (result == NULL)

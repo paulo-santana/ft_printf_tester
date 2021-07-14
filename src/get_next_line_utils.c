@@ -46,7 +46,7 @@ size_t	ft_strlcat(char *dest, const char *src, size_t size)
 	return (i);
 }
 
-size_t	ft_strlen(const char *str)
+size_t	gnl_ft_strlen(const char *str)
 {
 	size_t	len;
 
