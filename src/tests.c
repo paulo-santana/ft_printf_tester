@@ -48,6 +48,13 @@ int run_tests(int test_cat)
 	PRINTF(("%s", "-2"));
 	PRINTF(("%s", "-24"));
 	PRINTF(("%s", "-stop"));
+	PRINTF(("%s", "-0003"));
+	PRINTF(("%s", "000-0003"));
+	PRINTF(("%s", "0x42"));
+	PRINTF(("%s", "0x0000042"));
+	PRINTF(("some naugty tests: %s", "0000%"));
+	PRINTF(("some naugty tests: %s", "    %"));
+	PRINTF(("some naugty tests: %s", "%000"));
 	PRINTF(("%s", null_str));
 	PRINTF(("%s everywhere", null_str));
 	PRINTF(("everywhere %s", null_str));
@@ -83,6 +90,9 @@ int run_tests(int test_cat)
 	PRINTF(("%d %d", 2147483647, (int)-2147483648));
 	PRINTF(("42 - 84 is %d", -42));
 	PRINTF(("%d C is the lowest temperature in the universe", -273));
+	PRINTF(("%dxC is the lowest temperature in the universe", -273));
+	PRINTF(("%dsC is the lowest temperature in the universe", -273));
+	PRINTF(("%dpC is the lowest temperature in the universe", -273));
 
 	right_cat = test_cat ? test_cat & (CAT_I | CAT_MANDATORY) : 1;
 	describe("\n%i basic");
