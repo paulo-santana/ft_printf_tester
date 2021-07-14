@@ -17,6 +17,8 @@ int g_function_return;
 char *g_test_params;
 int g_tests_run;
 int g_all_bonus = 0;
+int g_all_bonus_1 = 0;
+int g_all_bonus_2 = 0;
 
 
 int parse_arguments(int argc, char *argv[])
@@ -29,35 +31,41 @@ int parse_arguments(int argc, char *argv[])
 	for (int i = 1; i < argc; i++)
 	{
 		char *str = argv[i];
-		if      (strncmp(str, "c", 1) == 0)
+		if      (strncmp(str, "c", 2) == 0)
 			options = options | CAT_C;
-		else if (strncmp(str, "s", 1) == 0)
+		else if (strncmp(str, "s", 2) == 0)
 			options = options | CAT_S;
-		else if (strncmp(str, "p", 1) == 0)
+		else if (strncmp(str, "p", 2) == 0)
 			options = options | CAT_P;
-		else if (strncmp(str, "d", 1) == 0)
+		else if (strncmp(str, "d", 2) == 0)
 			options = options | CAT_D;
-		else if (strncmp(str, "i", 1) == 0)
+		else if (strncmp(str, "i", 2) == 0)
 			options = options | CAT_I;
-		else if (strncmp(str, "u", 1) == 0)
+		else if (strncmp(str, "u", 2) == 0)
 			options = options | CAT_U;
-		else if (strncmp(str, "x", 1) == 0)
+		else if (strncmp(str, "x", 2) == 0)
 			options = options | CAT_X;
-		else if (strncmp(str, "X", 1) == 0)
+		else if (strncmp(str, "X", 2) == 0)
 			options = options | CAT_BIG_X;
-		else if (strncmp(str, "%", 1) == 0)
+		else if (strncmp(str, "%", 2) == 0)
 			options = options | CAT_PERCENT;
-		else if (strncmp(str, "m", 1) == 0)
+		else if (strncmp(str, "m", 2) == 0)
 			options = options | CAT_MANDATORY;
-		else if (strncmp(str, "b", 1) == 0)
-			options = options | CAT_BONUS;
+		else if (strncmp(str, "b", 2) == 0)
+			options = options | CAT_BONUS_1;
+		else if (strncmp(str, "b1", 3) == 0)
+			options = options | CAT_BONUS_1;
+		else if (strncmp(str, "b2", 3) == 0)
+			options = options | CAT_BONUS_2;
 		else
 			g_test_nbr = atoi(str);
 	}
-	// if it's strictly equal to CAT_BONUS, then the script was called only with
-	// the `b` argument
-	if (options == CAT_BONUS)
-		g_all_bonus = 1;
+	if (options == CAT_BONUS_1)
+		g_all_bonus = CAT_BONUS_1;
+	else if (options == CAT_BONUS_2)
+		g_all_bonus = CAT_BONUS_2;
+	if (options == (CAT_BONUS_1 | CAT_BONUS_2))
+		g_all_bonus = (CAT_BONUS_1 | CAT_BONUS_2);
 	return (options);
 }
 

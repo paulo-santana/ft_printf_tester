@@ -146,8 +146,8 @@ int run_tests(int test_cat)
 	PRINTF(("%%%%%%%%%%%%%%%%"));
 	PRINTF(("%%c%%s%%p%%d%%i%%u%%x%%X%%"));
 	
-	right_cat = g_all_bonus ? 1 
-		: test_cat ? (test_cat & CAT_C && test_cat & CAT_BONUS) 
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1 
+		: test_cat ? (test_cat & CAT_C && test_cat & CAT_BONUS_1) 
 		: 1;
 	describe("\n%c and widths");
 
@@ -158,8 +158,8 @@ int run_tests(int test_cat)
 	PRINTF(("%5chis paragraph is indented", 't'))
 	PRINTF(("The number %7c represents luck", '7'))
 	
-	right_cat = g_all_bonus ? 1
-		: test_cat ? (test_cat & CAT_S && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+		: test_cat ? (test_cat & CAT_S && test_cat & CAT_BONUS_1)
 		: 1;
 	describe("\n%s and widths");
 
@@ -184,8 +184,8 @@ int run_tests(int test_cat)
 	PRINTF(("%sc%13sd%42sp%3sx", "a, b and c", " are letters", " of the", " alphabet"));
 	PRINTF(("%sc%13sd%42sp%3sx", "a, b and c", " are letters", " of the", " alphabet"));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_P && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_P && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%p and widths");
 
@@ -212,8 +212,8 @@ int run_tests(int test_cat)
 	PRINTF_EXPECTED(("%4p is the address", (void *)0), /* expected: */ (" 0x0 is the address"));
 	PRINTF_EXPECTED(("%8p is the address", (void *)0), /* expected: */ ("     0x0 is the address"));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%d and widths");
 
@@ -237,8 +237,8 @@ int run_tests(int test_cat)
 	PRINTF(("%14d%20d%2d%d", (int)-2147483648, 3, 30, -1));
 	PRINTF(("%14dc%20ds%2dx%du", (int)-2147483648, 3, 30, -1));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%i and widths");
 
@@ -262,8 +262,8 @@ int run_tests(int test_cat)
 	PRINTF(("%14i%20i%2i%i", (int)-2147483648, 3, 30, -1));
 	PRINTF(("%14ic%20is%2ix%du", (int)-2147483648, 3, 30, -1));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_U && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_U && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%u and widths");
 
@@ -280,8 +280,8 @@ int run_tests(int test_cat)
 	PRINTF(("the biggest unsigned int is %11u", (unsigned int)-1));
 	PRINTF(("Here are some numbers: %1u%2u%5u%3u%9u and %ui", 11, (unsigned int)-1, 2, 200, 3, 10));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%x and widths");
 
@@ -307,8 +307,8 @@ int run_tests(int test_cat)
 	PRINTF(("%1x%2x%9x", (unsigned int)-1, 0xf0ca, 123456));
 	PRINTF(("%1xis doomed%2xpost%9xX args", (unsigned int)-1, 0xf0b1a, 7654321));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%X and widths");
 
@@ -334,8 +334,8 @@ int run_tests(int test_cat)
 	PRINTF(("%1X%2X%9X", (unsigned int)-1, 0xf0ca, 123456));
 	PRINTF(("%1Xis doomed%2Xpost%9Xx args", (unsigned int)-1, 0xf0b1a, 7654321));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%% and widths");
 
@@ -349,8 +349,8 @@ int run_tests(int test_cat)
 
 	describe("\n%s and precisions");
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_S && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_S && test_cat & CAT_BONUS_1)
 			: 1;
 	PRINTF(("%.s", "hi there"));
 	PRINTF(("%.0s", "hi there"));
@@ -380,8 +380,8 @@ int run_tests(int test_cat)
 	PRINTF(("It's %.4s to over%.50s my%s", "hardware", "state", " satisfaction"));
 	PRINTF(("%.11s%.6s%.4s", "Aperture", " Scientists", "ce"));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%d and precisions");
 
@@ -417,8 +417,8 @@ int run_tests(int test_cat)
 	PRINTF(("Bla %.2di bla %.5dsbla bla %.dx bla %.d", 127, 42, 1023, 0))
 	PRINTF(("%.4d%.2d%.20d%.0d%.0d%.d%.d%.d", 127, 0, 1023, 0, (int)-2147483648, 0, 1, (int)-2147483648))
 	
-	right_cat = g_all_bonus ? 1
-		: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+		: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS_1)
 		: 1;
 	describe("\n%i and precisions");
 
@@ -455,8 +455,8 @@ int run_tests(int test_cat)
 	PRINTF(("Bla %.2ii bla %.5isbla bla %.ix bla %.i", 127, 42, 1023, 0))
 	PRINTF(("%.4i%.2i%.20i%.0i%.0i%.i%.i%.i", 127, 0, 1023, 0, (int)-2147483648, 0, 1, (int)-2147483648))
 	
-	right_cat = g_all_bonus ? 1
-		: test_cat ? (test_cat & CAT_U && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+		: test_cat ? (test_cat & CAT_U && test_cat & CAT_BONUS_1)
 		: 1;
 	describe("\n%u and precisions");
 
@@ -492,8 +492,8 @@ int run_tests(int test_cat)
 	PRINTF(("%u%.5u%.0u%.u%.9u", 5, 55, 2, 0, 42))
 	PRINTF(("%us%.5ui%.0uc%.up%.9ux", 5, 55, 2, 0, 42))
 	
-	right_cat = g_all_bonus ? 1
-		: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+		: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS_1)
 		: 1;
 	describe("\n%x and precisions");
 
@@ -531,8 +531,8 @@ int run_tests(int test_cat)
 	PRINTF(("%x%.5x%.0x%.x%.9x", 5, 55, 2, 0, 42))
 	PRINTF(("%xs%.5xi%.0xc%.xp%.9xu", 5, 55, 2, 0, 42))
 	
-	right_cat = g_all_bonus ? 1
-		: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+		: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS_1)
 		: 1;
 	describe("\n%X and precisions");
 
@@ -570,8 +570,8 @@ int run_tests(int test_cat)
 	PRINTF(("%X%.5X%.0X%.X%.9X", 5, 55, 2, 0, 42))
 	PRINTF(("%Xs%.5Xi%.0Xc%.Xp%.9Xu", 5, 55, 2, 0, 42))
 	
-	right_cat = g_all_bonus ? 1
-		: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+		: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS_1)
 		: 1;
 	describe("\n%% and precisions");
 
@@ -582,8 +582,8 @@ int run_tests(int test_cat)
 	PRINTF(("%.9%%.5% is how you print %% in printf"))
 	PRINTF(("%.9%i%.5%s%.%d%.3%p%.3%.6c%.6%u%.8%x"))
 	
-	right_cat = g_all_bonus ? 1
-		: test_cat ? (test_cat & CAT_C && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+		: test_cat ? (test_cat & CAT_C && test_cat & CAT_BONUS_1)
 		: 1;
 	describe("\n%c, widths and -");
 
@@ -598,8 +598,8 @@ int run_tests(int test_cat)
 	PRINTF(("%-ci%-cp%4cs%-11cx", 'a', 'b', 'c', 'd'));
 	PRINTF(("%----ci%---cp%4cs%--11cx", 'a', 'b', 'c', 'd'));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_S && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_S && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%s, widths, precisions and -");
 
@@ -610,8 +610,8 @@ int run_tests(int test_cat)
 	PRINTF(("%--.sp--.su kkkk", "pegadinha po"));
 	PRINTF(("%-9sScience!", "-42"));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_P && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_P && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%p, widths and -");
 
@@ -623,8 +623,8 @@ int run_tests(int test_cat)
 	PRINTF(("%------21pwhoa wtf is that", (void *) 13));
 	PRINTF(("%------21p yeah i'm %p running out %--p of ideas", (void *) 13, (void *) 65, (void *) -1));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%d, widths, precisions and -");
 
@@ -690,8 +690,8 @@ int run_tests(int test_cat)
 	PRINTF(("%-4.5d%d%4d%-10d-d5%-.3d", 2147483647, 2141483647, 2141483647, 2141483647, 2141483647));
 	PRINTF(("%-4.5d%d%4d%-10d-d5%-.3d", (int)-2147483648, (int)-2141483648, (int)-2141483648, (int)-2141483648, (int)-2141483648));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%i, widths, precisions and -");
 
@@ -757,8 +757,8 @@ int run_tests(int test_cat)
 	PRINTF(("%-4.5i%i%4i%-10i-i5%-.3i", 2147483647, 2141483647, 2141483647, 2141483647, 2141483647));
 	PRINTF(("%-4.5i%i%4i%-10i-i5%-.3i", (int)-2147483648, (int)-2141483648, (int)-2141483648, (int)-2141483648, (int)-2141483648));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_U && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_U && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%u, widths, precisions and -");
 
@@ -824,8 +824,8 @@ int run_tests(int test_cat)
 	PRINTF(("%-4.5u%u%4u%-10u-u5%-.3u", 2147483647, 2141483647, 2141483647, 2141483647, 2141483647));
 	PRINTF(("%-4.5u%u%4u%-10u-u5%-.3u", -1, -1, -1, -1, -1));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%x, widths, precisions and -");
 
@@ -891,8 +891,8 @@ int run_tests(int test_cat)
 	PRINTF(("%-4.5x%x%4x%-10x-x5%-.3x", 2147483647, 2141483647, 2141483647, 2141483647, 2141483647));
 	PRINTF(("%-4.5x%x%4x%-10x-x5%-.3x", -1, -1, -1, -1, -1));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%X, widths, precisions and -");
 
@@ -958,8 +958,8 @@ int run_tests(int test_cat)
 	PRINTF(("%-4.5X%X%4X%-10X-X5%-.3X", 2147483647, 2141483647, 2141483647, 2141483647, 2141483647));
 	PRINTF(("%-4.5X%X%4X%-10X-X5%-.3X", -1, -1, -1, -1, -1));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%%, widths, precisions and -");
 
@@ -970,8 +970,8 @@ int run_tests(int test_cat)
 	PRINTF_EXPECTED(("%-3.3%"),                                           /* expected: */ ("%%  "))
 	PRINTF_EXPECTED(("%----.9%i%.5%s%-10.%d%.3%p%.3%----.6c%.6%u%-.8%x"), /* expected: */ ("%%i%%s%%         d%%p%%----.6c%%u%%x"))
 	
-	right_cat = g_all_bonus ? 1
-		: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+		: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_1)
 		: 1;
 	describe("\n%d, widths, precisions and 0");
 
@@ -1036,8 +1036,8 @@ int run_tests(int test_cat)
 	PRINTF(("%0014.2d%020d%0002.d%000.5d", (int)-2147483648, 3, 30, -1));
 	PRINTF(("%014dc%020ds%02dx%0du", (int)-2147483648, 3, 30, -1));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%i, widths, precisions and 0");
 
@@ -1102,8 +1102,8 @@ int run_tests(int test_cat)
 	PRINTF(("%0014.2i%020i%0002.i%000.5i", (int)-2147483648, 3, 30, -1));
 	PRINTF(("%014ic%020is%02ix%0iu", (int)-2147483648, 3, 30, -1));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_U && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_U && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%u, widths, precisions and 0");
 
@@ -1161,8 +1161,8 @@ int run_tests(int test_cat)
 	PRINTF(("%0014.2u%020u%0002.u%000.5u", -1, 3, 30, -1));
 	PRINTF(("%014uc%020us%02ux%0ui", -1, 3, 30, -1));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%x, widths, precisions and 0");
 
@@ -1220,8 +1220,8 @@ int run_tests(int test_cat)
 	PRINTF(("%0014.2x%020x%0002.x%000.5x", -1, 3, 30, -1));
 	PRINTF(("%014xc%020xs%02xx%0xi", -1, 3, 30, -1));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%X, widths, precisions and 0");
 
@@ -1269,17 +1269,17 @@ int run_tests(int test_cat)
 	PRINTF(("%010X", 2147483647));
 	PRINTF(("%011X", 2147483647));
 	PRINTF(("%05X",  -1));
-	PRINTF(("%030X", -1));
-	PRINTF(("%010X", -1));
-	PRINTF(("%011X", -1));
-	PRINTF(("%012X", -1));
-	PRINTF(("%012X, %20X, %2X, %000042X", -1, 3, 30, -1));
-	PRINTF(("%012X, %X, %002X, %42X", -1, 3, 30, -1));
+	PRINTF(("%030.20X", -1));
+	PRINTF(("%010.11X", -1));
+	PRINTF(("%011.11X", -1));
+	PRINTF(("%012.11X", -1));
+	PRINTF(("%012X, %20X, %2X, %000042.20X", -1, 3, 30, -1));
+	PRINTF(("%012X, %X, %002X, %42.5X", -1, 3, 30, -1));
 	PRINTF(("%0014.2X%020X%0002.X%000.5X", -1, 3, 30, -1));
-	PRINTF(("%014Xc%020Xs%02XX%0Xi", -1, 3, 30, -1));
+	PRINTF(("%014Xc%020Xs%02.5XX%0.Xi", -1, 3, 30, -1));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+			: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS_1)
 			: 1;
 	describe("\n%%, widths, precisions and 0");
 
@@ -1288,360 +1288,66 @@ int run_tests(int test_cat)
 	PRINTF_EXPECTED(("%0-5%"), /* expected: */ ("%%    "));
 	PRINTF_EXPECTED(("%010.5%"), /* expected: */ ("000000000%%"));
 
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
+			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS_2)
 			: 1;
-	describe("\n%x, widths, precisions and #");
+	describe("\n%x and #");
 
-	PRINTF(("%#1x", 0));
-	PRINTF(("%#1x", -4));
-	PRINTF(("%#10x", 42));
-	PRINTF(("%#42x", 42000));
-	PRINTF(("%#20x", -42000));
-	PRINTF(("wait for it... %#50x", 42));
-	PRINTF(("%#20x is how many tests are going to be made", 8000));
-	PRINTF(("%#5x", 2147483647));
-	PRINTF(("%#30x", 2147483647));
-	PRINTF(("%#10x", 2147483647));
-	PRINTF(("%#5x", -1));
-	PRINTF(("%#30x", -1));
-	PRINTF(("%#10x", -1));
-	PRINTF(("%#11x", -1));
-	PRINTF(("%#12x", -1));
-	PRINTF(("%#12x, %20x, %2x, %42x", -1, 3, 30, -1));
-	PRINTF(("%#12x, %x, %2x, %42x", -1, 3, 30, -1));
-	PRINTF(("%#14x%#20x%#2x%#x", -1, 3, 30, -1));
-	PRINTF(("%#14xc%#20xs%#2xX%#xi", -1, 3, 30, -1));
-	PRINTF(("%#1.x", 0));
-	PRINTF(("%#1.0x", 0));
-	PRINTF(("%#2.0x", 0));
-	PRINTF(("%#3.0x", 0));
-	PRINTF(("%#1.1x", 0));
-	PRINTF(("%#1.2x", 0));
-	PRINTF(("%#1.3x", 0));
-	PRINTF(("%#1.0x", 4));
-	PRINTF(("%#1.1x", 4));
-	PRINTF(("%#1.2x", 4));
-	PRINTF(("%#1.3x", 4));
-	PRINTF(("%#10.20x", 42));
-	PRINTF(("%#42.2x", 42000));
-	PRINTF(("%#42.20x", 42000));
-	PRINTF(("%#42.42x", 42000));
-	PRINTF(("%#042.52x", 42000));
-	PRINTF(("wait for it... %#050.50x", 42));
-	PRINTF(("%#20.19x is how many tests are going to be made", 8000));
-	PRINTF(("%#20.20x is how many tests are going to be made", 8000));
-	PRINTF(("%#20.21x is how many tests are going to be made", 8000));
-	PRINTF(("%#5x", 2147483647));
-	PRINTF(("%#30x", 2147483647));
-	PRINTF(("%#9x", 2147483647));
-	PRINTF(("%#10x", 2147483647));
-	PRINTF(("%#11x", 2147483647));
-	PRINTF(("%#5x",  -1));
-	PRINTF(("%#30x", -1));
-	PRINTF(("%#10x", -1));
-	PRINTF(("%#11x", -1));
-	PRINTF(("%#12x", -1));
-	PRINTF(("%#12x, %20x, %2x, %000042x", -1, 3, 30, -1));
-	PRINTF(("%#12x, %x, %002x, %42x", -1, 3, 30, -1));
-	PRINTF(("%#014.2x%#20x%###2.x%###.5x", -1, 3, 30, -1));
-	PRINTF(("%#14xc%#20xs%#2xx%#xi", -1, 3, 30, -1));
+	PRINTF(("%#x", 0));
+	PRINTF(("%#x", -4));
+	PRINTF(("%#x", 42));
+	PRINTF(("%#x", 42000));
+	PRINTF(("%#x", -42000));
+	PRINTF(("wait for it... %#x", 42));
+	PRINTF(("%#x is how many tests are going to be made", 8000));
+	PRINTF(("%#xd", 2147483647));
+	PRINTF(("%#xp", 2147483647));
+	PRINTF(("%#xX", 2147483647));
+	PRINTF(("%#xp", -1));
+	PRINTF(("%#xd", -1));
+	PRINTF(("%#xX", -1));
+	PRINTF(("%#x", -1));
+	PRINTF(("%#x, %x, %x, %x", -1, 3, 30, -1));
+	PRINTF(("%#x%#x%#x%#x", -1, 3, 30, -1));
+	PRINTF(("%#xc%#xs%#xX%#xi", -1, 3, 30, -1));
+	PRINTF(("--.%#xp", 0));
+	PRINTF(("--.%#xs", 0));
+	PRINTF(("%#xc", 4));
+	PRINTF(("c%#x-i", 42000));
+	PRINTF(("wait for it... %#xp", 42));
 	
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
+			: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS_2)
 			: 1;
-	describe("\n%x, widths, precisions 0 and #");
+	describe("\n%X and #");
 
-	PRINTF(("%#01x", 0));
-	PRINTF(("%#01x", -4));
-	PRINTF(("%#010x", 42));
-	PRINTF(("%#042x", 42000));
-	PRINTF(("%#020x", -42000));
-	PRINTF(("wait for it... %#050x", 42));
-	PRINTF(("%#020x is how many tests are going to be made", 8000));
-	PRINTF(("%#05x", 2147483647));
-	PRINTF(("%#030x", 2147483647));
-	PRINTF(("%#010x", 2147483647));
-	PRINTF(("%#05x", -1));
-	PRINTF(("%#030x", -1));
-	PRINTF(("%#010x", -1));
-	PRINTF(("%#011x", -1));
-	PRINTF(("%#012x", -1));
-	PRINTF(("%#012x, %20x, %2x, %42x", -1, 3, 30, -1));
-	PRINTF(("%#012x, %x, %2x, %42x", -1, 3, 30, -1));
-	PRINTF(("%#014x%#020x%#02x%#0x", -1, 3, 30, -1));
-	PRINTF(("%#014xc%#020xs%#02xX%#0xi", -1, 3, 30, -1));
-	PRINTF(("%#01.x", 0));
-	PRINTF(("%#01.0x", 0));
-	PRINTF(("%#02.0x", 0));
-	PRINTF(("%#03.0x", 0));
-	PRINTF(("%#01.1x", 0));
-	PRINTF(("%#01.2x", 0));
-	PRINTF(("%#01.3x", 0));
-	PRINTF(("%#01.0x", 4));
-	PRINTF(("%#01.1x", 4));
-	PRINTF(("%#01.2x", 4));
-	PRINTF(("%#01.3x", 4));
-	PRINTF(("%#010.20x", 42));
-	PRINTF(("%#042.2x", 42000));
-	PRINTF(("%#042.20x", 42000));
-	PRINTF(("%#042.42x", 42000));
-	PRINTF(("%#42.52x", 42000));
-	PRINTF(("wait for it... %#50.50x", 42));
-	PRINTF(("%#020.19x is how many tests are going to be made", 8000));
-	PRINTF(("%#020.20x is how many tests are going to be made", 8000));
-	PRINTF(("%#020.21x is how many tests are going to be made", 8000));
-	PRINTF(("%#05x", 2147483647));
-	PRINTF(("%#030x", 2147483647));
-	PRINTF(("%#09x", 2147483647));
-	PRINTF(("%#010x", 2147483647));
-	PRINTF(("%#011x", 2147483647));
-	PRINTF(("%#05x",  -1));
-	PRINTF(("%#030x", -1));
-	PRINTF(("%#010x", -1));
-	PRINTF(("%#011x", -1));
-	PRINTF(("%#012x", -1));
-	PRINTF(("%#012x, %20x, %2x, %000042x", -1, 3, 30, -1));
-	PRINTF(("%#012x, %x, %002x, %42x", -1, 3, 30, -1));
-	PRINTF(("%#0014.2x%#020x%#0#0#02.x%#0#0#0.5x", -1, 3, 30, -1));
-	PRINTF(("%#014xc%#020xs%#02xx%#0xi", -1, 3, 30, -1));
+	PRINTF(("%#X", 0));
+	PRINTF(("%#X", -4));
+	PRINTF(("%#X", 42));
+	PRINTF(("%#X", 42000));
+	PRINTF(("%#X", -42000));
+	PRINTF(("wait for it... %#X", 42));
+	PRINTF(("%#X is how many tests are going to be made", 8000));
+	PRINTF(("%#Xd", 2147483647));
+	PRINTF(("%#Xp", 2147483647));
+	PRINTF(("%#XX", 2147483647));
+	PRINTF(("%#Xp", -1));
+	PRINTF(("%#Xd", -1));
+	PRINTF(("%#XX", -1));
+	PRINTF(("%#X", -1));
+	PRINTF(("%#X, %X, %X, %X", -1, 3, 30, -1));
+	PRINTF(("%#X%#X%#X%#X", -1, 3, 30, -1));
+	PRINTF(("%#Xc%#Xs%#Xx%#Xi", -1, 3, 30, -1));
+	PRINTF(("--.%#Xp", 0));
+	PRINTF(("--.%#Xs", 0));
+	PRINTF(("%#Xc", 4));
+	PRINTF(("c%#X-i", 42000));
+	PRINTF(("wait for it... %#Xp", 42));
 
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS)
+	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
+			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_2)
 			: 1;
-	describe("\n%x, widths, precisions, - and #");
-
-	PRINTF(("%#-1x", 0));
-	PRINTF(("%#-1x", -4));
-	PRINTF(("%#-10x", 42));
-	PRINTF(("%#-42x", 42000));
-	PRINTF(("%#-20x", -42000));
-	PRINTF(("wait for it... %#-50x", 42));
-	PRINTF(("%#-20x is how many tests are going to be made", 8000));
-	PRINTF(("%#-5x", 2147483647));
-	PRINTF(("%#-30x", 2147483647));
-	PRINTF(("%#-10x", 2147483647));
-	PRINTF(("%#-5x", -1));
-	PRINTF(("%#-30x", -1));
-	PRINTF(("%#-10x", -1));
-	PRINTF(("%#-11x", -1));
-	PRINTF(("%#-12x", -1));
-	PRINTF(("%#-12x, %20x, %2x, %42x", -1, 3, 30, -1));
-	PRINTF(("%#-12x, %x, %#02x, %#042x", -1, 3, 30, -1));
-	PRINTF(("%#-14x%020x%02x%0x", -1, 3, 30, -1));
-	PRINTF(("%#-14xc%020xs%02xx%0xi", -1, 3, 30, -1));
-	PRINTF(("%#-1.x", 0));
-	PRINTF(("%#-1.0x", 0));
-	PRINTF(("%#-2.0x", 0));
-	PRINTF(("%#-3.0x", 0));
-	PRINTF(("%#-1.1x", 0));
-	PRINTF(("%#-1.2x", 0));
-	PRINTF(("%#-1.3x", 0));
-	PRINTF(("%#-1.0x", 4));
-	PRINTF(("%#-1.1x", 4));
-	PRINTF(("%#-1.3x", 4));
-	PRINTF(("%#-10.20x", 42));
-	PRINTF(("%#-42.2x", 42000));
-	PRINTF(("%#-42.20x", 42000));
-	PRINTF(("%#-42.42x", 42000));
-	PRINTF(("%#-42.52x", 42000));
-	PRINTF(("wait for it... %#-50.50x", 42));
-	PRINTF(("%#-20.19x is how many tests are going to be made", 8000));
-	PRINTF(("%#-20.20x is how many tests are going to be made", 8000));
-	PRINTF(("%#-20.21x is how many tests are going to be made", 8000));
-	PRINTF(("%#-5x", 2147483647));
-	PRINTF(("%#-30x", 2147483647));
-	PRINTF(("%#-9x", 2147483647));
-	PRINTF(("%#-10x", 2147483647));
-	PRINTF(("%#-11x", 2147483647));
-	PRINTF(("%#-5x",  -1));
-	PRINTF(("%#-30x", -1));
-	PRINTF(("%#-10x", -1));
-	PRINTF(("%#-11x", -1));
-	PRINTF(("%#-12x", -1));
-	PRINTF(("%#-12x, %20x, %2x, %#-#-#-#-42x", -1, 3, 30, -1));
-	PRINTF(("%#-12x, %x, %#-#-2x, %42x", -1, 3, 30, -1));
-	PRINTF(("%#-#-14.2x%#-20x%#-#-#-2.x%#-#-#-.5x", -1, 3, 30, -1));
-	PRINTF(("%#-14xc%-20xs%#-2xX%#-xi", -1, 3, 30, -1));
-
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS)
-			: 1;
-	describe("\n%X, widths, precisions and #");
-
-	PRINTF(("%#1X", 0));
-	PRINTF(("%#1X", -4));
-	PRINTF(("%#10X", 42));
-	PRINTF(("%#42X", 42000));
-	PRINTF(("%#20X", -42000));
-	PRINTF(("wait for it... %#50X", 42));
-	PRINTF(("%#20X is how many tests are going to be made", 8000));
-	PRINTF(("%#5X", 2147483647));
-	PRINTF(("%#30X", 2147483647));
-	PRINTF(("%#10X", 2147483647));
-	PRINTF(("%#5X", -1));
-	PRINTF(("%#30X", -1));
-	PRINTF(("%#10X", -1));
-	PRINTF(("%#11X", -1));
-	PRINTF(("%#12X", -1));
-	PRINTF(("%#12X, %20X, %2X, %42X", -1, 3, 30, -1));
-	PRINTF(("%#12X, %X, %#2X, %#42X", -1, 3, 30, -1));
-	PRINTF(("%#14X%020X%02X%0X", -1, 3, 30, -1));
-	PRINTF(("%#14Xc%020Xs%02XX%0Xi", -1, 3, 30, -1));
-	PRINTF(("%#1.X", 0));
-	PRINTF(("%#1.0X", 0));
-	PRINTF(("%#2.0X", 0));
-	PRINTF(("%#3.0X", 0));
-	PRINTF(("%#1.1X", 0));
-	PRINTF(("%#1.2X", 0));
-	PRINTF(("%#1.3X", 0));
-	PRINTF(("%#1.0X", 4));
-	PRINTF(("%#1.1X", 4));
-	PRINTF(("%#1.3X", 4));
-	PRINTF(("%#10.20X", 42));
-	PRINTF(("%#42.2X", 42000));
-	PRINTF(("%#42.20X", 42000));
-	PRINTF(("%#42.42X", 42000));
-	PRINTF(("%#42.52X", 42000));
-	PRINTF(("wait for it... %#50.50X", 42));
-	PRINTF(("%#20.19X is how many tests are going to be made", 8000));
-	PRINTF(("%#20.20X is how many tests are going to be made", 8000));
-	PRINTF(("%#20.21X is how many tests are going to be made", 8000));
-	PRINTF(("%#5X", 2147483647));
-	PRINTF(("%#30X", 2147483647));
-	PRINTF(("%#9X", 2147483647));
-	PRINTF(("%#10X", 2147483647));
-	PRINTF(("%#11X", 2147483647));
-	PRINTF(("%#5X",  -1));
-	PRINTF(("%#30X", -1));
-	PRINTF(("%#10X", -1));
-	PRINTF(("%#11X", -1));
-	PRINTF(("%#12X", -1));
-	PRINTF(("%#12X, %20X, %2X, %####42X", -1, 3, 30, -1));
-	PRINTF(("%#12X, %X, %##2X, %42X", -1, 3, 30, -1));
-	PRINTF(("%##14.2X%#20X%###2.X%###.5X", -1, 3, 30, -1));
-	PRINTF(("%#14Xc%020Xs%#2XX%#Xi", -1, 3, 30, -1));
-
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS)
-			: 1;
-	describe("\n%X, widths, precisions, 0 and #");
-
-	PRINTF(("%#01X", 0));
-	PRINTF(("%#01X", -4));
-	PRINTF(("%#010X", 42));
-	PRINTF(("%#042X", 42000));
-	PRINTF(("%#020X", -42000));
-	PRINTF(("wait for it... %#050X", 42));
-	PRINTF(("%#020X is how many tests are going to be made", 8000));
-	PRINTF(("%#05X", 2147483647));
-	PRINTF(("%#030X", 2147483647));
-	PRINTF(("%#010X", 2147483647));
-	PRINTF(("%#05X", -1));
-	PRINTF(("%#030X", -1));
-	PRINTF(("%#010X", -1));
-	PRINTF(("%#011X", -1));
-	PRINTF(("%#012X", -1));
-	PRINTF(("%#012X, %20X, %2X, %42X", -1, 3, 30, -1));
-	PRINTF(("%#012X, %X, %#02X, %#042X", -1, 3, 30, -1));
-	PRINTF(("%#014X%020X%02X%0X", -1, 3, 30, -1));
-	PRINTF(("%#014Xc%020Xs%02XX%0Xi", -1, 3, 30, -1));
-	PRINTF(("%#01.X", 0));
-	PRINTF(("%#01.0X", 0));
-	PRINTF(("%#02.0X", 0));
-	PRINTF(("%#03.0X", 0));
-	PRINTF(("%#01.1X", 0));
-	PRINTF(("%#01.2X", 0));
-	PRINTF(("%#01.3X", 0));
-	PRINTF(("%#01.0X", 4));
-	PRINTF(("%#01.1X", 4));
-	PRINTF(("%#01.3X", 4));
-	PRINTF(("%#010.20X", 42));
-	PRINTF(("%#042.2X", 42000));
-	PRINTF(("%#042.20X", 42000));
-	PRINTF(("%#042.42X", 42000));
-	PRINTF(("%#042.52X", 42000));
-	PRINTF(("wait for it... %#050.50X", 42));
-	PRINTF(("%#020.19X is how many tests are going to be made", 8000));
-	PRINTF(("%#020.20X is how many tests are going to be made", 8000));
-	PRINTF(("%#020.21X is how many tests are going to be made", 8000));
-	PRINTF(("%#05X", 2147483647));
-	PRINTF(("%#030X", 2147483647));
-	PRINTF(("%#09X", 2147483647));
-	PRINTF(("%#010X", 2147483647));
-	PRINTF(("%#011X", 2147483647));
-	PRINTF(("%#05X",  -1));
-	PRINTF(("%#030X", -1));
-	PRINTF(("%#010X", -1));
-	PRINTF(("%#011X", -1));
-	PRINTF(("%#012X", -1));
-	PRINTF(("%#012X, %20X, %2X, %#0#0#0#042X", -1, 3, 30, -1));
-	PRINTF(("%#012X, %X, %#0#02X, %42X", -1, 3, 30, -1));
-	PRINTF(("%#0#014.2X%#020X%#0#0#02.X%#0#0#0.5X", -1, 3, 30, -1));
-	PRINTF(("%#014Xc%020Xs%#02XX%#0Xi", -1, 3, 30, -1));
-
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS)
-			: 1;
-	describe("\n%X, widths, precisions, - and #");
-
-	PRINTF(("%#-1X", 0));
-	PRINTF(("%#-1X", -4));
-	PRINTF(("%#-10X", 42));
-	PRINTF(("%#-42X", 42000));
-	PRINTF(("%#-20X", -42000));
-	PRINTF(("wait for it... %#-50X", 42));
-	PRINTF(("%#-20X is how many tests are going to be made", 8000));
-	PRINTF(("%#-5X", 2147483647));
-	PRINTF(("%#-30X", 2147483647));
-	PRINTF(("%#-10X", 2147483647));
-	PRINTF(("%#-5X", -1));
-	PRINTF(("%#-30X", -1));
-	PRINTF(("%#-10X", -1));
-	PRINTF(("%#-11X", -1));
-	PRINTF(("%#-12X", -1));
-	PRINTF(("%#-12X, %20X, %2X, %42X", -1, 3, 30, -1));
-	PRINTF(("%#-12X, %X, %#02X, %#042X", -1, 3, 30, -1));
-	PRINTF(("%#-14X%020X%02X%0X", -1, 3, 30, -1));
-	PRINTF(("%#-14Xc%020Xs%02XX%0Xi", -1, 3, 30, -1));
-	PRINTF(("%#-1.X", 0));
-	PRINTF(("%#-1.0X", 0));
-	PRINTF(("%#-2.0X", 0));
-	PRINTF(("%#-3.0X", 0));
-	PRINTF(("%#-1.1X", 0));
-	PRINTF(("%#-1.2X", 0));
-	PRINTF(("%#-1.3X", 0));
-	PRINTF(("%#-1.0X", 4));
-	PRINTF(("%#-1.1X", 4));
-	PRINTF(("%#-1.3X", 4));
-	PRINTF(("%#-10.20X", 42));
-	PRINTF(("%#-42.2X", 42000));
-	PRINTF(("%#-42.20X", 42000));
-	PRINTF(("%#-42.42X", 42000));
-	PRINTF(("%#-42.52X", 42000));
-	PRINTF(("wait for it... %#-50.50X", 42));
-	PRINTF(("%#-20.19X is how many tests are going to be made", 8000));
-	PRINTF(("%#-20.20X is how many tests are going to be made", 8000));
-	PRINTF(("%#-20.21X is how many tests are going to be made", 8000));
-	PRINTF(("%#-5X", 2147483647));
-	PRINTF(("%#-30X", 2147483647));
-	PRINTF(("%#-9X", 2147483647));
-	PRINTF(("%#-10X", 2147483647));
-	PRINTF(("%#-11X", 2147483647));
-	PRINTF(("%#-5X",  -1));
-	PRINTF(("%#-30X", -1));
-	PRINTF(("%#-10X", -1));
-	PRINTF(("%#-11X", -1));
-	PRINTF(("%#-12X", -1));
-	PRINTF(("%#-12X, %20X, %2X, %#-#-#-#-42X", -1, 3, 30, -1));
-	PRINTF(("%#-12X, %X, %#-#-2X, %42X", -1, 3, 30, -1));
-	PRINTF(("%#-#-14.2X%#-20X%#-#-#-2.X%#-#-#-.5X", -1, 3, 30, -1));
-	PRINTF(("%#-14Xc%-20Xs%#-2XX%#-Xi", -1, 3, 30, -1));
-
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS)
-			: 1;
-	describe("\n%d, widths, precisions and ' '");
+	describe("\n%d and ' '");
 
 	PRINTF(("% d", 0));
 	PRINTF(("% d", 1));
@@ -1657,135 +1363,7 @@ int run_tests(int test_cat)
 	PRINTF(("% d", (int)-2144348));
 	PRINTF(("%   d", 2147837));
 	PRINTF(("%  d", (int)-2147486));
-	PRINTF(("% 1d", 0));
-	PRINTF(("%  1d", -1));
-	PRINTF(("% 2d", 1));
-	PRINTF(("% 3d", -1));
-	PRINTF(("%    4d", 0));
-	PRINTF(("%   5d", 1));
-	PRINTF(("%  2d", -1));
-	PRINTF(("% 9d", 2147483647));
-	PRINTF(("% 10d", 2147483647));
-	PRINTF(("% 11d", 2147483647));
-	PRINTF(("% 9d", (int)-2147483648));
-	PRINTF(("%   10d", (int)-2147483648));
-	PRINTF(("%  11d", (int)-2147483648));
-	PRINTF(("%  11d", (int)-2147483648));
-	PRINTF(("%     12d", (int)-2147483648));
-	PRINTF(("% .d", 0));
-	PRINTF(("% .0d", 0));
-	PRINTF(("% .1d", 0));
-	PRINTF(("% .2d", 0));
-	PRINTF(("% .0d", 1));
-	PRINTF(("% .1d", 1));
-	PRINTF(("% .d", -1));
-	PRINTF(("%   .3d", 1));
-	PRINTF(("%  .1d", -1));
-	PRINTF(("%  .3d", -1));
-	PRINTF(("% .10d", 2147483647));
-	PRINTF(("% .11d", 2147483647));
-	PRINTF(("% .9d", (int)-2147483648));
-	PRINTF(("%   .9d", 2147483647));
-	PRINTF(("%  .10d", (int)-2147483648));
-	PRINTF(("% .8d", 2178647));
-	PRINTF(("% .9d", (int)-2144348));
-	PRINTF(("%   .7d", 2147837));
-	PRINTF(("%  .8d", (int)-2147486));
-	PRINTF(("%  .7d", (int)-2147486));
-	PRINTF(("% 1.0d", 0));
-	PRINTF(("% 1.1d", 0));
-	PRINTF(("% 1.2d", 0));
-	PRINTF(("%  1.1d", -1));
-	PRINTF(("%  1.2d", -1));
-	PRINTF(("% 2.0d", 1));
-	PRINTF(("% 3.3d", -1));
-	PRINTF(("%    4.8d", 0));
-	PRINTF(("%  5.d", 1));
-	PRINTF(("%  2.9d", -1));
-	PRINTF(("% 9.8d", 2147483647));
-	PRINTF(("% 10.11d", 2147483647));
-	PRINTF(("% 11.9d", 2147483647));
-	PRINTF(("% 9.9d", (int)-2147483648));
-	PRINTF(("%   10.9d", (int)-2147483648));
-	PRINTF(("%  11.9di", (int)-2147483648));
-	PRINTF(("%  11.12ds", (int)-2147483648));
-	PRINTF(("%   12.0d", (int)-2147483648));
-
-	right_cat = g_all_bonus ? 1
-			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS)
-			: 1;
-	describe("\n%d, widths, precisions and ' '");
-
-	PRINTF(("%0 d", 0));
-	PRINTF(("%0 d", 1));
-	PRINTF(("%0 d", -1));
-	PRINTF(("%0    d", 0));
-	PRINTF(("%0   d", 1));
-	PRINTF(("%0  d", -1));
-	PRINTF(("%0 d", 2147483647));
-	PRINTF(("%0 d", (int)-2147483648));
-	PRINTF(("%0   d", 2147483647));
-	PRINTF(("%0  d", (int)-2147483648));
-	PRINTF(("%0 d", 2178647));
-	PRINTF(("%0 d", (int)-2144348));
-	PRINTF(("%0   d", 2147837));
-	PRINTF(("%0  d", (int)-2147486));
-	PRINTF(("%0 1d", 0));
-	PRINTF(("%0  1d", -1));
-	PRINTF(("%0 2d", 1));
-	PRINTF(("%0 3d", -1));
-	PRINTF(("%0    4d", 0));
-	PRINTF(("%0   5d", 1));
-	PRINTF(("%0  2d", -1));
-	PRINTF(("%0 9d", 2147483647));
-	PRINTF(("%0 10d", 2147483647));
-	PRINTF(("%0 11d", 2147483647));
-	PRINTF(("%0 13d", 2147483647));
-	PRINTF(("%0 16d", 2147483647));
-	PRINTF(("%0 9d", (int)-2147483648));
-	PRINTF(("%0   10d", (int)-2147483648));
-	PRINTF(("%0  11d", (int)-2147483648));
-	PRINTF(("%0  11d", (int)-2147483648));
-	PRINTF(("%0     12d", (int)-2147483648));
-	PRINTF(("%0 .d", 0));
-	PRINTF(("%0 .0d", 0));
-	PRINTF(("%0 .1d", 0));
-	PRINTF(("%0 .2d", 0));
-	PRINTF(("%0 .0d", 1));
-	PRINTF(("%0 .1d", 1));
-	PRINTF(("%0 .d", -1));
-	PRINTF(("%0   .3d", 1));
-	PRINTF(("%0  .1d", -1));
-	PRINTF(("%0  .3d", -1));
-	PRINTF(("%0 .10d", 2147483647));
-	PRINTF(("%0 .11d", 2147483647));
-	PRINTF(("%0 .12d", 2147483647));
-	PRINTF(("%0 .9d", (int)-2147483648));
-	PRINTF(("%0   .9d", 2147483647));
-	PRINTF(("%0  .10d", (int)-2147483648));
-	PRINTF(("%0 .8d", 2178647));
-	PRINTF(("%0 .9d", (int)-2144348));
-	PRINTF(("%0   .7d", 2147837));
-	PRINTF(("%0  .8d", (int)-2147486));
-	PRINTF(("%0  .7d", (int)-2147486));
-	PRINTF(("%0 1.0d", 0));
-	PRINTF(("%0 1.1d", 0));
-	PRINTF(("%0 1.2d", 0));
-	PRINTF(("%0  1.1d", -1));
-	PRINTF(("%0  1.2d", -1));
-	PRINTF(("%0 2.0d", 1));
-	PRINTF(("%0 3.3d", -1));
-	PRINTF(("%0    4.8d", 0));
-	PRINTF(("%0  5.d", 1));
-	PRINTF(("%0  2.9d", -1));
-	PRINTF(("%0 9.8d", 2147483647));
-	PRINTF(("%0 10.11d", 2147483647));
-	PRINTF(("%0 11.9d", 2147483647));
-	PRINTF(("%0 9.9d", (int)-2147483648));
-	PRINTF(("%0   10.9d", (int)-2147483648));
-	PRINTF(("%0  11.9di", (int)-2147483648));
-	PRINTF(("%0  11.12ds", (int)-2147483648));
-	PRINTF(("%0   12.0d", (int)-2147483648));
+	PRINTF(("%  d this is %d getting% di hard :/", (int)-2147486, -2, 42));
 	
 	return (0);
 }
