@@ -217,7 +217,7 @@ int check_result(t_result *user_result, t_result *orig_result, char *params_used
 			tester_putstr(" (Wrong return)");
 		if (errors == ERRORS_LEAK)
 			tester_putstr(RED " (LEAKS!)");
-		if (!success) {
+		if (!success || wrong_return) {
 			tester_putstr("\n");
 			print_output(orig_result, user_result, orig_result->bytes_read, user_result->bytes_read);
 		}
