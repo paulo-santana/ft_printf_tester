@@ -1437,8 +1437,6 @@ int run_tests(int test_cat)
 	PRINTF(("%+++i", 2147837));
 	PRINTF(("%++i", (int)-2147486));
 	PRINTF(("%++i this is %i getting%+ix hard :/", (int)-2147486, -2, 42));
-	
-	PRINTF(("%+u", 0));
 
 	return (0);
 }
