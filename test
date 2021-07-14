@@ -23,6 +23,6 @@ if [ $? -ne 0 ]
 then
 	echo -e "\ncompilation error kkkkkkkkkkkkkkkkkkkk"
 else
-	echo ./tester $@ 2>myleaks.txt
+	echo "./tester $@ 2>myleaks.txt"
 	./tester $@ 2>myleaks.txt
 fi
