@@ -19,13 +19,16 @@ The tests are managed maily by a shell script. Here are all the commands:
 
 * `sh test`: run all the tests
 * `sh test m`: run all the mandatory tests
-* `sh test b`: run all the bonus tests
+* `sh test b1`: run the first bonus tests (`'-0.'` and widths)
+* `sh test b2`: run all second bonus tests (`'# +'`)
 * `sh test d`: run only the `mandatory` tests related to the `%d` specifier. Currently, only the
 `cspdiuxX%` specifiers are supported
-* `sh test b c`: run only the `bonus` tests related to the `%c` specifier.
+* `sh test b1 c`: run the `b1` tests related to the `%c` specifier.
+* `sh test b2 X`: run the `b2` tests related to the `%X` specifier.
+* `sh test b1 b2`: run all the bonus tests
 * `sh test nosan`: run all the tests without the AddressSanitizer
 * `sh test nosan m`: run all the mandatory tests without the AddressSanitizer
-* `sh test nosan b`: run all the bonus tests without the AddressSanitizer
+* `sh test nosan b1`: run the first bonus tests without the AddressSanitizer
 * `sh test nosan p`: run all tests related to the `%p` without the AddressSanitizer
 * `sh test 1088`: run only the 1088th test
 
