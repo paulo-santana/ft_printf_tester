@@ -8,7 +8,7 @@ OBJS = ${SRCS:.c=.o}
 
 AR = ar rcs
 CFLAGS = -Wall -Werror -Wextra
-CC = gcc ${CFLAGS}
+CC = clang ${CFLAGS}
 
 all: ${NAME}
 

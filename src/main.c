@@ -16,6 +16,7 @@ char g_orig_fake_stdout[BUFSIZE];
 int g_function_return;
 char *g_test_params;
 int g_tests_run;
+int g_all_bonus = 0;
 
 
 int parse_arguments(int argc, char *argv[])
@@ -53,6 +54,10 @@ int parse_arguments(int argc, char *argv[])
 		else
 			g_test_nbr = atoi(str);
 	}
+	// if it's strictly equal to CAT_BONUS, then the script was called only with
+	// the `b` argument
+	if (options == CAT_BONUS)
+		g_all_bonus = 1;
 	return (options);
 }
 
@@ -77,10 +82,5 @@ int main(int argc, char *argv[])
 	{
 		printf("\nTests run: %d out of %d", g_tests_run, g_current_test - 1);
 		printf("\nTests OK:  %d (%d%%)\n", passed_tests, (int)((float)passed_tests / g_tests_run * 100));
-		//tester_putstr("\nTests passed: ");
-		//tester_putnbr(passed_tests);
-		//tester_putstr("/");
-		//tester_putnbr(--g_current_test);
-		//tester_putchar('\n');
 	}
 }

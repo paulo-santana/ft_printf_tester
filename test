@@ -23,6 +23,6 @@ if [ $? -ne 0 ]
 then
 	echo -e "\ncompilation error kkkkkkkkkkkkkkkkkkkk"
 else
-	echo params: $@
+	echo ./tester $@
 	./tester $@
 fi
