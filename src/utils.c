@@ -38,7 +38,7 @@ void pretty_printf(char *params)
 		}
 		i++;
 	}
-	tester_putchar('\n');
+	tester_putstr(";\n");
 }
 
 int already_printed_help = 0;
@@ -202,7 +202,7 @@ int check_result(t_result *user_result, t_result *orig_result, char *params_used
 		tester_putnbr(g_current_test);
 		tester_putchar('.');
 
-		if (success && !wrong_return && (!errors || errors == ERRORS_LEAK))
+		if (success && !wrong_return && !errors)
 			tester_putstr(BOLD "OK" RESET);
 		else if (errors) {
 			if (errors == ERRORS_SIGSEGV)

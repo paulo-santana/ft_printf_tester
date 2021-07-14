@@ -1399,7 +1399,7 @@ int run_tests(int test_cat)
 	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
 			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_2)
 			: 1;
-	describe("\n%i and +");
+	describe("\n%d and +");
 
 	PRINTF(("%+d", 0));
 	PRINTF(("%+d", 1));
@@ -1416,6 +1416,29 @@ int run_tests(int test_cat)
 	PRINTF(("%+++d", 2147837));
 	PRINTF(("%++d", (int)-2147486));
 	PRINTF(("%++d this is %d getting%+di hard :/", (int)-2147486, -2, 42));
+
+	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
+			: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS_2)
+			: 1;
+	describe("\n%d and +");
+
+	PRINTF(("%+i", 0));
+	PRINTF(("%+i", 1));
+	PRINTF(("%+i", -1));
+	PRINTF(("%+i", 24));
+	PRINTF(("%+i", 42));
+	PRINTF(("%+i", -42));
+	PRINTF(("%+i", 2147483647));
+	PRINTF(("%+i", (int)-2147483648));
+	PRINTF(("%+++i", 2147483647));
+	PRINTF(("%++i", (int)-2147483648));
+	PRINTF(("%+i", 2178647));
+	PRINTF(("%+i", (int)-2144348));
+	PRINTF(("%+++i", 2147837));
+	PRINTF(("%++i", (int)-2147486));
+	PRINTF(("%++i this is %i getting%+ix hard :/", (int)-2147486, -2, 42));
 	
+	PRINTF(("%+u", 0));
+
 	return (0);
 }
