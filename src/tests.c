@@ -1403,9 +1403,9 @@ int run_tests(int test_cat)
 	PRINTF(("%++d", (int)-2147483648));
 	PRINTF(("%+d", 2178647));
 	PRINTF(("%+d", (int)-2144348));
-	PRINTF(("%+  d", 2147837));
-	PRINTF(("%+ d", (int)-2147486));
-	PRINTF(("%+ d this is %d getting% di hard :/", (int)-2147486, -2, 42));
+	PRINTF(("%+++d", 2147837));
+	PRINTF(("%++d", (int)-2147486));
+	PRINTF(("%++d this is %d getting%+di hard :/", (int)-2147486, -2, 42));
 	
 	return (0);
 }
