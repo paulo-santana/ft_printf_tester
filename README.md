@@ -9,7 +9,7 @@ If a test detects that the output is wrong, it will print information about
 what should've been print.
 
 If the moulinette KO you, or if you find a different output between linux and mac, please
-(open an issue)[https://github.com/paulo-santana/ft_printf_tester/issues/new]
+[https://github.com/paulo-santana/ft_printf_tester/issues/new](open an issue)
 
 ### RTFM
 
