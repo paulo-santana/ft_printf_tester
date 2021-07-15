@@ -6,7 +6,7 @@ the original `printf()`. It works on both linux and mac. On linux, it forces the
 output of the original `printf` to equal the mac's one.
 
 If a test detects that the output is wrong, it will print information about
-what should've been print.
+what should've been printed.
 
 If the moulinette KO you, or if you find a different output between linux and mac, please
 [open an issue](https://github.com/paulo-santana/ft_printf_tester/issues/new)
