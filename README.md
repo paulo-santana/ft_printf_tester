@@ -16,7 +16,7 @@ If the moulinette KO you, or if you find a different output between linux and ma
 Clone the test repository inside the folder where you generate the `libftprintf.a`
 file, then `cd` into it.
 
-The tests are managed maily by a shell script. Here are all the commands:
+The tests are managed maily by a shell script. Here are some command examples:
 
 * `sh test`: run all the tests
 * `sh test m`: run all the mandatory tests
