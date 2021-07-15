@@ -1,15 +1,15 @@
 # ft_printf tester
-Updated for the new specification (2021 2nd semester)
+A tester for 42's **ft_printf** project. Updated for the new specification (2021 2nd semester)
 
-This is currently in alpha pre-release.
-
-This program is a tester for 42's project **ft_printf**.
-It runs a series of tests against `ft_printf` and compares the output with 
-the original `printf`. It works on both linux and mac. On linux, it forces the
+It runs a series of tests against `ft_printf()` and compares the output with 
+the original `printf()`. It works on both linux and mac. On linux, it forces the
 output of the original `printf` to equal the mac's one.
 
 If a test detects that the output is wrong, it will print information about
 what should've been print.
+
+If the moulinette KO you, or if you find a different output between linux and mac, please
+(open an issue)[https://github.com/paulo-santana/ft_printf_tester/issues/new]
 
 ### RTFM
 
@@ -21,7 +21,7 @@ The tests are managed maily by a shell script. Here are all the commands:
 * `sh test`: run all the tests
 * `sh test m`: run all the mandatory tests
 * `sh test b1`: run the first bonus tests (`'-0.'` and widths)
-* `sh test b2`: run all second bonus tests (`'# +'`)
+* `sh test b2`: run all second bonus tests (`'# +'` combined with the `'-0.'` flags)
 * `sh test d`: run only the `mandatory` tests related to the `%d` specifier. Currently, only the
 `cspdiuxX%` specifiers are supported
 * `sh test b1 c`: run the `b1` tests related to the `%c` specifier.
