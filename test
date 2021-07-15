@@ -5,13 +5,18 @@ git pull
 NOSAN=
 BONUS=
 
+if [ $# -eq 0 ] || ([ $# -eq 1 ] && [ "$1" = "nosan" ])
+then
+	BONUS="bonus"
+fi
+
 for i in $@
 do
-	if [ $i == "nosan" ]
+	if [ $i = "nosan" ]
 	then
 		NOSAN="nosan"
 	fi
-	if [ $i == "b" ]
+	if [ $i = "b" ]
 	then
 		BONUS="bonus"
 	fi
