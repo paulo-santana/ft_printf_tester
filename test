@@ -12,11 +12,11 @@ fi
 
 for i in $@
 do
-	if [ $i = "nosan" ]
+	if [ "$i" = "nosan" ]
 	then
 		NOSAN="nosan"
 	fi
-	if [ $i = "b" ]
+	if [ "$i" = "b" ]
 	then
 		BONUS="bonus"
 	fi
