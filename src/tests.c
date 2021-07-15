@@ -163,10 +163,13 @@ int run_tests(int test_cat)
 	describe("\n%c and widths");
 
 	PRINTF(("%1c", 'a'))
+	PRINTF(("%1c", '\0'))
 	PRINTF(("%10c", 'b'))
+	PRINTF(("%10c", '\0'))
 	PRINTF(("%2c", 'c'))
 	PRINTF(("there are 15 spaces between this text and the next char%15c", 'd'))
 	PRINTF(("%5chis paragraph is indented", 't'))
+	PRINTF(("%5c now you see", '\0'))
 	PRINTF(("The number %7c represents luck", '7'))
 	
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
@@ -174,6 +177,9 @@ int run_tests(int test_cat)
 		: 1;
 	describe("\n%s and widths");
 
+	PRINTF(("%1s", ""));
+	PRINTF(("%2s", ""));
+	PRINTF(("%5s", ""));
 	PRINTF(("%1s", "a"));
 	PRINTF(("%1s", "abc"));
 	PRINTF(("%7s", "a"));
@@ -194,6 +200,7 @@ int run_tests(int test_cat)
 	PRINTF(("%s%13s%42s%3s", "a, b and c", " are letters", " of the", " alphabet"));
 	PRINTF(("%sc%13sd%42sp%3sx", "a, b and c", " are letters", " of the", " alphabet"));
 	PRINTF(("%sc%13sd%42sp%3sx", "a, b and c", " are letters", " of the", " alphabet"));
+	PRINTF(("%sc%13sd%42sp%sx", "a, b and c", "", " of the", ""));
 	
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_P && test_cat & CAT_BONUS_1)
@@ -353,7 +360,7 @@ int run_tests(int test_cat)
 	PRINTF(("%1%"));
 	PRINTF_EXPECTED(("%5%"),                               /* expected: */ ("    %%"));
 	PRINTF_EXPECTED(("%2%"),                               /* expected: */ (" %%"));
-	PRINTF_EXPECTED(("the world is 2%10% more big today"), /* expected: */ ("the world is 2         %% more big today"));
+	PRINTF_EXPECTED(("the world is 2%10% bigger today"), /* expected: */ ("the world is 2         %% bigger today"));
 	PRINTF_EXPECTED(("%2%%1%%%%5%%9%"),                    /* expected: */ (" %%%%%%    %%        %%"));
 	PRINTF_EXPECTED(("%2%s%1%id%%10%5%%9%"),               /* expected: */ (" %%s%%id%%10    %%        %%"));
 	PRINTF_EXPECTED(("hey, what's %5% up%%?"),             /* expected: */ ("hey, what's     %% up%%?"));
@@ -380,6 +387,10 @@ int run_tests(int test_cat)
 	PRINTF(("%.3s", "-42"));
 	PRINTF(("%.4s", "-42"));
 	PRINTF(("%.7s", "-42"));
+	PRINTF(("%.s", ""));
+	PRINTF(("%.0s", ""));
+	PRINTF(("%.1s", ""));
+	PRINTF(("%.5s", ""));
 	PRINTF_EXPECTED(("%.1s", null_str), /* expected: */ ("("));
 	PRINTF_EXPECTED(("%.2s", null_str), /* expected: */ ("(n"));
 	PRINTF_EXPECTED(("%.5s", null_str), /* expected: */ ("(null"));
@@ -614,12 +625,17 @@ int run_tests(int test_cat)
 			: 1;
 	describe("\n%s, widths, precisions and -");
 
+	PRINTF(("%-sScience!", "Aperture"));
 	PRINTF(("%-9sScience!", "Aperture"));
 	PRINTF(("We %-s what we %8s, %-2s we %-20s", "do", "must", "because", "can"));
 	PRINTF(("%--4s %s %------------------9s of %s of %-5s", "for", "the", "goooood", "aaall", "us"));
 	PRINTF(("%--4.1s %s %------------------9.3s of %s of %-5.7s", "for", "the", "goooood", "aaall", "us"));
 	PRINTF(("%--.sp--.su kkkk", "pegadinha po"));
 	PRINTF(("%-9sScience!", "-42"));
+	PRINTF(("%-s %-.7s!", "Aperture", "Science"));
+	PRINTF(("%-sScience!", ""));
+	PRINTF(("%-1sScience!", ""));
+	PRINTF(("%-9.2sScience!", ""));
 	
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_P && test_cat & CAT_BONUS_1)
