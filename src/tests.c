@@ -46,6 +46,7 @@ int run_tests(int test_cat)
 	PRINTF(("%s%s%s%s", "This ", "is", " an ugly ", "test"));
 	PRINTF(("%s", "This is a rather simple test."));
 	PRINTF(("%s", "-2"));
+	PRINTF((" test with %s some %s empty strings", "", ""))
 	PRINTF(("%s", "-24"));
 	PRINTF(("%s", "-stop"));
 	PRINTF(("%s", "-0003"));
