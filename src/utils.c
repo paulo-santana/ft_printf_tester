@@ -204,7 +204,7 @@ int check_result(t_result *user_result, t_result *orig_result, char *params_used
 
 		if (success && !wrong_return && !errors)
 			tester_putstr(BOLD "OK" RESET);
-		else if (errors) {
+		else if (errors && errors != ERRORS_LEAK) {
 			if (errors == ERRORS_SIGSEGV)
 				tester_putstr(BOLD "SIGSEGV!" RESET RED " - check files/user_stderr.txt");
 		}
