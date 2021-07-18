@@ -8,6 +8,12 @@ output of the original `printf` to equal the mac's one.
 If a test detects that the output is wrong, it will print information about
 what should've been printed.
 
+It compiles the program with the AddressSanitizer flag, mainly to detect memory leaks
+and invalid access. However, it makes the tests run slowly. The option `nosan` disables the
+compilation with the address sanitizer, so the tests can run faster. Because the ASAN's LeakSanitizer
+doesn't work on Mac, this tester checks for memory leaks using a library called `malloc_count` if running
+on Darwin.
+
 If the moulinette KO you, or if you find a different output between linux and mac, please
 [open an issue](https://github.com/paulo-santana/ft_printf_tester/issues/new)
 
