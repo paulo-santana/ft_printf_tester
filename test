@@ -17,7 +17,7 @@ do
 	then
 		NOSAN="nosan"
 	fi
-	if [ "$i" = "b" ]
+	if [ "$i" = "b" ] || [ "$i" = "b1" ] || [ "$i" = "b2" ]
 	then
 		BONUS="bonus"
 	fi
