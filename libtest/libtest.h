@@ -4,16 +4,9 @@
 # include <ctype.h>
 # include <unistd.h>
 # include <fcntl.h>
-# ifdef __linux__
-#  include <bsd/string.h>
-#  include <bsd/stdlib.h>
-#  include <stdio.h>
-#  endif
-# ifdef __APPLE__
-#  include <string.h>
-#  include <stdlib.h>
-#  include <stdio.h>
-# endif
+# include <string.h>
+# include <stdlib.h>
+# include <stdio.h>
 
 # define BOLD		"\x1b[1m"
 # define RED		"\x1b[31m"
