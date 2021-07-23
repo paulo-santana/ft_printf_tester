@@ -27,7 +27,7 @@ The tests are managed maily by a shell script. Here are some command examples:
 * `sh test`: run all the tests
 * `sh test m`: run all the mandatory tests
 * `sh test b1`: run the first bonus tests (`'-0.'` and widths)
-* `sh test b2`: run all second bonus tests (`'# +'` combined with the `'-0.'` flags)
+* `sh test b2`: run the second bonus tests (`'# +'`)
 * `sh test d`: run only the `mandatory` tests related to the `%d` specifier. Currently, only the
 `cspdiuxX%` specifiers are supported
 * `sh test b1 c`: run the `b1` tests related to the `%c` specifier.
