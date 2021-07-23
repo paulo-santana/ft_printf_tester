@@ -2,6 +2,9 @@
 #include "helpers.h"
 #include "libftprintf.h"
 
+#define INT_MIN (int)-2141483648
+#define INT_MAX 2141483647
+
 extern char g_orig_fake_stdout[BUFSIZ];
 extern char g_user_fake_stdout[BUFSIZ];
 extern char *g_test_params;
@@ -46,8 +49,16 @@ int run_tests(int test_cat)
 	PRINTF(("%s%s%s%s", "This ", "is", " an ugly ", "test"));
 	PRINTF(("%s", "This is a rather simple test."));
 	PRINTF(("%s", "-2"));
+	PRINTF((" test with %s some %s empty strings", "", ""))
 	PRINTF(("%s", "-24"));
 	PRINTF(("%s", "-stop"));
+	PRINTF(("%s", "-0003"));
+	PRINTF(("%s", "000-0003"));
+	PRINTF(("%s", "0x42"));
+	PRINTF(("%s", "0x0000042"));
+	PRINTF(("some naugty tests: %s", "0000%"));
+	PRINTF(("some naugty tests: %s", "    %"));
+	PRINTF(("some naugty tests: %s", "%000"));
 	PRINTF(("%s", null_str));
 	PRINTF(("%s everywhere", null_str));
 	PRINTF(("everywhere %s", null_str));
@@ -83,6 +94,9 @@ int run_tests(int test_cat)
 	PRINTF(("%d %d", 2147483647, (int)-2147483648));
 	PRINTF(("42 - 84 is %d", -42));
 	PRINTF(("%d C is the lowest temperature in the universe", -273));
+	PRINTF(("%dxC is the lowest temperature in the universe", -273));
+	PRINTF(("%dsC is the lowest temperature in the universe", -273));
+	PRINTF(("%dpC is the lowest temperature in the universe", -273));
 
 	right_cat = test_cat ? test_cat & (CAT_I | CAT_MANDATORY) : 1;
 	describe("\n%i basic");
@@ -152,10 +166,13 @@ int run_tests(int test_cat)
 	describe("\n%c and widths");
 
 	PRINTF(("%1c", 'a'))
+	PRINTF(("%1c", '\0'))
 	PRINTF(("%10c", 'b'))
+	PRINTF(("%10c", '\0'))
 	PRINTF(("%2c", 'c'))
 	PRINTF(("there are 15 spaces between this text and the next char%15c", 'd'))
 	PRINTF(("%5chis paragraph is indented", 't'))
+	PRINTF(("%5c now you see", '\0'))
 	PRINTF(("The number %7c represents luck", '7'))
 	
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
@@ -163,6 +180,9 @@ int run_tests(int test_cat)
 		: 1;
 	describe("\n%s and widths");
 
+	PRINTF(("%1s", ""));
+	PRINTF(("%2s", ""));
+	PRINTF(("%5s", ""));
 	PRINTF(("%1s", "a"));
 	PRINTF(("%1s", "abc"));
 	PRINTF(("%7s", "a"));
@@ -183,6 +203,7 @@ int run_tests(int test_cat)
 	PRINTF(("%s%13s%42s%3s", "a, b and c", " are letters", " of the", " alphabet"));
 	PRINTF(("%sc%13sd%42sp%3sx", "a, b and c", " are letters", " of the", " alphabet"));
 	PRINTF(("%sc%13sd%42sp%3sx", "a, b and c", " are letters", " of the", " alphabet"));
+	PRINTF(("%sc%13sd%42sp%sx", "a, b and c", "", " of the", ""));
 	
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_P && test_cat & CAT_BONUS_1)
@@ -333,19 +354,6 @@ int run_tests(int test_cat)
 	PRINTF(("this is the real number: %9X", (unsigned int)-1));
 	PRINTF(("%1X%2X%9X", (unsigned int)-1, 0xf0ca, 123456));
 	PRINTF(("%1Xis doomed%2Xpost%9Xx args", (unsigned int)-1, 0xf0b1a, 7654321));
-	
-	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
-			: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS_1)
-			: 1;
-	describe("\n%% and widths");
-
-	PRINTF(("%1%"));
-	PRINTF_EXPECTED(("%5%"),                               /* expected: */ ("    %%"));
-	PRINTF_EXPECTED(("%2%"),                               /* expected: */ (" %%"));
-	PRINTF_EXPECTED(("the world is 2%10% more big today"), /* expected: */ ("the world is 2         %% more big today"));
-	PRINTF_EXPECTED(("%2%%1%%%%5%%9%"),                    /* expected: */ (" %%%%%%    %%        %%"));
-	PRINTF_EXPECTED(("%2%s%1%id%%10%5%%9%"),               /* expected: */ (" %%s%%id%%10    %%        %%"));
-	PRINTF_EXPECTED(("hey, what's %5% up%%?"),             /* expected: */ ("hey, what's     %% up%%?"));
 
 	describe("\n%s and precisions");
 	
@@ -369,6 +377,10 @@ int run_tests(int test_cat)
 	PRINTF(("%.3s", "-42"));
 	PRINTF(("%.4s", "-42"));
 	PRINTF(("%.7s", "-42"));
+	PRINTF(("%.s", ""));
+	PRINTF(("%.0s", ""));
+	PRINTF(("%.1s", ""));
+	PRINTF(("%.5s", ""));
 	PRINTF_EXPECTED(("%.1s", null_str), /* expected: */ ("("));
 	PRINTF_EXPECTED(("%.2s", null_str), /* expected: */ ("(n"));
 	PRINTF_EXPECTED(("%.5s", null_str), /* expected: */ ("(null"));
@@ -571,18 +583,6 @@ int run_tests(int test_cat)
 	PRINTF(("%Xs%.5Xi%.0Xc%.Xp%.9Xu", 5, 55, 2, 0, 42))
 	
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
-		: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS_1)
-		: 1;
-	describe("\n%% and precisions");
-
-	PRINTF(("%.3%"))
-	PRINTF_EXPECTED(("%3.3%"), ("  %%"))
-	PRINTF(("%.0%"))
-	PRINTF(("you have 100%.10% chance of approval"))
-	PRINTF(("%.9%%.5% is how you print %% in printf"))
-	PRINTF(("%.9%i%.5%s%.%d%.3%p%.3%.6c%.6%u%.8%x"))
-	
-	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 		: test_cat ? (test_cat & CAT_C && test_cat & CAT_BONUS_1)
 		: 1;
 	describe("\n%c, widths and -");
@@ -603,12 +603,17 @@ int run_tests(int test_cat)
 			: 1;
 	describe("\n%s, widths, precisions and -");
 
+	PRINTF(("%-sScience!", "Aperture"));
 	PRINTF(("%-9sScience!", "Aperture"));
 	PRINTF(("We %-s what we %8s, %-2s we %-20s", "do", "must", "because", "can"));
 	PRINTF(("%--4s %s %------------------9s of %s of %-5s", "for", "the", "goooood", "aaall", "us"));
 	PRINTF(("%--4.1s %s %------------------9.3s of %s of %-5.7s", "for", "the", "goooood", "aaall", "us"));
 	PRINTF(("%--.sp--.su kkkk", "pegadinha po"));
 	PRINTF(("%-9sScience!", "-42"));
+	PRINTF(("%-s %-.7s!", "Aperture", "Science"));
+	PRINTF(("%-sScience!", ""));
+	PRINTF(("%-1sScience!", ""));
+	PRINTF(("%-9.2sScience!", ""));
 	
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_P && test_cat & CAT_BONUS_1)
@@ -959,18 +964,6 @@ int run_tests(int test_cat)
 	PRINTF(("%-4.5X%X%4X%-10X-X5%-.3X", -1, -1, -1, -1, -1));
 	
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
-			: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS_1)
-			: 1;
-	describe("\n%%, widths, precisions and -");
-
-	PRINTF(("%--.3%"))
-	PRINTF(("---%.0%"))
-	PRINTF(("you have 100%-.10% chance of approval"))
-	PRINTF(("%---.9%%---.5% is how you print %% in printf"))
-	PRINTF_EXPECTED(("%-3.3%"),                                           /* expected: */ ("%%  "))
-	PRINTF_EXPECTED(("%----.9%i%.5%s%-10.%d%.3%p%.3%----.6c%.6%u%-.8%x"), /* expected: */ ("%%i%%s%%         d%%p%%----.6c%%u%%x"))
-	
-	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 		: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_1)
 		: 1;
 	describe("\n%d, widths, precisions and 0");
@@ -1269,24 +1262,14 @@ int run_tests(int test_cat)
 	PRINTF(("%010X", 2147483647));
 	PRINTF(("%011X", 2147483647));
 	PRINTF(("%05X",  -1));
-	PRINTF(("%030X", -1));
-	PRINTF(("%010X", -1));
-	PRINTF(("%011X", -1));
-	PRINTF(("%012X", -1));
-	PRINTF(("%012X, %20X, %2X, %000042X", -1, 3, 30, -1));
-	PRINTF(("%012X, %X, %002X, %42X", -1, 3, 30, -1));
+	PRINTF(("%030.20X", -1));
+	PRINTF(("%010.11X", -1));
+	PRINTF(("%011.11X", -1));
+	PRINTF(("%012.11X", -1));
+	PRINTF(("%012X, %20X, %2X, %000042.20X", -1, 3, 30, -1));
+	PRINTF(("%012X, %X, %002X, %42.5X", -1, 3, 30, -1));
 	PRINTF(("%0014.2X%020X%0002.X%000.5X", -1, 3, 30, -1));
-	PRINTF(("%014Xc%020Xs%02XX%0Xi", -1, 3, 30, -1));
-	
-	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
-			: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS_1)
-			: 1;
-	describe("\n%%, widths, precisions and 0");
-
-	PRINTF_EXPECTED(("%0%"),  /* expected: */ ("%%"));
-	PRINTF_EXPECTED(("%05%"), /* expected: */ ("0000%%"));
-	PRINTF_EXPECTED(("%0-5%"), /* expected: */ ("%%    "));
-	PRINTF_EXPECTED(("%010.5%"), /* expected: */ ("000000000%%"));
+	PRINTF(("%014Xc%020Xs%02.5XX%0.Xi", -1, 3, 30, -1));
 
 	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
 			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS_2)
@@ -1463,7 +1446,7 @@ int run_tests(int test_cat)
 	PRINTF(("%#-12x, %x, %#-#-2x, %42x", -1, 3, 30, -1));
 	PRINTF(("%#-#-14.2x%#-20x%#-#-#-2.x%#-#-#-.5x", -1, 3, 30, -1));
 	PRINTF(("%#-14xc%-20xs%#-2xX%#-xi", -1, 3, 30, -1));
-
+	
 	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
 			: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS_2)
 			: 1;
@@ -1710,11 +1693,14 @@ int run_tests(int test_cat)
 	PRINTF(("%  11.9di", (int)-2147483648));
 	PRINTF(("%  11.12ds", (int)-2147483648));
 	PRINTF(("%   12.0d", (int)-2147483648));
+	PRINTF(("life %   12.0d is %d craz% dy", 1, 2, (int)-2147483648));
+	PRINTF(("%   9.12d is % 22d craz%22dy", -333, 2, -30));
+	PRINTF(("Thank %  d you vim for allowing % .dme ed%   dit this file", -333, 0, -30));
 
 	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
 			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_2)
 			: 1;
-	describe("\n%d, widths, precisions and ' '");
+	describe("\n%d, widths, precisions, ' ' and 0");
 
 	PRINTF(("%0 d", 0));
 	PRINTF(("%0 d", 1));
@@ -1775,7 +1761,7 @@ int run_tests(int test_cat)
 	PRINTF(("%0  1.2d", -1));
 	PRINTF(("%0 2.0d", 1));
 	PRINTF(("%0 3.3d", -1));
-	PRINTF(("%0    4.8d", 0));
+	PRINTF(("%0 0  0 4.8d", 0));
 	PRINTF(("%0  5.d", 1));
 	PRINTF(("%0  2.9d", -1));
 	PRINTF(("%0 9.8d", 2147483647));
@@ -1786,6 +1772,557 @@ int run_tests(int test_cat)
 	PRINTF(("%0  11.9di", (int)-2147483648));
 	PRINTF(("%0  11.12ds", (int)-2147483648));
 	PRINTF(("%0   12.0d", (int)-2147483648));
-	
+	PRINTF(("life %  0  12.0d is %0d craz% 20dy", 1, 2, (int)-2147483648));
+	PRINTF(("%  00 00 9.12d is %  22d craz% 022dy", -333, 2, -30));
+	PRINTF(("Thank %  0 d you vim for allowing % 0   .dme ed%  0 dit this file", -333, 0, -30));
+
+	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
+			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_2)
+			: 1;
+	describe("\n%d, widths, precisions, ' ' and -");
+
+	PRINTF(("%- d", 0));
+	PRINTF(("%- d", 1));
+	PRINTF(("%- d", -1));
+	PRINTF(("%-    d", 0));
+	PRINTF(("%-   d", 1));
+	PRINTF(("%-  d", -1));
+	PRINTF(("%- d", 2147483647));
+	PRINTF(("%- d", (int)-2147483648));
+	PRINTF(("%-   d", 2147483647));
+	PRINTF(("%-  d", (int)-2147483648));
+	PRINTF(("%- d", 2178647));
+	PRINTF(("%- d", (int)-2144348));
+	PRINTF(("%-   d", 2147837));
+	PRINTF(("%-  d", (int)-2147486));
+	PRINTF(("%- 1d", 0));
+	PRINTF(("%-  1d", -1));
+	PRINTF(("%- 2d", 1));
+	PRINTF(("%- 3d", -1));
+	PRINTF(("%-    4d", 0));
+	PRINTF(("%-   5d", 1));
+	PRINTF(("%-  2d", -1));
+	PRINTF(("%- 9d", 2147483647));
+	PRINTF(("%- 10d", 2147483647));
+	PRINTF(("%- 11d", 2147483647));
+	PRINTF(("%- 13d", 2147483647));
+	PRINTF(("%- 16d", 2147483647));
+	PRINTF(("%- 9d", (int)-2147483648));
+	PRINTF(("%-   10d", (int)-2147483648));
+	PRINTF(("%-  11d", (int)-2147483648));
+	PRINTF(("%-  11d", (int)-2147483648));
+	PRINTF(("%-     12d", (int)-2147483648));
+	PRINTF(("%- .d", 0));
+	PRINTF(("%- .0d", 0));
+	PRINTF(("%- .1d", 0));
+	PRINTF(("%- .2d", 0));
+	PRINTF(("%- .0d", 1));
+	PRINTF(("%- .1d", 1));
+	PRINTF(("%- .d", -1));
+	PRINTF(("%-   .3d", 1));
+	PRINTF(("%-  .1d", -1));
+	PRINTF(("%-  .3d", -1));
+	PRINTF(("%- .10d", 2147483647));
+	PRINTF(("%- .11d", 2147483647));
+	PRINTF(("%- .12d", 2147483647));
+	PRINTF(("%- .9d", (int)-2147483648));
+	PRINTF(("%-   .9d", 2147483647));
+	PRINTF(("%-  .10d", (int)-2147483648));
+	PRINTF(("%- .8d", 2178647));
+	PRINTF(("%- .9d", (int)-2144348));
+	PRINTF(("%-   .7d", 2147837));
+	PRINTF(("%-  .8d", (int)-2147486));
+	PRINTF(("%-  .7d", (int)-2147486));
+	PRINTF(("%- 1.0d", 0));
+	PRINTF(("%- 1.1d", 0));
+	PRINTF(("%- 1.2d", 0));
+	PRINTF(("%-  1.1d", -1));
+	PRINTF(("%-  1.2d", -1));
+	PRINTF(("%- 2.0d", 1));
+	PRINTF(("%- 3.3d", -1));
+	PRINTF(("%-    4.8d", 0));
+	PRINTF(("%-  5.d", 1));
+	PRINTF(("%-  2.9d", -1));
+	PRINTF(("%- 9.8d", 2147483647));
+	PRINTF(("%- 10.11d", 2147483647));
+	PRINTF(("%- 11.9d", 2147483647));
+	PRINTF(("%- 9.9d", (int)-2147483648));
+	PRINTF(("%-  - 10.9d", (int)-2147483648));
+	PRINTF(("%-  11.9dx", (int)-2147483648));
+	PRINTF(("%-  11.12ds", (int)-2147483648));
+	PRINTF(("%-   12.0d", (int)-2147483648));
+	PRINTF(("life %  -  12.0d is %-d craz% 20dy", 1, 2, (int)-2147483648));
+	PRINTF(("%  00 00 9.12d is %  - 22d craz%-- -22dy", -333, 2, -30));
+	PRINTF(("Thank %  - d you vim for allowing % 0   .dme ed%  - dit this file", -333, 0, -30));
+
+	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
+			: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS_2)
+			: 1;
+	describe("\n%d, widths, precisions and ' '");
+
+	PRINTF(("% i", 0));
+	PRINTF(("% i", 1));
+	PRINTF(("% i", -1));
+	PRINTF(("%    i", 0));
+	PRINTF(("%   i", 1));
+	PRINTF(("%  i", -1));
+	PRINTF(("% i", 2147483647));
+	PRINTF(("% i", (int)-2147483648));
+	PRINTF(("%   i", 2147483647));
+	PRINTF(("%  i", (int)-2147483648));
+	PRINTF(("% i", 2178647));
+	PRINTF(("% i", (int)-2144348));
+	PRINTF(("%   i", 2147837));
+	PRINTF(("%  i", (int)-2147486));
+	PRINTF(("% 1i", 0));
+	PRINTF(("%  1i", -1));
+	PRINTF(("% 2i", 1));
+	PRINTF(("% 3i", -1));
+	PRINTF(("%    4i", 0));
+	PRINTF(("%   5i", 1));
+	PRINTF(("%  2i", -1));
+	PRINTF(("% 9i", 2147483647));
+	PRINTF(("% 10i", 2147483647));
+	PRINTF(("% 11i", 2147483647));
+	PRINTF(("% 9i", (int)-2147483648));
+	PRINTF(("%   10i", (int)-2147483648));
+	PRINTF(("%  11i", (int)-2147483648));
+	PRINTF(("%  11i", (int)-2147483648));
+	PRINTF(("%     12i", (int)-2147483648));
+	PRINTF(("% .i", 0));
+	PRINTF(("% .0i", 0));
+	PRINTF(("% .1i", 0));
+	PRINTF(("% .2i", 0));
+	PRINTF(("% .0i", 1));
+	PRINTF(("% .1i", 1));
+	PRINTF(("% .i", -1));
+	PRINTF(("%   .3i", 1));
+	PRINTF(("%  .1i", -1));
+	PRINTF(("%  .3i", -1));
+	PRINTF(("% .10i", 2147483647));
+	PRINTF(("% .11i", 2147483647));
+	PRINTF(("% .9i", (int)-2147483648));
+	PRINTF(("%   .9i", 2147483647));
+	PRINTF(("%  .10i", (int)-2147483648));
+	PRINTF(("% .8i", 2178647));
+	PRINTF(("% .9i", (int)-2144348));
+	PRINTF(("%   .7i", 2147837));
+	PRINTF(("%  .8i", (int)-2147486));
+	PRINTF(("%  .7i", (int)-2147486));
+	PRINTF(("% 1.0i", 0));
+	PRINTF(("% 1.1i", 0));
+	PRINTF(("% 1.2i", 0));
+	PRINTF(("%  1.1i", -1));
+	PRINTF(("%  1.2i", -1));
+	PRINTF(("% 2.0i", 1));
+	PRINTF(("% 3.3i", -1));
+	PRINTF(("%    4.8i", 0));
+	PRINTF(("%  5.i", 1));
+	PRINTF(("%  2.9i", -1));
+	PRINTF(("% 9.8i", 2147483647));
+	PRINTF(("% 10.11i", 2147483647));
+	PRINTF(("% 11.9i", 2147483647));
+	PRINTF(("% 9.9i", (int)-2147483648));
+	PRINTF(("%   10.9i", (int)-2147483648));
+	PRINTF(("%  11.9ii", (int)-2147483648));
+	PRINTF(("%  11.12is", (int)-2147483648));
+	PRINTF(("%   12.0i", (int)-2147483648));
+	PRINTF(("life %   12.0i is %i craz% iy", 1, 2, (int)-2147483648));
+	PRINTF(("%   9.12i is % 22i craz%22iy", -333, 2, -30));
+	PRINTF(("Thank %  i you vim for allowing % .ime ed%   iit this file", -333, 0, -30));
+
+	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
+			: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS_2)
+			: 1;
+	describe("\n%i, widths, precisions, ' ' and 0");
+
+	PRINTF(("%0 i", 0));
+	PRINTF(("%0 i", 1));
+	PRINTF(("%0 i", -1));
+	PRINTF(("%0    i", 0));
+	PRINTF(("%0   i", 1));
+	PRINTF(("%0  i", -1));
+	PRINTF(("%0 i", 2147483647));
+	PRINTF(("%0 i", (int)-2147483648));
+	PRINTF(("%0   i", 2147483647));
+	PRINTF(("%0  i", (int)-2147483648));
+	PRINTF(("%0 i", 2178647));
+	PRINTF(("%0 i", (int)-2144348));
+	PRINTF(("%0   i", 2147837));
+	PRINTF(("%0  i", (int)-2147486));
+	PRINTF(("%0 1i", 0));
+	PRINTF(("%0  1i", -1));
+	PRINTF(("%0 2i", 1));
+	PRINTF(("%0 3i", -1));
+	PRINTF(("%0    4i", 0));
+	PRINTF(("%0   5i", 1));
+	PRINTF(("%0  2i", -1));
+	PRINTF(("%0 9i", 2147483647));
+	PRINTF(("%0 10i", 2147483647));
+	PRINTF(("%0 11i", 2147483647));
+	PRINTF(("%0 13i", 2147483647));
+	PRINTF(("%0 16i", 2147483647));
+	PRINTF(("%0 9i", (int)-2147483648));
+	PRINTF(("%0   10i", (int)-2147483648));
+	PRINTF(("%0  11i", (int)-2147483648));
+	PRINTF(("%0  11i", (int)-2147483648));
+	PRINTF(("%0     12i", (int)-2147483648));
+	PRINTF(("%0 .i", 0));
+	PRINTF(("%0 .0i", 0));
+	PRINTF(("%0 .1i", 0));
+	PRINTF(("%0 .2i", 0));
+	PRINTF(("%0 .0i", 1));
+	PRINTF(("%0 .1i", 1));
+	PRINTF(("%0 .i", -1));
+	PRINTF(("%0   .3i", 1));
+	PRINTF(("%0  .1i", -1));
+	PRINTF(("%0  .3i", -1));
+	PRINTF(("%0 .10i", 2147483647));
+	PRINTF(("%0 .11i", 2147483647));
+	PRINTF(("%0 .12i", 2147483647));
+	PRINTF(("%0 .9i", (int)-2147483648));
+	PRINTF(("%0   .9i", 2147483647));
+	PRINTF(("%0  .10i", (int)-2147483648));
+	PRINTF(("%0 .8i", 2178647));
+	PRINTF(("%0 .9i", (int)-2144348));
+	PRINTF(("%0   .7i", 2147837));
+	PRINTF(("%0  .8i", (int)-2147486));
+	PRINTF(("%0  .7i", (int)-2147486));
+	PRINTF(("%0 1.0i", 0));
+	PRINTF(("%0 1.1i", 0));
+	PRINTF(("%0 1.2i", 0));
+	PRINTF(("%0  1.1i", -1));
+	PRINTF(("%0  1.2i", -1));
+	PRINTF(("%0 2.0i", 1));
+	PRINTF(("%0 3.3i", -1));
+	PRINTF(("%0 0  0 4.8i", 0));
+	PRINTF(("%0  5.i", 1));
+	PRINTF(("%0  2.9i", -1));
+	PRINTF(("%0 9.8i", 2147483647));
+	PRINTF(("%0 10.11i", 2147483647));
+	PRINTF(("%0 11.9i", 2147483647));
+	PRINTF(("%0 9.9i", (int)-2147483648));
+	PRINTF(("%0   10.9i", (int)-2147483648));
+	PRINTF(("%0  11.9ii", (int)-2147483648));
+	PRINTF(("%0  11.12is", (int)-2147483648));
+	PRINTF(("%0   12.0i", (int)-2147483648));
+	PRINTF(("life %  0  12.0i is %0i craz% 20iy", 1, 2, (int)-2147483648));
+	PRINTF(("%  00 00 9.12i is %  22i craz% 022iy", -333, 2, -30));
+	PRINTF(("Thank %  0 i you vim for allowing % 0   .ime ei%  0 iit this file", -333, 0, -30));
+
+	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
+			: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS_2)
+			: 1;
+	describe("\n%i, widths, precisions, ' ' and -");
+
+	PRINTF(("%- i", 0));
+	PRINTF(("%- i", 1));
+	PRINTF(("%- i", -1));
+	PRINTF(("%-    i", 0));
+	PRINTF(("%-   i", 1));
+	PRINTF(("%-  i", -1));
+	PRINTF(("%- i", 2147483647));
+	PRINTF(("%- i", (int)-2147483648));
+	PRINTF(("%-   i", 2147483647));
+	PRINTF(("%-  i", (int)-2147483648));
+	PRINTF(("%- i", 2178647));
+	PRINTF(("%- i", (int)-2144348));
+	PRINTF(("%-   i", 2147837));
+	PRINTF(("%-  i", (int)-2147486));
+	PRINTF(("%- 1i", 0));
+	PRINTF(("%-  1i", -1));
+	PRINTF(("%- 2i", 1));
+	PRINTF(("%- 3i", -1));
+	PRINTF(("%-    4i", 0));
+	PRINTF(("%-   5i", 1));
+	PRINTF(("%-  2i", -1));
+	PRINTF(("%- 9i", 2147483647));
+	PRINTF(("%- 10i", 2147483647));
+	PRINTF(("%- 11i", 2147483647));
+	PRINTF(("%- 13i", 2147483647));
+	PRINTF(("%- 16i", 2147483647));
+	PRINTF(("%- 9i", (int)-2147483648));
+	PRINTF(("%-   10i", (int)-2147483648));
+	PRINTF(("%-  11i", (int)-2147483648));
+	PRINTF(("%-  11i", (int)-2147483648));
+	PRINTF(("%-     12i", (int)-2147483648));
+	PRINTF(("%- .i", 0));
+	PRINTF(("%- .0i", 0));
+	PRINTF(("%- .1i", 0));
+	PRINTF(("%- .2i", 0));
+	PRINTF(("%- .0i", 1));
+	PRINTF(("%- .1i", 1));
+	PRINTF(("%- .i", -1));
+	PRINTF(("%-   .3i", 1));
+	PRINTF(("%-  .1i", -1));
+	PRINTF(("%-  .3i", -1));
+	PRINTF(("%- .10i", 2147483647));
+	PRINTF(("%- .11i", 2147483647));
+	PRINTF(("%- .12i", 2147483647));
+	PRINTF(("%- .9i", (int)-2147483648));
+	PRINTF(("%-   .9i", 2147483647));
+	PRINTF(("%-  .10i", (int)-2147483648));
+	PRINTF(("%- .8i", 2178647));
+	PRINTF(("%- .9i", (int)-2144348));
+	PRINTF(("%-   .7i", 2147837));
+	PRINTF(("%-  .8i", (int)-2147486));
+	PRINTF(("%-  .7i", (int)-2147486));
+	PRINTF(("%- 1.0i", 0));
+	PRINTF(("%- 1.1i", 0));
+	PRINTF(("%- 1.2i", 0));
+	PRINTF(("%-  1.1i", -1));
+	PRINTF(("%-  1.2i", -1));
+	PRINTF(("%- 2.0i", 1));
+	PRINTF(("%- 3.3i", -1));
+	PRINTF(("%-    4.8i", 0));
+	PRINTF(("%-  5.i", 1));
+	PRINTF(("%-  2.9i", -1));
+	PRINTF(("%- 9.8i", 2147483647));
+	PRINTF(("%- 10.11i", 2147483647));
+	PRINTF(("%- 11.9i", 2147483647));
+	PRINTF(("%- 9.9i", (int)-2147483648));
+	PRINTF(("%-  - 10.9i", (int)-2147483648));
+	PRINTF(("%-  11.9ii", (int)-2147483648));
+	PRINTF(("%-  11.12is", (int)-2147483648));
+	PRINTF(("%-   12.0i", (int)-2147483648));
+	PRINTF(("life %  -  12.0i is %-i craz% 20iy", 1, 2, (int)-2147483648));
+	PRINTF(("%  00 00 9.12i is %  - 22i craz%-- -22iy", -333, 2, -30));
+	PRINTF(("Thank %  - i you vim for allowing % 0   .ime ed%  - ixt this file", -333, 0, -30));
+
+
+	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
+			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_2)
+			: 1;
+	describe("\n%d, widths, precisions and ' '");
+
+	PRINTF(("%+d", 0));
+	PRINTF(("%+d", 1));
+	PRINTF(("%+d", -1));
+	PRINTF(("%++++d", 0));
+	PRINTF(("%+++d", 1));
+	PRINTF(("%++d", -1));
+	PRINTF(("%+d", 2147483647));
+	PRINTF(("%+d", (int)-2147483648));
+	PRINTF(("%+++d", 2147483647));
+	PRINTF(("%++d", (int)-2147483648));
+	PRINTF(("%+d", 2178647));
+	PRINTF(("%+d", (int)-2144348));
+	PRINTF(("%+++d", 2147837));
+	PRINTF(("%++d", (int)-2147486));
+	PRINTF(("%+1d", 0));
+	PRINTF(("%++1d", -1));
+	PRINTF(("%+2d", 1));
+	PRINTF(("%+3d", -1));
+	PRINTF(("%++++4d", 0));
+	PRINTF(("%+++5d", 1));
+	PRINTF(("%++2d", -1));
+	PRINTF(("%+9d", 2147483647));
+	PRINTF(("%+10d", 2147483647));
+	PRINTF(("%+11d", 2147483647));
+	PRINTF(("%+9d", (int)-2147483648));
+	PRINTF(("%+++10d", (int)-2147483648));
+	PRINTF(("%++11d", (int)-2147483648));
+	PRINTF(("%++11d", (int)-2147483648));
+	PRINTF(("%+++++12d", (int)-2147483648));
+	PRINTF(("%+.d", 0));
+	PRINTF(("%+.0d", 0));
+	PRINTF(("%+.1d", 0));
+	PRINTF(("%+.2d", 0));
+	PRINTF(("%+.0d", 1));
+	PRINTF(("%+.1d", 1));
+	PRINTF(("%+.d", -1));
+	PRINTF(("%+++.3d", 1));
+	PRINTF(("%++.1d", -1));
+	PRINTF(("%++.3d", -1));
+	PRINTF(("%+.10d", 2147483647));
+	PRINTF(("%+.11d", 2147483647));
+	PRINTF(("%+.9d", (int)-2147483648));
+	PRINTF(("%+++.9d", 2147483647));
+	PRINTF(("%++.10d", (int)-2147483648));
+	PRINTF(("%+.8d", 2178647));
+	PRINTF(("%+.9d", (int)-2144348));
+	PRINTF(("%+++.7d", 2147837));
+	PRINTF(("%++.8d", (int)-2147486));
+	PRINTF(("%++.7d", (int)-2147486));
+	PRINTF(("%+1.0d", 0));
+	PRINTF(("%+1.1d", 0));
+	PRINTF(("%+1.2d", 0));
+	PRINTF(("%++1.1d", -1));
+	PRINTF(("%++1.2d", -1));
+	PRINTF(("%+2.0d", 1));
+	PRINTF(("%+3.3d", -1));
+	PRINTF(("%++++4.8d", 0));
+	PRINTF(("%++5.d", 1));
+	PRINTF(("%++2.9d", -1));
+	PRINTF(("%+9.8d", 2147483647));
+	PRINTF(("%+10.11d", 2147483647));
+	PRINTF(("%+11.9d", 2147483647));
+	PRINTF(("%+9.9d", (int)-2147483648));
+	PRINTF(("%+++10.9d", (int)-2147483648));
+	PRINTF(("%++11.9di", (int)-2147483648));
+	PRINTF(("%++11.12ds", (int)-2147483648));
+	PRINTF(("%+++12.0d", (int)-2147483648));
+	PRINTF(("life %+++12.0d is %d craz%+dy", 1, 2, (int)-2147483648));
+	PRINTF(("%+++9.12d is % 22d craz%22dy", -333, 2, -30));
+	PRINTF(("Thank %++d you vim for allowing %+.dme ed%+++++dit this file", -333, 0, -30));
+
+	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
+			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_2)
+			: 1;
+	describe("\n%d, widths, precisions, ' ' and 0");
+
+	PRINTF(("%0+d", 0));
+	PRINTF(("%0+d", 1));
+	PRINTF(("%0+d", -1));
+	PRINTF(("%0++++d", 0));
+	PRINTF(("%0+++d", 1));
+	PRINTF(("%0++d", -1));
+	PRINTF(("%0+d", 2147483647));
+	PRINTF(("%0+d", (int)-2147483648));
+	PRINTF(("%0+++d", 2147483647));
+	PRINTF(("%0++d", (int)-2147483648));
+	PRINTF(("%0+d", 2178647));
+	PRINTF(("%0+d", (int)-2144348));
+	PRINTF(("%0+++d", 2147837));
+	PRINTF(("%0++d", (int)-2147486));
+	PRINTF(("%0+1d", 0));
+	PRINTF(("%0++1d", -1));
+	PRINTF(("%0+2d", 1));
+	PRINTF(("%0+3d", -1));
+	PRINTF(("%0++++4d", 0));
+	PRINTF(("%0+++5d", 1));
+	PRINTF(("%0++2d", -1));
+	PRINTF(("%0+9d", 2147483647));
+	PRINTF(("%0+10d", 2147483647));
+	PRINTF(("%0+11d", 2147483647));
+	PRINTF(("%0+13d", 2147483647));
+	PRINTF(("%0+16d", 2147483647));
+	PRINTF(("%0+9d", (int)-2147483648));
+	PRINTF(("%0+++10d", (int)-2147483648));
+	PRINTF(("%0++11d", (int)-2147483648));
+	PRINTF(("%0++11d", (int)-2147483648));
+	PRINTF(("%0+++++12d", (int)-2147483648));
+	PRINTF(("%0+.d", 0));
+	PRINTF(("%0+.0d", 0));
+	PRINTF(("%0+.1d", 0));
+	PRINTF(("%0+.2d", 0));
+	PRINTF(("%0+.0d", 1));
+	PRINTF(("%0+.1d", 1));
+	PRINTF(("%0+.d", -1));
+	PRINTF(("%0+++.3d", 1));
+	PRINTF(("%0++.1d", -1));
+	PRINTF(("%0++.3d", -1));
+	PRINTF(("%0+.10d", 2147483647));
+	PRINTF(("%0+.11d", 2147483647));
+	PRINTF(("%0+.12d", 2147483647));
+	PRINTF(("%0+.9d", (int)-2147483648));
+	PRINTF(("%0+++.9d", 2147483647));
+	PRINTF(("%0++.10d", (int)-2147483648));
+	PRINTF(("%0+.8d", 2178647));
+	PRINTF(("%0+.9d", (int)-2144348));
+	PRINTF(("%0+++.7d", 2147837));
+	PRINTF(("%0++.8d", (int)-2147486));
+	PRINTF(("%0++.7d", (int)-2147486));
+	PRINTF(("%0+1.0d", 0));
+	PRINTF(("%0+1.1d", 0));
+	PRINTF(("%0+1.2d", 0));
+	PRINTF(("%0++1.1d", -1));
+	PRINTF(("%0++1.2d", -1));
+	PRINTF(("%0+2.0d", 1));
+	PRINTF(("%0+3.3d", -1));
+	PRINTF(("%0+0++0+4.8d", 0));
+	PRINTF(("%0++5.d", 1));
+	PRINTF(("%0++2.9d", -1));
+	PRINTF(("%0+9.8d", 2147483647));
+	PRINTF(("%0+10.11d", 2147483647));
+	PRINTF(("%0+11.9d", 2147483647));
+	PRINTF(("%0+9.9d", (int)-2147483648));
+	PRINTF(("%0+++10.9d", (int)-2147483648));
+	PRINTF(("%0++11.9di", (int)-2147483648));
+	PRINTF(("%0++11.12ds", (int)-2147483648));
+	PRINTF(("%0+++12.0d", (int)-2147483648));
+	PRINTF(("life %++0++12.0d is %0d craz%+20dy", 1, 2, (int)-2147483648));
+	PRINTF(("%++00+00+9.12d is %++22d craz%+022dy", -333, 2, -30));
+	PRINTF(("Thank %++0+d you vim for allowing %+0+++.dme ed%++0+dit this file", -333, 0, -30));
+
+	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
+			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_2)
+			: 1;
+	describe("\n%d, widths, precisions, ' ' and -");
+
+	PRINTF(("%-+d", 0));
+	PRINTF(("%-+d", 1));
+	PRINTF(("%-+d", -1));
+	PRINTF(("%-++++d", 0));
+	PRINTF(("%-+++d", 1));
+	PRINTF(("%-++d", -1));
+	PRINTF(("%-+d", 2147483647));
+	PRINTF(("%-+d", (int)-2147483648));
+	PRINTF(("%-+++d", 2147483647));
+	PRINTF(("%-++d", (int)-2147483648));
+	PRINTF(("%-+d", 2178647));
+	PRINTF(("%-+d", (int)-2144348));
+	PRINTF(("%-+++d", 2147837));
+	PRINTF(("%-++d", (int)-2147486));
+	PRINTF(("%-+1d", 0));
+	PRINTF(("%-++1d", -1));
+	PRINTF(("%-+2d", 1));
+	PRINTF(("%-+3d", -1));
+	PRINTF(("%-++++4d", 0));
+	PRINTF(("%-+++5d", 1));
+	PRINTF(("%-++2d", -1));
+	PRINTF(("%-+9d", 2147483647));
+	PRINTF(("%-+10d", 2147483647));
+	PRINTF(("%-+11d", 2147483647));
+	PRINTF(("%-+13d", 2147483647));
+	PRINTF(("%-+16d", 2147483647));
+	PRINTF(("%-+9d", (int)-2147483648));
+	PRINTF(("%-+++10d", (int)-2147483648));
+	PRINTF(("%-++11d", (int)-2147483648));
+	PRINTF(("%-++11d", (int)-2147483648));
+	PRINTF(("%-+++++12d", (int)-2147483648));
+	PRINTF(("%-+.d", 0));
+	PRINTF(("%-+.0d", 0));
+	PRINTF(("%-+.1d", 0));
+	PRINTF(("%-+.2d", 0));
+	PRINTF(("%-+.0d", 1));
+	PRINTF(("%-+.1d", 1));
+	PRINTF(("%-+.d", -1));
+	PRINTF(("%-+++.3d", 1));
+	PRINTF(("%-++.1d", -1));
+	PRINTF(("%-++.3d", -1));
+	PRINTF(("%-+.10d", 2147483647));
+	PRINTF(("%-+.11d", 2147483647));
+	PRINTF(("%-+.12d", 2147483647));
+	PRINTF(("%-+.9d", (int)-2147483648));
+	PRINTF(("%-+++.9d", 2147483647));
+	PRINTF(("%-++.10d", (int)-2147483648));
+	PRINTF(("%-+.8d", 2178647));
+	PRINTF(("%-+.9d", (int)-2144348));
+	PRINTF(("%-+++.7d", 2147837));
+	PRINTF(("%-++.8d", (int)-2147486));
+	PRINTF(("%-++.7d", (int)-2147486));
+	PRINTF(("%-+1.0d", 0));
+	PRINTF(("%-+1.1d", 0));
+	PRINTF(("%-+1.2d", 0));
+	PRINTF(("%-++1.1d", -1));
+	PRINTF(("%-++1.2d", -1));
+	PRINTF(("%-+2.0d", 1));
+	PRINTF(("%-+3.3d", -1));
+	PRINTF(("%-++++4.8d", 0));
+	PRINTF(("%-++5.d", 1));
+	PRINTF(("%-++2.9d", -1));
+	PRINTF(("%-+9.8d", 2147483647));
+	PRINTF(("%-+10.11d", 2147483647));
+	PRINTF(("%-+11.9d", 2147483647));
+	PRINTF(("%-+9.9d", (int)-2147483648));
+	PRINTF(("%-++-+10.9d", (int)-2147483648));
+	PRINTF(("%-++11.9dx", (int)-2147483648));
+	PRINTF(("%-++11.12ds", (int)-2147483648));
+	PRINTF(("%-+++12.0d", (int)-2147483648));
+	PRINTF(("life %++-++12.0d is %-d craz%+20dy", 1, 2, (int)-2147483648));
+	PRINTF(("%++00+00+9.12d is %++-+22d craz%--+-22dy", -333, 2, -30));
+	PRINTF(("Thank %++-+d you vim for allowing %+0+++.dme ed%++-+dit this file", -333, 0, -30));
+
 	return (0);
 }
