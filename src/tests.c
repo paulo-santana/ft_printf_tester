@@ -162,10 +162,13 @@ int run_tests(int test_cat)
 	describe("\n%c and widths");
 
 	PRINTF(("%1c", 'a'))
+	PRINTF(("%1c", '\0'))
 	PRINTF(("%10c", 'b'))
+	PRINTF(("%10c", '\0'))
 	PRINTF(("%2c", 'c'))
 	PRINTF(("there are 15 spaces between this text and the next char%15c", 'd'))
 	PRINTF(("%5chis paragraph is indented", 't'))
+	PRINTF(("%5c now you see", '\0'))
 	PRINTF(("The number %7c represents luck", '7'))
 	
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
