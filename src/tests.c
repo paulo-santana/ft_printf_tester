@@ -347,19 +347,6 @@ int run_tests(int test_cat)
 	PRINTF(("%1X%2X%9X", (unsigned int)-1, 0xf0ca, 123456));
 	PRINTF(("%1Xis doomed%2Xpost%9Xx args", (unsigned int)-1, 0xf0b1a, 7654321));
 	
-	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
-			: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS_1)
-			: 1;
-	describe("\n%% and widths");
-
-	PRINTF(("%1%"));
-	PRINTF_EXPECTED(("%5%"),                               /* expected: */ ("    %%"));
-	PRINTF_EXPECTED(("%2%"),                               /* expected: */ (" %%"));
-	PRINTF_EXPECTED(("the world is 2%10% more big today"), /* expected: */ ("the world is 2         %% more big today"));
-	PRINTF_EXPECTED(("%2%%1%%%%5%%9%"),                    /* expected: */ (" %%%%%%    %%        %%"));
-	PRINTF_EXPECTED(("%2%s%1%id%%10%5%%9%"),               /* expected: */ (" %%s%%id%%10    %%        %%"));
-	PRINTF_EXPECTED(("hey, what's %5% up%%?"),             /* expected: */ ("hey, what's     %% up%%?"));
-
 	describe("\n%s and precisions");
 	
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
@@ -582,18 +569,6 @@ int run_tests(int test_cat)
 	PRINTF(("the number is %.5X", 0))
 	PRINTF(("%X%.5X%.0X%.X%.9X", 5, 55, 2, 0, 42))
 	PRINTF(("%Xs%.5Xi%.0Xc%.Xp%.9Xu", 5, 55, 2, 0, 42))
-	
-	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
-		: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS_1)
-		: 1;
-	describe("\n%% and precisions");
-
-	PRINTF(("%.3%"))
-	PRINTF_EXPECTED(("%3.3%"), ("  %%"))
-	PRINTF(("%.0%"))
-	PRINTF(("you have 100%.10% chance of approval"))
-	PRINTF(("%.9%%.5% is how you print %% in printf"))
-	PRINTF(("%.9%i%.5%s%.%d%.3%p%.3%.6c%.6%u%.8%x"))
 	
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 		: test_cat ? (test_cat & CAT_C && test_cat & CAT_BONUS_1)
@@ -970,18 +945,6 @@ int run_tests(int test_cat)
 	PRINTF(("%-4.5X%X%4X%-10X-X5%-.3X", -300000, -400000, -500000, -600000, -700000));
 	PRINTF(("%-4.5X%X%4X%-10X-X5%-.3X", 2147483647, 2141483647, 2141483647, 2141483647, 2141483647));
 	PRINTF(("%-4.5X%X%4X%-10X-X5%-.3X", -1, -1, -1, -1, -1));
-	
-	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
-			: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS_1)
-			: 1;
-	describe("\n%%, widths, precisions and -");
-
-	PRINTF(("%--.3%"))
-	PRINTF(("---%.0%"))
-	PRINTF(("you have 100%-.10% chance of approval"))
-	PRINTF(("%---.9%%---.5% is how you print %% in printf"))
-	PRINTF_EXPECTED(("%-3.3%"),                                           /* expected: */ ("%%  "))
-	PRINTF_EXPECTED(("%----.9%i%.5%s%-10.%d%.3%p%.3%----.6c%.6%u%-.8%x"), /* expected: */ ("%%i%%s%%         d%%p%%----.6c%%u%%x"))
 	
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 		: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_1)
