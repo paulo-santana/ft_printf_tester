@@ -1288,16 +1288,6 @@ int run_tests(int test_cat)
 	PRINTF(("%0014.2X%020X%0002.X%000.5X", -1, 3, 30, -1));
 	PRINTF(("%014Xc%020Xs%02.5XX%0.Xi", -1, 3, 30, -1));
 	
-	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
-			: test_cat ? (test_cat & CAT_PERCENT && test_cat & CAT_BONUS_1)
-			: 1;
-	describe("\n%%, widths, precisions and 0");
-
-	PRINTF_EXPECTED(("%0%"),  /* expected: */ ("%%"));
-	PRINTF_EXPECTED(("%05%"), /* expected: */ ("0000%%"));
-	PRINTF_EXPECTED(("%0-5%"), /* expected: */ ("%%    "));
-	PRINTF_EXPECTED(("%010.5%"), /* expected: */ ("000000000%%"));
-
 	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
 			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS_2)
 			: 1;
