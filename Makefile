@@ -61,7 +61,7 @@ ${LIBFTPRINTF}:
 ${LIBTEST}:
 	make -C libtest CFLAGS="${CFLAGS}"
 
-${OBJ_DIR}/%.o: ${SRC_DIR}/%.c ${HEADdRS} Makefile
+${OBJ_DIR}/%.o: ${SRC_DIR}/%.c ${HEADERS} Makefile
 	${CC} -DERROR_LIMIT=${ERROR_LIMIT} -DBUFFER_SIZE=32 -c $< -o $@
 
 r: run
