@@ -577,7 +577,6 @@ int run_tests(int test_cat)
 
 	// this is literally a negative width '-'
 	PRINTF(("%-c", 'p'));
-	PRINTF(("%-c%-c%c*", 0, '1', 1));
 	PRINTF(("%-1c", 'b'));
 	PRINTF(("%-5c", 'w'));
 	PRINTF((" kk daora%-5cblz", 'w'));
@@ -585,6 +584,8 @@ int run_tests(int test_cat)
 	PRINTF(("%-c%-c%-4c%-11c", 'a', 'b', 'c', 'd'));
 	PRINTF(("%-ci%-cp%4cs%-11cx", 'a', 'b', 'c', 'd'));
 	PRINTF(("%----ci%---cp%4cs%--11cx", 'a', 'b', 'c', 'd'));
+	PRINTF(("%-c%-c%c*", 0, '1', 1));
+	PRINTF(("%-2c%-3c%-4c*", 0, 'a', 0));
 	
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_S && test_cat & CAT_BONUS_1)
