@@ -155,6 +155,17 @@ int run_tests(int test_cat)
 	PRINTF(("the '%%%%' is used to print a %% in printf"));
 	PRINTF(("%%%%%%%%%%%%%%%%"));
 	PRINTF(("%%c%%s%%p%%d%%i%%u%%x%%X%%"));
+
+	right_cat = test_cat ? test_cat & CAT_MANDATORY : 1;
+	describe("\nmix");
+
+	PRINTF(("%c - %s - %p %d - %i - %u - %x %X %%", 'a', "test", 0xdeadc0de, 20, -20, -1, -1, 200000000));
+	PRINTF(("%c - %s - %p %d - %i - %u - %x %X %%", '\0', "test", (void *)-1, 20, -20, -1, -1, 200000000));
+	PRINTF(("%c - %s - %p %d - %i - %u - %x %X %%", 'c', "", (void *)-1, 20, -20, -1, -1, 200000000));
+	PRINTF(("%i - %s - %p %d - %c - %u - %x %X %%", 20, "", (void *)-1, '\0', -20, -1, -1, 200000000));
+	PRINTF_EXPECTED(("%c - %s - %p %d - %i - %u - %x %X %%", 'b', null_str, NULL, 20, -20, -1, -1, 200000000),
+			("b - (null) - 0x0 20 - -20 - 4294967295 - ffffffff BEBC200 %%"));
+	PRINTF(("%c %s - %p - %d - %i %u - %x - %X %%", '\0', null_str, 0xdeadc0de, 0, (int)-2147483648, -1, -1, 200000000));
 	
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1 
 		: test_cat ? (test_cat & CAT_C && test_cat & CAT_BONUS_1) 
