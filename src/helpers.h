@@ -54,14 +54,37 @@ extern int g_tests_run;
 			waitpid(child, &wstatus, 0); \
 		} \
 		open_pipes(op, rp); \
-		child = fork(); \
-		if (child == 0) { \
-			prepare_test("files/user_stderr.txt", op, rp); \
-			alarm(1); \
-			int result = ft_printf params; \
-			finish_test(result, op, rp); \
+		int intermediate_pid = fork(); \
+		if (intermediate_pid == 0) { \
+			int worker = fork(); \
+			if (worker == 0) { \
+				prepare_test("files/user_stderr.txt", op, rp); \
+				int result = ft_printf params; \
+				finish_test(result, op, rp); \
+			} \
+			int killer = fork(); \
+			if (killer == 0) { \
+				/* sleep well before killing lol */ \
+				sleep(1); \
+				_exit(0); \
+			} \
+			int exited_pid = wait(&wstatus); \
+			if (exited_pid == worker) { \
+				kill(killer, SIGKILL); \
+				wait(NULL); \
+			} else { \
+				kill(worker, SIGKILL); \
+				wait(&wstatus); \
+			} \
+			int status; \
+			if (WIFEXITED(wstatus)) { \
+				status = WEXITSTATUS(wstatus); \
+			} else if(WIFSIGNALED(wstatus)) { \
+				status = WTERMSIG(wstatus); \
+			} else { status = -1; } \
+			_exit(status); \
 		} else { \
-			waitpid(child, &wstatus, 0); \
+			waitpid(intermediate_pid, &wstatus, 0); \
 			g_test_params = #params; \
 			handle_errors(wstatus, &ur, &or, g_user_fake_stdout, op, rp); \
 		} \

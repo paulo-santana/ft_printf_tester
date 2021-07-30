@@ -3,6 +3,9 @@
 #include "../libtest/libtest.h"
 #include "ft_printf_tester.h"
 #include "helpers.h"
+#include <stdlib.h>
+#include <valgrind/valgrind.h>
+#include <execinfo.h>
 
 extern int g_current_test;
 extern int g_test_nbr;
@@ -109,11 +112,11 @@ int check_leaks_sanitizer(int user_stderr)
 	int n = 0;
 	int error = 0;
 	char *line;
-	int result = get_next_line(user_stderr, &line);
+	int result = get_next_line(user_stderr, &line); // get rid of the first line
 	free(line);
-	if (result == 0)
+	if (result <= 0)
 		return (0);
-	result = get_next_line(user_stderr, &line); // get rid of the first line
+	result = get_next_line(user_stderr, &line);
 	n = strlen(line);
 	if (tester_strnstr(line, "heap-buffer-overflow", n))
 	{
@@ -205,8 +208,10 @@ int check_result(t_result *user_result, t_result *orig_result, char *params_used
 		if (success && !wrong_return && !errors)
 			tester_putstr(BOLD "OK" RESET);
 		else if (errors && errors != ERRORS_LEAK) {
-			if (errors == ERRORS_SIGSEGV)
-				tester_putstr(BOLD "SIGSEGV!" RESET RED " - check files/user_stderr.txt");
+			if (errors == ERRORS_SIGSEGV || errors == ERRORS_BUFFER_OVERFLOW)
+				tester_putstr(BOLD "SIGSEGV!");
+			else
+				tester_putstr(BOLD "UNKNOWN CRASH!");
 		}
 		else
 			tester_putstr("KO");
@@ -298,14 +303,15 @@ extern char *g_user_fake_stdout;
 void handle_errors(int wstatus, t_result *user_r, t_result *orig_r,
 		char *user_output, int *output_pipe, int *return_pipe) {
 	/* 30 is the status code for the leak sanitizer   */
-	if (wstatus != 0 && wstatus != 256 * 30) {
+	int child_exit_status = WEXITSTATUS(wstatus);
+	if (child_exit_status) {
 		tester_putstr(BOLD RED);
 		tester_putnbr(g_current_test);
-		switch(wstatus - 128) {
+		switch(child_exit_status) {
 			case SIGSEGV: /* classic segfault */
-				tester_putstr(".SIGSEGV! " RESET);
+				tester_putstr(".SIGSEGV - crash! " RESET);
 				break;
-			case 14 - 128: /* timeout */
+			case SIGKILL: /* killed because of timeout */
 				tester_putstr(".TIMEOUT! " RESET);
 				break;
 			default: /* something yet to be discovered */
