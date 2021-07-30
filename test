@@ -1,6 +1,6 @@
 #!/bin/sh
 
-git pull
+#git pull
 
 NOSAN=
 BONUS=
@@ -50,7 +50,7 @@ make ${BONUS}${NOSAN}
 
 if [ $? -ne 0 ]
 then
-	echo -e "\ncompilation error."
+	echo -e "\e[1;31m\ncompilation error.\e[0;0m"
 	echo "${DAT_FEEL}"
 else
 	echo "./tester $@ 2>myleaks.txt"
