@@ -95,7 +95,7 @@ void	print_output(t_result *expected, t_result *user, unsigned int expected_size
 		}
 		if (user->output_str[i] == '\0')
 			tester_putstr(BOLD MAGENTA "\\0" RESET);
-		else if (!isprint(user->output_str[i]))
+		else if (user->output_str[i] > 1 && user->output_str[i] < 32)
 			print_non_print(user->output_str[i]);
 		else
 			tester_putchar(user->output_str[i]);
@@ -304,19 +304,19 @@ void handle_errors(int wstatus, t_result *user_r, t_result *orig_r,
 		char *user_output, int *output_pipe, int *return_pipe) {
 	/* 30 is the status code for the leak sanitizer   */
 	int child_exit_status = WEXITSTATUS(wstatus);
-	if (child_exit_status) {
+	if (child_exit_status && child_exit_status != 30) {
 		tester_putstr(BOLD RED);
 		tester_putnbr(g_current_test);
 		switch(child_exit_status) {
 			case SIGSEGV: /* classic segfault */
-				tester_putstr(".SIGSEGV - crash! " RESET);
+				tester_putstr(".SIGSEGV! " RESET);
 				break;
 			case SIGKILL: /* killed because of timeout */
 				tester_putstr(".TIMEOUT! " RESET);
 				break;
 			default: /* something yet to be discovered */
 				tester_putstr(".CRASH! wstatus: ");
-				tester_putnbr(wstatus);
+				tester_putnbr(child_exit_status);
 				tester_putstr(RESET);
 		}
 		print_help(g_test_params);
