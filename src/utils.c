@@ -4,7 +4,6 @@
 #include "ft_printf_tester.h"
 #include "helpers.h"
 #include <stdlib.h>
-#include <valgrind/valgrind.h>
 #include <execinfo.h>
 
 extern int g_current_test;
