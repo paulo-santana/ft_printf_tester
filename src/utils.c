@@ -3,6 +3,7 @@
 #include "../libtest/libtest.h"
 #include "ft_printf_tester.h"
 #include "helpers.h"
+#include <signal.h>
 #include <stdlib.h>
 #include <execinfo.h>
 
@@ -313,6 +314,9 @@ void handle_errors(int wstatus, t_result *user_r, t_result *orig_r,
 			case SIGKILL: /* killed because of timeout */
 				tester_putstr(".TIMEOUT! " RESET);
 				break;
+			case SIGABRT:
+				tester_putstr(".SIGABRT! " RESET);
+				break ;
 			default: /* something yet to be discovered */
 				tester_putstr(".CRASH! wstatus: ");
 				tester_putnbr(child_exit_status);
