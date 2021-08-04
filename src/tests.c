@@ -126,10 +126,10 @@ int run_tests(int test_cat)
 	PRINTF(("%x", 160));
 	PRINTF(("%x", 255));
 	PRINTF(("%x", 256));
-	PRINTF(("%x", (unsigned int)3735929054));
-	PRINTF(("the password is %x", (unsigned int)3735929054));
-	PRINTF(("%x is the definitive answer", (unsigned int)66));
-	PRINTF(("this is the real number: %x", (unsigned int)-1));
+	PRINTF(("%x", 3735929054u));
+	PRINTF(("the password is %x", 3735929054u));
+	PRINTF(("%x is the definitive answer", 66u));
+	PRINTF(("this is the real number: %x", -1u));
 	
 	right_cat = test_cat ? test_cat & (CAT_BIG_X | CAT_MANDATORY ): 1;
 	describe("\n%X basic");
