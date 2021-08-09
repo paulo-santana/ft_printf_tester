@@ -52,7 +52,7 @@ int parse_arguments(int argc, char *argv[])
 		else if (strncmp(str, "m", 2) == 0)
 			options = options | CAT_MANDATORY;
 		else if (strncmp(str, "b", 2) == 0)
-			options = options | CAT_BONUS_1;
+			options = options | CAT_BONUS_1 | CAT_BONUS_2;
 		else if (strncmp(str, "b1", 3) == 0)
 			options = options | CAT_BONUS_1;
 		else if (strncmp(str, "b2", 3) == 0)
