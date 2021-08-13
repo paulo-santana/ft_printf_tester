@@ -91,4 +91,5 @@ int main(int argc, char *argv[])
 		printf("\nTests run: %d out of %d", g_tests_run, g_current_test - 1);
 		printf("\nTests OK:  %d (%d%%)\n", passed_tests, (int)((float)passed_tests / g_tests_run * 100));
 	}
+	return (g_tests_failed > 0);
 }
