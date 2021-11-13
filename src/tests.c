@@ -55,6 +55,7 @@ int run_tests(int test_cat)
 	PRINTF(("some naugty tests: %s", "0000%"));
 	PRINTF(("some naugty tests: %s", "    %"));
 	PRINTF(("some naugty tests: %s", "%000"));
+	PRINTF(("%s", "bea thought but bea forgot the loop that the chars cause she was floaty during the amsterdam siren call. she got me by surprise you probably read my mind that look in your eyes and judging by your own cries you probably read my mind this is a really long string and if you see this you must look at your return values!kthxbai this must have more than 127 chars by now isnt it ok 4242 4 life 1337 code everyday to the moon!"));
 	PRINTF(("%s", null_str));
 	PRINTF(("%s everywhere", null_str));
 	PRINTF(("everywhere %s", null_str));
@@ -103,7 +104,7 @@ int run_tests(int test_cat)
 	PRINTF(("%i%i%i%i%i%i%i", 10, 23, -2, 37, 200, -9999, 977779));
 	PRINTF(("%i %i", 2147483647, (int)-2147483648));
 	PRINTF(("%iq%i", 21447, -21648));
-	
+
 	right_cat = test_cat ? test_cat & (CAT_U | CAT_MANDATORY) : 1;
 	describe("\n%u basic");
 
@@ -115,7 +116,7 @@ int run_tests(int test_cat)
 	PRINTF(("%u", (unsigned int)4294967295));
 	PRINTF(("%u to the power of %u is %u", 2, 32, (unsigned int)4294967295));
 	PRINTF(("%u%u%u%u", (unsigned int)429896724, 0, 32, (unsigned int)4294967295));
-	
+
 	right_cat = test_cat ? test_cat & (CAT_X | CAT_MANDATORY ) : 1;
 	describe("\n%x basic");
 
@@ -130,7 +131,7 @@ int run_tests(int test_cat)
 	PRINTF(("the password is %x", 3735929054u));
 	PRINTF(("%x is the definitive answer", 66u));
 	PRINTF(("this is the real number: %x", -1u));
-	
+
 	right_cat = test_cat ? test_cat & (CAT_BIG_X | CAT_MANDATORY ): 1;
 	describe("\n%X basic");
 
@@ -145,7 +146,7 @@ int run_tests(int test_cat)
 	PRINTF(("the password is %X", (unsigned int)3735929054));
 	PRINTF(("%X is the definitive answer", (unsigned int)66));
 	PRINTF(("this is the real number: %X", (unsigned int)-1));
-	
+
 	right_cat = test_cat ? test_cat & (CAT_PERCENT | CAT_MANDATORY) : 1;
 	describe("\n%% basic");
 
@@ -166,9 +167,9 @@ int run_tests(int test_cat)
 	PRINTF_EXPECTED(("%c - %s - %p %d - %i - %u - %x %X %%", 'b', null_str, NULL, 20, -20, -1, -1, 200000000),
 			("b - (null) - 0x0 20 - -20 - 4294967295 - ffffffff BEBC200 %%"));
 	PRINTF(("%c %s - %p - %d - %i %u - %x - %X %%", '\0', null_str, (void *)0xdeadc0de, 0, (int)-2147483648, -1, -1, 200000000));
-	
-	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1 
-		: test_cat ? (test_cat & CAT_C && test_cat & CAT_BONUS_1) 
+
+	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
+		: test_cat ? (test_cat & CAT_C && test_cat & CAT_BONUS_1)
 		: 1;
 	describe("\n%c and widths");
 
@@ -181,7 +182,7 @@ int run_tests(int test_cat)
 	PRINTF(("%5chis paragraph is indented", 't'))
 	PRINTF(("%5c now you see", '\0'))
 	PRINTF(("The number %7c represents luck", '7'))
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 		: test_cat ? (test_cat & CAT_S && test_cat & CAT_BONUS_1)
 		: 1;
@@ -207,7 +208,7 @@ int run_tests(int test_cat)
 	PRINTF(("%s%13s%42s%3s", "a, b and c", " are letters", " of the", " alphabet"));
 	PRINTF(("%sc%13sd%42sp%3sx", "a, b and c", " are letters", " of the", " alphabet"));
 	PRINTF(("%sc%13sd%42sp%3sx", "a, b and c", " are letters", " of the", " alphabet"));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_P && test_cat & CAT_BONUS_1)
 			: 1;
@@ -235,7 +236,7 @@ int run_tests(int test_cat)
 	PRINTF_EXPECTED(("%3p is the address", (void *)0), /* expected: */ ("0x0 is the address"));
 	PRINTF_EXPECTED(("%4p is the address", (void *)0), /* expected: */ (" 0x0 is the address"));
 	PRINTF_EXPECTED(("%8p is the address", (void *)0), /* expected: */ ("     0x0 is the address"));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_1)
 			: 1;
@@ -260,7 +261,7 @@ int run_tests(int test_cat)
 	PRINTF(("%12d, %d, %2d, %42d", (int)-2147483648, 3, 30, -1));
 	PRINTF(("%14d%20d%2d%d", (int)-2147483648, 3, 30, -1));
 	PRINTF(("%14dc%20ds%2dx%du", (int)-2147483648, 3, 30, -1));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS_1)
 			: 1;
@@ -285,7 +286,7 @@ int run_tests(int test_cat)
 	PRINTF(("%12i, %i, %2i, %42i", (int)-2147483648, 3, 30, -1));
 	PRINTF(("%14i%20i%2i%i", (int)-2147483648, 3, 30, -1));
 	PRINTF(("%14ic%20is%2ix%du", (int)-2147483648, 3, 30, -1));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_U && test_cat & CAT_BONUS_1)
 			: 1;
@@ -303,7 +304,7 @@ int run_tests(int test_cat)
 	PRINTF(("the biggest unsigned int is %10u", (unsigned int)-1));
 	PRINTF(("the biggest unsigned int is %11u", (unsigned int)-1));
 	PRINTF(("Here are some numbers: %1u%2u%5u%3u%9u and %ui", 11, (unsigned int)-1, 2, 200, 3, 10));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS_1)
 			: 1;
@@ -330,7 +331,7 @@ int run_tests(int test_cat)
 	PRINTF(("this is the real number: %9x", (unsigned int)-1));
 	PRINTF(("%1x%2x%9x", (unsigned int)-1, 0xf0ca, 123456));
 	PRINTF(("%1xis doomed%2xpost%9xX args", (unsigned int)-1, 0xf0b1a, 7654321));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS_1)
 			: 1;
@@ -357,9 +358,9 @@ int run_tests(int test_cat)
 	PRINTF(("this is the real number: %9X", (unsigned int)-1));
 	PRINTF(("%1X%2X%9X", (unsigned int)-1, 0xf0ca, 123456));
 	PRINTF(("%1Xis doomed%2Xpost%9Xx args", (unsigned int)-1, 0xf0b1a, 7654321));
-	
+
 	describe("\n%s and precisions");
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_S && test_cat & CAT_BONUS_1)
 			: 1;
@@ -390,7 +391,7 @@ int run_tests(int test_cat)
 	PRINTF(("%.4s making a %.4s here: %.13s", "I'm delighted", "notation", "HUGE SUCCESS!"));
 	PRINTF(("It's %.4s to over%.50s my%s", "hardware", "state", " satisfaction"));
 	PRINTF(("%.11s%.6s%.4s", "Aperture", " Scientists", "ce"));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_1)
 			: 1;
@@ -427,7 +428,7 @@ int run_tests(int test_cat)
 	PRINTF(("Then take these %.7d things and get the hell out of here", 2))
 	PRINTF(("Bla %.2di bla %.5dsbla bla %.dx bla %.d", 127, 42, 1023, 0))
 	PRINTF(("%.4d%.2d%.20d%.0d%.0d%.d%.d%.d", 127, 0, 1023, 0, (int)-2147483648, 0, 1, (int)-2147483648))
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 		: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS_1)
 		: 1;
@@ -465,7 +466,7 @@ int run_tests(int test_cat)
 	PRINTF(("Then take these %.7i things and get the hell out of here", 2))
 	PRINTF(("Bla %.2ii bla %.5isbla bla %.ix bla %.i", 127, 42, 1023, 0))
 	PRINTF(("%.4i%.2i%.20i%.0i%.0i%.i%.i%.i", 127, 0, 1023, 0, (int)-2147483648, 0, 1, (int)-2147483648))
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 		: test_cat ? (test_cat & CAT_U && test_cat & CAT_BONUS_1)
 		: 1;
@@ -502,7 +503,7 @@ int run_tests(int test_cat)
 	PRINTF(("the number is %.5u", 0))
 	PRINTF(("%u%.5u%.0u%.u%.9u", 5, 55, 2, 0, 42))
 	PRINTF(("%us%.5ui%.0uc%.up%.9ux", 5, 55, 2, 0, 42))
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 		: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS_1)
 		: 1;
@@ -541,7 +542,7 @@ int run_tests(int test_cat)
 	PRINTF(("the number is %.5x", 0))
 	PRINTF(("%x%.5x%.0x%.x%.9x", 5, 55, 2, 0, 42))
 	PRINTF(("%xs%.5xi%.0xc%.xp%.9xu", 5, 55, 2, 0, 42))
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 		: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS_1)
 		: 1;
@@ -580,7 +581,7 @@ int run_tests(int test_cat)
 	PRINTF(("the number is %.5X", 0))
 	PRINTF(("%X%.5X%.0X%.X%.9X", 5, 55, 2, 0, 42))
 	PRINTF(("%Xs%.5Xi%.0Xc%.Xp%.9Xu", 5, 55, 2, 0, 42))
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 		: test_cat ? (test_cat & CAT_C && test_cat & CAT_BONUS_1)
 		: 1;
@@ -597,7 +598,7 @@ int run_tests(int test_cat)
 	PRINTF(("%----ci%---cp%4cs%--11cx", 'a', 'b', 'c', 'd'));
 	PRINTF(("%-c%-c%c*", 0, '1', 1));
 	PRINTF(("%-2c%-3c%-4c*", 0, 'a', 0));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_S && test_cat & CAT_BONUS_1)
 			: 1;
@@ -609,7 +610,7 @@ int run_tests(int test_cat)
 	PRINTF(("%--4.1s %s %------------------9.3s of %s of %-5.7s", "for", "the", "goooood", "aaall", "us"));
 	PRINTF(("%--.sp--.su kkkk", "pegadinha po"));
 	PRINTF(("%-9sScience!", "-42"));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_P && test_cat & CAT_BONUS_1)
 			: 1;
@@ -622,7 +623,7 @@ int run_tests(int test_cat)
 	PRINTF(("thats %-psrobably not a good idea", (void *) 13));
 	PRINTF(("%------21pwhoa wtf is that", (void *) 13));
 	PRINTF(("%------21p yeah i'm %p running out %--p of ideas", (void *) 13, (void *) 65, (void *) -1));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_1)
 			: 1;
@@ -689,7 +690,7 @@ int run_tests(int test_cat)
 	PRINTF(("%-4.5d%d%4d%-10d-d5%-.3d", -300000, -400000, -500000, -600000, -700000));
 	PRINTF(("%-4.5d%d%4d%-10d-d5%-.3d", 2147483647, 2141483647, 2141483647, 2141483647, 2141483647));
 	PRINTF(("%-4.5d%d%4d%-10d-d5%-.3d", (int)-2147483648, (int)-2141483648, (int)-2141483648, (int)-2141483648, (int)-2141483648));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS_1)
 			: 1;
@@ -756,7 +757,7 @@ int run_tests(int test_cat)
 	PRINTF(("%-4.5i%i%4i%-10i-i5%-.3i", -300000, -400000, -500000, -600000, -700000));
 	PRINTF(("%-4.5i%i%4i%-10i-i5%-.3i", 2147483647, 2141483647, 2141483647, 2141483647, 2141483647));
 	PRINTF(("%-4.5i%i%4i%-10i-i5%-.3i", (int)-2147483648, (int)-2141483648, (int)-2141483648, (int)-2141483648, (int)-2141483648));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_U && test_cat & CAT_BONUS_1)
 			: 1;
@@ -823,7 +824,7 @@ int run_tests(int test_cat)
 	PRINTF(("%-4.5u%u%4u%-10u-u5%-.3u", -300000, -400000, -500000, -600000, -700000));
 	PRINTF(("%-4.5u%u%4u%-10u-u5%-.3u", 2147483647, 2141483647, 2141483647, 2141483647, 2141483647));
 	PRINTF(("%-4.5u%u%4u%-10u-u5%-.3u", -1, -1, -1, -1, -1));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS_1)
 			: 1;
@@ -890,7 +891,7 @@ int run_tests(int test_cat)
 	PRINTF(("%-4.5x%x%4x%-10x-x5%-.3x", -300000, -400000, -500000, -600000, -700000));
 	PRINTF(("%-4.5x%x%4x%-10x-x5%-.3x", 2147483647, 2141483647, 2141483647, 2141483647, 2141483647));
 	PRINTF(("%-4.5x%x%4x%-10x-x5%-.3x", -1, -1, -1, -1, -1));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS_1)
 			: 1;
@@ -957,7 +958,7 @@ int run_tests(int test_cat)
 	PRINTF(("%-4.5X%X%4X%-10X-X5%-.3X", -300000, -400000, -500000, -600000, -700000));
 	PRINTF(("%-4.5X%X%4X%-10X-X5%-.3X", 2147483647, 2141483647, 2141483647, 2141483647, 2141483647));
 	PRINTF(("%-4.5X%X%4X%-10X-X5%-.3X", -1, -1, -1, -1, -1));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 		: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_1)
 		: 1;
@@ -1023,7 +1024,7 @@ int run_tests(int test_cat)
 	PRINTF(("%012d, %d, %002d, %42d", (int)-2147483648, 3, 30, -1));
 	PRINTF(("%0014.2d%020d%0002.d%000.5d", (int)-2147483648, 3, 30, -1));
 	PRINTF(("%014dc%020ds%02dx%0du", (int)-2147483648, 3, 30, -1));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_I && test_cat & CAT_BONUS_1)
 			: 1;
@@ -1089,7 +1090,7 @@ int run_tests(int test_cat)
 	PRINTF(("%012i, %i, %002i, %42i", (int)-2147483648, 3, 30, -1));
 	PRINTF(("%0014.2i%020i%0002.i%000.5i", (int)-2147483648, 3, 30, -1));
 	PRINTF(("%014ic%020is%02ix%0iu", (int)-2147483648, 3, 30, -1));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_U && test_cat & CAT_BONUS_1)
 			: 1;
@@ -1148,7 +1149,7 @@ int run_tests(int test_cat)
 	PRINTF(("%012u, %u, %002u, %42u", -1, 3, 30, -1));
 	PRINTF(("%0014.2u%020u%0002.u%000.5u", -1, 3, 30, -1));
 	PRINTF(("%014uc%020us%02ux%0ui", -1, 3, 30, -1));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS_1)
 			: 1;
@@ -1207,7 +1208,7 @@ int run_tests(int test_cat)
 	PRINTF(("%012x, %x, %002x, %42x", -1, 3, 30, -1));
 	PRINTF(("%0014.2x%020x%0002.x%000.5x", -1, 3, 30, -1));
 	PRINTF(("%014xc%020xs%02xx%0xi", -1, 3, 30, -1));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS_1)
 			: 1;
@@ -1265,7 +1266,7 @@ int run_tests(int test_cat)
 	PRINTF(("%012X, %X, %002X, %42.5X", -1, 3, 30, -1));
 	PRINTF(("%0014.2X%020X%0002.X%000.5X", -1, 3, 30, -1));
 	PRINTF(("%014Xc%020Xs%02.5XX%0.Xi", -1, 3, 30, -1));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
 			: test_cat ? (test_cat & CAT_X && test_cat & CAT_BONUS_2)
 			: 1;
@@ -1293,7 +1294,7 @@ int run_tests(int test_cat)
 	PRINTF(("%#xc", 4));
 	PRINTF(("c%#x-i", 42000));
 	PRINTF(("wait for it... %#xp", 42));
-	
+
 	right_cat = (g_all_bonus & CAT_BONUS_2) ? 1
 			: test_cat ? (test_cat & CAT_BIG_X && test_cat & CAT_BONUS_2)
 			: 1;
