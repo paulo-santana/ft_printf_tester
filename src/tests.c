@@ -77,8 +77,8 @@ int run_tests(int test_cat)
 
 	char *mallocked = malloc(2);
 	PRINTF(("This %p is an address from the heap", mallocked); free(mallocked);); free(mallocked);
-	PRINTF_EXPECTED(("%p", NULL),                       /* expected: */ ("0x0"));
-	PRINTF_EXPECTED(("The NULL macro represents the %p address", NULL), ("The NULL macro represents the 0x0 address"));
+	PRINTF(("%p", NULL));
+	PRINTF(("The NULL macro represents the %p address", NULL));
 	PRINTF(("This %p is even stranger", (void *)-1));
 
 	right_cat = test_cat ? test_cat & (CAT_D | CAT_MANDATORY) : 1;
@@ -164,8 +164,7 @@ int run_tests(int test_cat)
 	PRINTF(("%c - %s - %p %d - %i - %u - %x %X %%", '\0', "test", (void *)-1, 20, -20, -1, -1, 200000000));
 	PRINTF(("%c - %s - %p %d - %i - %u - %x %X %%", 'c', "", (void *)-1, 20, -20, -1, -1, 200000000));
 	PRINTF(("%i - %s - %p %d - %c - %u - %x %X %%", 20, "", (void *)-1, '\0', -20, -1, -1, 200000000));
-	PRINTF_EXPECTED(("%c - %s - %p %d - %i - %u - %x %X %%", 'b', null_str, NULL, 20, -20, -1, -1, 200000000),
-			("b - (null) - 0x0 20 - -20 - 4294967295 - ffffffff BEBC200 %%"));
+	PRINTF(("%c - %s - %p %d - %i - %u - %x %X %%", 'b', null_str, NULL, 20, -20, -1, -1, 200000000));
 	PRINTF(("%c %s - %p - %d - %i %u - %x - %X %%", '\0', null_str, (void *)0xdeadc0de, 0, (int)-2147483648, -1, -1, 200000000));
 
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
@@ -223,19 +222,19 @@ int run_tests(int test_cat)
 	PRINTF(("the address is %12p", (void *)0x7ffe6b8e60c7));
 	PRINTF(("the address is %13p", (void *)0x7ffe6b8e60c8));
 	PRINTF(("the address is %14p", (void *)0x7ffe6b8e60c9));
-	PRINTF_EXPECTED(("the address is %1p", (void *)0), /* expected: */ ("the address is 0x0"));
-	PRINTF_EXPECTED(("the address is %2p", (void *)0), /* expected: */ ("the address is 0x0"));
-	PRINTF_EXPECTED(("the address is %3p", (void *)0), /* expected: */ ("the address is 0x0"));
-	PRINTF_EXPECTED(("the address is %4p", (void *)0), /* expected: */ ("the address is  0x0"));
-	PRINTF_EXPECTED(("the address is %8p", (void *)0), /* expected: */ ("the address is      0x0"));
+	PRINTF(("the address is %1p", (void *)0));
+	PRINTF(("the address is %2p", (void *)0));
+	PRINTF(("the address is %3p", (void *)0));
+	PRINTF(("the address is %4p", (void *)0));
+	PRINTF(("the address is %8p", (void *)0));
 	PRINTF(("%12p is the address", (void *)0x7ffe6b8e60c7));
 	PRINTF(("%13p is the address", (void *)0x7ffe6b8e60c8));
 	PRINTF(("%14p is the address", (void *)0x7ffe6b8e60c9));
-	PRINTF_EXPECTED(("%1p is the address", (void *)0), /* expected: */ ("0x0 is the address"));
-	PRINTF_EXPECTED(("%2p is the address", (void *)0), /* expected: */ ("0x0 is the address"));
-	PRINTF_EXPECTED(("%3p is the address", (void *)0), /* expected: */ ("0x0 is the address"));
-	PRINTF_EXPECTED(("%4p is the address", (void *)0), /* expected: */ (" 0x0 is the address"));
-	PRINTF_EXPECTED(("%8p is the address", (void *)0), /* expected: */ ("     0x0 is the address"));
+	PRINTF(("%1p is the address", (void *)0));
+	PRINTF(("%2p is the address", (void *)0));
+	PRINTF(("%3p is the address", (void *)0));
+	PRINTF(("%4p is the address", (void *)0));
+	PRINTF(("%8p is the address", (void *)0));
 
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_1)
@@ -381,9 +380,9 @@ int run_tests(int test_cat)
 	PRINTF(("%.3s", "-42"));
 	PRINTF(("%.4s", "-42"));
 	PRINTF(("%.7s", "-42"));
-	PRINTF_EXPECTED(("%.1s", null_str), /* expected: */ ("("));
-	PRINTF_EXPECTED(("%.2s", null_str), /* expected: */ ("(n"));
-	PRINTF_EXPECTED(("%.5s", null_str), /* expected: */ ("(null"));
+	PRINTF(("%.1s", null_str));
+	PRINTF(("%.2s", null_str));
+	PRINTF(("%.5s", null_str));
 	PRINTF(("%.6s", null_str));
 	PRINTF(("%.7s", null_str));
 	PRINTF(("%.2s, motherfucker", "hi there"));
