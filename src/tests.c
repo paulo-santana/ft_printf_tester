@@ -390,6 +390,8 @@ int run_tests(int test_cat)
 	PRINTF(("%.4s making a %.4s here: %.13s", "I'm delighted", "notation", "HUGE SUCCESS!"));
 	PRINTF(("It's %.4s to over%.50s my%s", "hardware", "state", " satisfaction"));
 	PRINTF(("%.11s%.6s%.4s", "Aperture", " Scientists", "ce"));
+	PRINTF(("%1.s", "21-school.ru")); //Rustem (bnidia)
+	PRINTF(("%10.1s", "21-school.ru")); //Rustem (bnidia)
 
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_D && test_cat & CAT_BONUS_1)
@@ -609,8 +611,6 @@ int run_tests(int test_cat)
 	PRINTF(("%--4.1s %s %------------------9.3s of %s of %-5.7s", "for", "the", "goooood", "aaall", "us"));
 	PRINTF(("%--.sp--.su kkkk", "pegadinha po"));
 	PRINTF(("%-9sScience!", "-42"));
-	PRINTF(("%1.s", "21-school.ru")); //Rustem (bnidia)
-	PRINTF(("%10.1s", "21-school.ru")); //Rustem (bnidia)
 
 	right_cat = (g_all_bonus & CAT_BONUS_1) ? 1
 			: test_cat ? (test_cat & CAT_P && test_cat & CAT_BONUS_1)
